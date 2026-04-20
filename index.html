@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CS Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+:root{--pri:#4F46E5;--pri-d:#4338CA;--pri-l:#E0E7FF;--acc:#F59E0B;--acc-l:#FEF3C7;--ok:#10B981;--ok-l:#D1FAE5;--ng:#EF4444;--ng-l:#FEE2E2;--bg:#F3F4F6;--sf:#FFF;--sf2:#F9FAFB;--bd:#E5E7EB;--tx:#111827;--tx2:#6B778C;--tx3:#9CA3AF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6;min-height:100vh}
+a{color:var(--pri);text-decoration:none;cursor:pointer}
+button{font-family:inherit;cursor:pointer}
+.hide{display:none!important}
+
+/* Nav */
+.nav{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{font-weight:800;font-size:16px;color:var(--pri)}
+.nav-links{display:flex;gap:4px}
+.nav-links a{padding:6px 14px;border-radius:16px;font-size:13px;font-weight:500;color:var(--tx2)}
+.nav-links a:hover,.nav-links a.active{background:var(--pri-l);color:var(--pri);font-weight:700}
+.nav-badge{background:var(--ng);color:#fff;font-size:10px;font-weight:800;padding:1px 6px;border-radius:10px;margin-left:4px}
+
+/* Page */
+.page{max-width:900px;margin:0 auto;padding:24px 16px 80px}
+
+/* Login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#667EEA,#764BA2);padding:24px}
+.login-card{background:#fff;padding:48px 40px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.12);width:100%;max-width:420px;text-align:center}
+.login-card h1{font-size:28px;font-weight:900;margin:12px 0 4px}
+.login-card .sub{color:var(--tx2);font-size:14px;margin-bottom:28px}
+.login-card label{display:block;text-align:left;font-weight:600;font-size:13px;color:var(--tx2);margin-bottom:6px}
+.login-card input{width:100%;padding:12px 16px;font-size:15px;border:2px solid var(--bd);border-radius:8px;outline:none;font-family:inherit}
+.login-card input:focus{border-color:var(--pri)}
+.login-card button{width:100%;margin-top:14px;padding:14px;font-size:16px;font-weight:700;color:#fff;background:var(--pri);border:none;border-radius:8px}
+.login-card button:hover{background:var(--pri-d)}
+.login-card .hint{margin-top:16px;font-size:12px;color:var(--tx3)}
+
+/* User Card */
+.uc{background:linear-gradient(135deg,#667EEA,#764BA2);border-radius:16px;padding:24px;color:#fff;display:flex;gap:20px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.uc-left{display:flex;align-items:center;gap:16px;flex:1;min-width:200px}
+.uc-avatar{width:60px;height:60px;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative}
+.uc-lvl{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:var(--acc);padding:1px 8px;border-radius:10px;font-size:10px;font-weight:800;white-space:nowrap}
+.uc-name{font-size:20px;font-weight:800}
+.uc-title{font-size:12px;opacity:.85}
+.xp-bar{width:100%;height:8px;background:rgba(0,0,0,.2);border-radius:4px;overflow:hidden;margin-top:8px}
+.xp-fill{height:100%;background:linear-gradient(90deg,#FBBF24,#F59E0B);border-radius:4px;transition:width .5s}
+.xp-txt{font-size:11px;opacity:.8;margin-top:4px}
+.uc-stats{display:flex;gap:12px}
+.uc-stat{text-align:center;padding:8px 14px;background:rgba(255,255,255,.15);border-radius:8px;min-width:64px}
+.uc-stat-n{font-size:18px;font-weight:800}
+.uc-stat-l{font-size:10px;opacity:.8}
+
+/* Badges */
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.bdg{background:var(--sf);border:1px solid var(--bd);padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600}
+
+/* Wrong Banner */
+.wb{background:var(--acc-l);border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;font-weight:600;color:#92400E}
+.wb a{color:#D97706;font-weight:700}
+.wb-r{background:var(--ng-l);border-color:#FECACA;color:#991B1B}
+.wb-r a{color:var(--ng)}
+
+/* World/Stage */
+.world{background:var(--sf);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.world-hdr{display:flex;align-items:center;gap:14px;padding-bottom:16px;margin-bottom:16px;border-bottom:2px solid var(--bd)}
+.world-icon{font-size:36px;background:var(--pri-l);width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.world-t{font-size:18px;font-weight:800}
+.world-s{font-size:12px;color:var(--tx2);margin-top:2px}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.stg{background:var(--sf2);border:2px solid var(--bd);border-radius:10px;padding:16px;position:relative;transition:all .2s}
+.stg:hover:not(.locked){border-color:var(--pri);transform:translateY(-2px)}
+.stg.locked{opacity:.55}
+.stg.cleared{border-color:var(--ok);background:var(--ok-l)}
+.stg-icon{font-size:32px;margin-bottom:6px}
+.stg-t{font-size:15px;font-weight:800;margin-bottom:2px}
+.stg-s{font-size:11px;color:var(--tx2);margin-bottom:10px}
+.stg-meta{background:var(--sf);padding:8px 10px;border-radius:6px;margin-bottom:10px;font-size:11px}
+.stg-meta div{display:flex;justify-content:space-between;padding:1px 0}
+.stg-meta span{color:var(--tx2)}
+.stg-meta strong{color:var(--tx)}
+.stg-btn{display:block;text-align:center;padding:9px;background:var(--pri);color:#fff;border-radius:6px;font-weight:700;font-size:13px;border:none;width:100%}
+.stg-btn:hover{background:var(--pri-d);color:#fff}
+.stg-btn:disabled{background:var(--bd);color:var(--tx3);cursor:not-allowed}
+.cleared-mk{position:absolute;top:10px;right:10px;background:var(--ok);color:#fff;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700}
+
+/* Quiz */
+.quiz-hdr{background:var(--sf);border-radius:14px;padding:24px;margin-bottom:20px}
+.quiz-hdr h2{font-size:20px;font-weight:800;margin-bottom:4px}
+.quiz-hdr .desc{color:var(--tx2);font-size:12px;margin-bottom:12px}
+.quiz-meta{display:flex;gap:10px;font-size:11px;color:var(--tx2);flex-wrap:wrap}
+.quiz-meta span{padding:3px 8px;background:var(--sf2);border-radius:10px}
+.qc{background:var(--sf);border-radius:10px;padding:20px;margin-bottom:12px;border-left:4px solid var(--pri)}
+.qc .qn{font-size:11px;font-weight:700;color:var(--pri);margin-bottom:6px}
+.qc .qt{font-size:14px;font-weight:500;line-height:1.7;margin-bottom:14px;white-space:pre-wrap}
+.ans-g{display:flex;flex-direction:column;gap:6px}
+.ans-g.ox{flex-direction:row;gap:10px}
+.ans-o{display:flex;align-items:flex-start;gap:8px;padding:10px 14px;border:2px solid var(--bd);border-radius:8px;cursor:pointer;background:var(--sf2);transition:all .12s}
+.ans-o:hover{border-color:var(--pri);background:var(--pri-l)}
+.ans-o.selected{border-color:var(--pri);background:var(--pri-l);font-weight:700}
+.ans-g.ox .ans-o{flex:1;justify-content:center;padding:16px;font-size:24px;font-weight:900}
+.ans-o.ox-yes.selected{color:var(--ok)}
+.ans-o.ox-no.selected{color:var(--ng)}
+.blank-in{width:100%;padding:10px 14px;font-size:14px;border:2px solid var(--bd);border-radius:8px;outline:none;font-family:inherit}
+.blank-in:focus{border-color:var(--pri)}
+.submit-bar{position:sticky;bottom:12px;background:var(--sf);border:2px solid var(--pri);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:20px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.submit-bar .prog{font-size:12px;font-weight:600;color:var(--tx2)}
+.submit-bar .prog b{color:var(--pri)}
+.submit-btn{padding:10px 24px;background:var(--tx3);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:14px;transition:all .15s}
+.submit-btn.ready{background:var(--pri)}
+.submit-btn.ready:hover{background:var(--pri-d)}
+
+/* Result */
+.res-hero{border-radius:16px;padding:40px 32px;text-align:center;margin-bottom:20px;color:#fff}
+.res-hero.passed{background:linear-gradient(135deg,#10B981,#059669)}
+.res-hero.failed{background:linear-gradient(135deg,#F59E0B,#D97706)}
+.res-hero h1{font-size:24px;font-weight:900;margin:12px 0 20px}
+.res-summary{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.rs-c{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:14px 20px;border-radius:10px;min-width:90px;text-align:center}
+.rs-c .l{font-size:11px;opacity:.85;font-weight:600}
+.rs-c .v{font-size:28px;font-weight:900;line-height:1.1;margin-top:4px}
+.rs-c.sc{background:rgba(255,255,255,.95);color:var(--tx)}
+.rs-c.sc .l{color:var(--tx2)}
+.res-sub{font-size:13px;opacity:.9;margin-bottom:16px}
+.gain{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.gain-c{background:rgba(255,255,255,.2);padding:8px 16px;border-radius:20px;font-weight:700;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.3);font-size:13px}
+.gain-c.lvl{background:rgba(255,255,255,.95);color:var(--acc);animation:pulse 1.2s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.03)}}
+.nb-area{margin-top:20px}
+.nb-title{font-size:13px;font-weight:700;margin-bottom:10px;opacity:.9}
+.nb-list{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.nb-card{background:rgba(255,255,255,.95);color:var(--tx);padding:14px 18px;border-radius:10px;min-width:120px;text-align:center}
+.nb-card .i{font-size:28px}
+.nb-card .n{font-weight:800;font-size:13px;margin-top:4px}
+.nb-card .d{font-size:10px;color:var(--tx2);margin-top:2px}
+
+.sec-t{font-size:16px;font-weight:800;margin:20px 0 12px}
+.sec-t.ok-t{color:var(--ok)}
+
+/* Review Card */
+.rv{background:var(--sf);border-radius:10px;padding:16px 20px;margin-bottom:10px;border-left:4px solid var(--bd)}
+.rv.wrong{border-left-color:var(--ng)}
+.rv.correct{border-left-color:var(--ok)}
+.rv-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.rv-num{font-size:11px;font-weight:600;color:var(--tx2)}
+.rv-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px}
+.rv-tag.wrong{background:var(--ng-l);color:var(--ng)}
+.rv-tag.correct{background:var(--ok-l);color:var(--ok)}
+.rv-q{font-size:13px;font-weight:500;line-height:1.7;margin-bottom:10px;white-space:pre-wrap}
+.rv-ar{font-size:12px;margin-bottom:4px;display:flex;gap:8px}
+.rv-ar .lbl{color:var(--tx2);font-weight:600;min-width:50px}
+.rv-ar .val{color:var(--tx)}
+.rv-ar .val.wt{color:var(--ng);font-weight:700;text-decoration:line-through}
+.rv-ar .val.ct{color:var(--ok);font-weight:700}
+.rv-choices{margin-top:8px}
+.rv-ch{padding:6px 10px;margin-bottom:3px;font-size:12px;background:var(--sf2);border-radius:6px;border:1px solid var(--bd)}
+.rv-ch.cc{background:var(--ok-l);border-color:var(--ok);color:#065F46;font-weight:700}
+.rv-ch.wc{background:var(--ng-l);border-color:var(--ng);color:var(--ng);text-decoration:line-through}
+.rv-exp{margin-top:10px;padding:10px 12px;background:var(--acc-l);border-left:3px solid var(--acc);border-radius:6px}
+.rv-exp .el{font-size:11px;font-weight:700;color:#D97706;margin-bottom:3px}
+.rv-exp .et{font-size:12px;line-height:1.7}
+.rv-exp .er{font-size:10px;color:var(--tx2);font-style:italic;margin-top:4px}
+.rv.correct.collapsed .rv-body{display:none}
+.rv.correct.collapsed{cursor:pointer;padding:12px 20px}
+.rv.correct.collapsed:hover{background:var(--sf2)}
+.rv.correct.collapsed .rv-h{margin-bottom:0}
+
+.actions{display:flex;gap:10px;margin-top:24px;justify-content:center;flex-wrap:wrap}
+.btn-p,.btn-s{padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;border:none}
+.btn-p{background:var(--pri);color:#fff}
+.btn-p:hover{background:var(--pri-d)}
+.btn-s{background:var(--sf);color:var(--pri);border:2px solid var(--pri)}
+.btn-s:hover{background:var(--pri-l)}
+
+/* Wrong Notes */
+.wn-bar{font-size:12px;font-weight:700;color:var(--tx2);margin-bottom:14px;padding:8px 14px;background:var(--sf);border-radius:6px;border:1px solid var(--bd)}
+.wn{background:var(--sf);border-radius:10px;margin-bottom:8px;border:1px solid var(--bd);border-left:4px solid var(--ng);overflow:hidden}
+.wn-h{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.wn-h:hover{background:var(--sf2)}
+.wn-stg{font-size:9px;font-weight:700;color:var(--tx3);background:var(--sf2);padding:2px 6px;border-radius:3px;text-transform:uppercase;flex-shrink:0}
+.wn-prev{font-size:12px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wn-arr{font-size:10px;color:var(--tx3);transition:transform .2s}
+.wn.open .wn-arr{transform:rotate(180deg)}
+.wn-body{display:none;padding:0 16px 16px;border-top:1px solid var(--bd)}
+.wn.open .wn-body{display:block;padding-top:12px}
+.wn-q{font-size:13px;line-height:1.7;margin-bottom:10px;white-space:pre-wrap}
+.wn-ans{font-size:13px;font-weight:700;color:var(--ok);margin-bottom:10px;padding:6px 10px;background:var(--ok-l);border-radius:6px}
+
+/* Dashboard */
+.dash-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.dc{background:var(--sf);border-radius:10px;padding:16px 20px}
+.dc-l{font-size:11px;color:var(--tx2);font-weight:600}
+.dc-v{font-size:28px;font-weight:900;color:var(--pri);line-height:1.1;margin:4px 0}
+.dc-s{font-size:11px;color:var(--tx2)}
+.dash-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
+.dash-tbl th,.dash-tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd)}
+.dash-tbl th{background:var(--sf2);font-weight:700;font-size:10px;text-transform:uppercase;color:var(--tx2)}
+
+/* Empty */
+.empty{text-align:center;padding:60px 20px}
+.empty .ei{font-size:56px;margin-bottom:12px}
+.empty .et{font-size:15px;font-weight:600;color:var(--tx2);margin-bottom:20px}
+
+/* Loading */
+.loading{text-align:center;padding:40px;color:var(--tx2);font-size:14px}
+
+@media(max-width:640px){.uc{flex-direction:column;text-align:center}.uc-stats{justify-content:center}.stages{grid-template-columns:1fr}.res-summary{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// Firebase config
+firebase.initializeApp({
+  apiKey:"AIzaSyCLO2xoWU6TS0PJqfqpDfwW81wjr_VecW0",
+  authDomain:"cs-academy-b31a5.firebaseapp.com",
+  projectId:"cs-academy-b31a5",
+  storageBucket:"cs-academy-b31a5.firebasestorage.app",
+  messagingSenderId:"962435394629",
+  appId:"1:962435394629:web:0c0c9bb2934a26c10c872c"
+});
+const fireDb = firebase.firestore();
+
+// Quiz Data (embedded)
+const QUIZ_BUNDLE = {"manifest":{"version":"2.0.0","last_updated":"2026-04-17","worlds":[{"id":"youtube","title":"유튜브 쇼핑 에볼루션","subtitle":"Cafe24 YouTube Shopping 서비스 온보딩·운영·CS 대응","icon":"🎬","order":1,"unlock_condition":null,"stages":[{"id":"beginner","title":"초급","subtitle":"서비스 개요·기본 개념","icon":"🌱","order":1,"xp_per_question":10,"pass_score":70,"sample_size":13,"shuffle":true,"shuffle_choices":true,"unlock_condition":null},{"id":"intermediate","title":"중급","subtitle":"온보딩·상품관리·메뉴 경로","icon":"🌿","order":2,"xp_per_question":20,"pass_score":70,"sample_size":14,"shuffle":true,"shuffle_choices":true,"unlock_condition":{"type":"stage_clear","stage_id":"beginner"}},{"id":"advanced","title":"고급","subtitle":"실전 CS 시나리오·트러블슈팅","icon":"🌳","order":3,"xp_per_question":35,"pass_score":70,"sample_size":13,"shuffle":true,"shuffle_choices":true,"unlock_condition":{"type":"stage_clear","stage_id":"intermediate"}}]}],"level_thresholds":[{"level":1,"xp_required":0,"title":"수습 상담사"},{"level":2,"xp_required":50,"title":"신입 상담사"},{"level":3,"xp_required":150,"title":"주니어 상담사"},{"level":4,"xp_required":300,"title":"시니어 상담사"},{"level":5,"xp_required":500,"title":"CS 마스터"},{"level":6,"xp_required":750,"title":"CS 전문가"}],"badges":[{"id":"first_step","name":"첫 걸음","icon":"👣","desc":"첫 퀴즈 완료"},{"id":"youtube_beginner","name":"유튜브 새싹","icon":"🌱","desc":"유튜브 초급 클리어"},{"id":"youtube_intermediate","name":"유튜브 성장","icon":"🌿","desc":"유튜브 중급 클리어"},{"id":"youtube_advanced","name":"유튜브 마스터","icon":"🌳","desc":"유튜브 고급 클리어"},{"id":"youtube_perfect","name":"유튜브 완벽","icon":"💎","desc":"유튜브 전 스테이지 만점"},{"id":"streak_3","name":"3연속 정답","icon":"🔥","desc":"퀴즈 3문제 연속 정답"},{"id":"streak_5","name":"5연속 정답","icon":"⚡","desc":"퀴즈 5문제 연속 정답"},{"id":"wrong_note_clear","name":"복습 완료","icon":"📝","desc":"오답노트 문제 모두 정답 처리"}]},"quizzes":{"youtube":{"beginner":{"world_id":"youtube","stage_id":"beginner","title":"유튜브 쇼핑 초급","description":"서비스 개요·핵심 개념·기본 수치 이해 (풀 25문항 중 13문항 랜덤 출제)","questions":[{"id":"yt_b_001","type":"ox","question":"YPP(유튜브 파트너 프로그램)에 가입되어 있지 않아도 유튜브 쇼핑을 시작할 수 있다.","answer":true,"explanation":"에볼루션에서는 YPP 미가입 채널도 유튜브 쇼핑 시작이 가능합니다. 단, YPP 가입 여부에 따라 이용 가능한 기능(직접 판매·제휴프로그램·체크아웃 등)이 달라집니다.","guide_ref":"가이드① 서비스 개요"},{"id":"yt_b_002","type":"ox","question":"결제 프로필에 국내 전용 신용카드도 등록할 수 있다.","answer":false,"explanation":"국내 전용 카드는 등록 불가합니다. 해외/국내외 겸용 VISA, MasterCard, American Express만 등록 가능해요.","guide_ref":"가이드① STEP 4"},{"id":"yt_b_003","type":"ox","question":"결제 프로필에 카드를 등록하면 즉시 실제 결제가 발생한다.","answer":false,"explanation":"카드 등록은 본인 인증 목적이며 실제 결제는 발생하지 않습니다. 단, 카드사에서 본인 확인 문자가 발송될 수 있으니 고객에게 미리 안내해주세요.","guide_ref":"가이드① STEP 4 / FAQ"},{"id":"yt_b_004","type":"multiple_choice","question":"구유튜브(판매채널 > 유튜브 쇼핑)와 전용스토어(샵스) 서비스는 언제 완전히 종료되나요?","choices":["2026년 3월 31일","2026년 4월 30일","2026년 5월 31일","2026년 6월 30일"],"answer":1,"explanation":"2026년 4월 30일부로 기존 판매채널 > 유튜브 쇼핑 및 유튜브 쇼핑 전용 스토어(샵스)가 완전 종료됩니다.","guide_ref":"가이드①② 서비스 종료 공지"},{"id":"yt_b_005","type":"multiple_choice","question":"유튜브 쇼핑 PG 심사는 보통 얼마나 걸리나요?","choices":["1~2 영업일","3~7 영업일","2주 이상","당일 즉시"],"answer":1,"explanation":"PG 심사는 영업일 기준 3~7일 소요됩니다. 진행 상태는 [설정 > 결제설정 > 이용현황]에서 확인 가능해요.","guide_ref":"가이드① STEP 6"},{"id":"yt_b_006","type":"multiple_choice","question":"현재 유튜브 쇼핑(에볼루션)의 어드민 진입 경로는?","choices":["자사몰 어드민 > 판매채널 > 유튜브","전용 스토어 별도 어드민","자사몰 어드민 좌측 LNB > 유튜브 쇼핑","YouTube 스튜디오 > 수익 창출"],"answer":2,"explanation":"현행 에볼루션 서비스는 자사몰 어드민 좌측 LNB의 '유튜브 쇼핑' 메뉴를 통해 접근합니다.","guide_ref":"가이드②"},{"id":"yt_b_007","type":"multiple_choice","question":"결제 프로필에 등록 가능한 카드 브랜드가 아닌 것은?","choices":["VISA","MasterCard","American Express","국내 전용 BC카드"],"answer":3,"explanation":"해외 또는 국내/외 겸용 VISA, MasterCard, American Express만 등록 가능합니다. 국내 전용 카드는 불가예요.","guide_ref":"가이드① STEP 4"},{"id":"yt_b_008","type":"multiple_choice","question":"카페24 계정 1개당 연결 가능한 유튜브 채널 수는?","choices":["1개","3개","5개","무제한"],"answer":0,"explanation":"카페24 계정 1개당 유튜브 채널 1개만 연결 가능합니다. 채널 변경은 기존 연결 해제 후 재연결해야 해요.","guide_ref":"가이드① STEP 3 / FAQ"},{"id":"yt_b_009","type":"multiple_choice","question":"YouTube 채널 스토어 탭에 노출 가능한 상품의 최대 개수는?","choices":["10개","20개","30개","50개"],"answer":2,"explanation":"채널 스토어 상품 진열은 최대 30개까지 선택 가능합니다.","guide_ref":"가이드① STEP 7"},{"id":"yt_b_010","type":"ox","question":"유튜브 쇼핑을 이용하려면 쇼핑몰에 PG(결제대행) 서비스가 반드시 설정되어 있어야 한다.","answer":true,"explanation":"유튜브에 태깅된 상품 클릭 시 자사몰에서 구매가 이루어지므로, PG 세팅이 없으면 판매 자체가 불가합니다.","guide_ref":"예시 CS 5번"},{"id":"yt_b_011","type":"ox","question":"유튜브 쇼핑으로 들어온 주문은 카페24 어드민이 아닌 별도의 유튜브 전용 어드민에서만 관리할 수 있다.","answer":false,"explanation":"에볼루션은 카페24 어드민과 통합 관리 구조입니다. 기존 자사몰과 동일하게 '주문 > 전체주문조회'에서 확인 가능해요. 별도 주문/배송/CS 메뉴가 없는 것이 에볼루션의 특징입니다.","guide_ref":"가이드② 핵심 변경점"},{"id":"yt_b_012","type":"fill_blank","question":"유튜브 쇼핑 연결의 전제 조건으로 반드시 ON 설정해야 하는 것은 '______ 태그'입니다.","answer":"전환 추적","acceptable_answers":["전환 추적","전환추적"],"explanation":"전환 추적 태그 미설정 시 유튜브 쇼핑 연결 자체가 불가능합니다.","guide_ref":"가이드① FAQ"},{"id":"yt_b_013","type":"multiple_choice","question":"에볼루션(현행 서비스)의 구버전 대비 핵심 변경점으로 옳은 것은?","choices":["카페24페이먼츠만 사용 가능","별도 주문/배송/CS 메뉴가 없고 기존 D2C 쇼핑몰에서 통합 처리","전용 디자인 템플릿 제공","유튜브 쇼핑 전용 멀티샵 생성"],"answer":1,"explanation":"에볼루션은 카페24페이먼츠 전용 의무가 없고, 별도 주문/배송/CS 메뉴 없이 기존 D2C 쇼핑몰에서 통합 처리합니다.","guide_ref":"가이드② 핵심 변경점"},{"id":"yt_b_014","type":"ox","question":"유튜브 쇼핑 온보딩 시 쇼핑몰 대표 도메인에 SSL 인증서 발급은 선택사항이다.","answer":false,"explanation":"SSL 인증서 발급은 필수 사전 조건입니다. 미발급 시 유튜브 쇼핑 연동이 불가합니다.","guide_ref":"가이드① 공통 사전 조건"},{"id":"yt_b_015","type":"ox","question":"쇼핑몰에 이용약관 및 환불 정책 페이지 등록은 유튜브 쇼핑 연동의 필수 조건이다.","answer":true,"explanation":"이용약관 및 환불 정책 페이지가 쇼핑몰에 등록되어 있어야 유튜브 쇼핑 연동이 가능합니다.","guide_ref":"가이드① 공통 사전 조건"},{"id":"yt_b_016","type":"multiple_choice","question":"유튜브 쇼핑 에볼루션의 핵심 기능이 아닌 것은?","choices":["제휴 프로그램 (크리에이터 협업)","체크아웃 프로그램 (앱 내 바로 결제)","유튜브 전용 특가 설정","전용 스토어 디자인 편집"],"answer":3,"explanation":"에볼루션은 전용 디자인이 없습니다(접근통제 없음·전용 디자인 없음). 제휴, 체크아웃, 유튜브 전용 특가는 에볼루션의 핵심 기능이에요.","guide_ref":"가이드② 서비스 개요"},{"id":"yt_b_017","type":"multiple_choice","question":"다음 중 유튜브 쇼핑 서비스의 세대 구분이 올바른 것은?","choices":["1세대: 판매채널 > 유튜브 / 2세대: 전용스토어(샵스) / 3세대: 에볼루션","1세대: 에볼루션 / 2세대: 전용스토어 / 3세대: 판매채널","1세대: 전용스토어 / 2세대: 판매채널 / 3세대: 에볼루션","1세대~3세대 모두 현재 운영 중"],"answer":0,"explanation":"1세대(구유튜브, 판매채널 > 유튜브 쇼핑) → 2세대(전용스토어, 샵스) → 3세대(에볼루션, 현행) 순서입니다. 1,2세대는 4/30 종료.","guide_ref":"가이드② SECTION 01"},{"id":"yt_b_018","type":"ox","question":"유튜브 프리미엄 환경에서는 채널 하단 상품 표기가 되지 않는다.","answer":true,"explanation":"유튜브 프리미엄 환경에서는 채널 하단 상품 표기가 안 되는 제한이 있습니다.","guide_ref":"가이드① STEP 7 주의사항"},{"id":"yt_b_019","type":"multiple_choice","question":"YPP 미가입 채널이 유튜브 쇼핑을 활용하는 방법이 아닌 것은?","choices":["제휴 프로그램 심사 요청으로 크리에이터 채널 통해 판매","파트너 특가 설정으로 크리에이터와 직접 협업","내 채널 스토어 탭에서 직접 판매","3P(제3자) 채널을 통한 판매"],"answer":2,"explanation":"YPP 미가입 시 내 채널에서 직접 판매는 불가합니다. 제휴 프로그램 또는 파트너 특가를 통해 타 크리에이터 채널에서 판매해야 해요.","guide_ref":"가이드① YPP 미가입 채널"},{"id":"yt_b_020","type":"fill_blank","question":"유튜브 쇼핑 서비스 세대 중 현재 운영 중인 3세대 서비스의 이름은 '______'입니다.","answer":"에볼루션","acceptable_answers":["에볼루션","Evolution"],"explanation":"3세대 현행 서비스는 '에볼루션'이라는 이름으로, 오픈형 구조로 전환된 확장 서비스입니다.","guide_ref":"가이드② SECTION 01"},{"id":"yt_b_021","type":"ox","question":"유튜브 쇼핑의 주문도 사방넷 등 외부 주문수집 프로그램으로 수집이 가능하다.","answer":true,"explanation":"유튜브 쇼핑 주문도 카페24 자사몰 어드민과 동일한 통합관리 구조이므로, 기존 외부 프로그램도 동일하게 사용 가능합니다. 다만 정확한 호환 여부는 해당 앱 제작사에 확인이 필요합니다.","guide_ref":"예시 CS 25번"},{"id":"yt_b_022","type":"multiple_choice","question":"유튜브 쇼핑 온보딩에서 STEP 2~5는 어떻게 안내되나요?","choices":["별도 매뉴얼을 읽고 직접 설정","카페24 CS팀이 대신 설정","홈 대시보드 튜토리얼로 안내","유튜브 스튜디오에서 안내"],"answer":2,"explanation":"STEP 2~5는 홈 대시보드 튜토리얼로 안내됩니다. 온보딩 구간을 정상 완료하면 홈 대시보드로 자동 진입해요.","guide_ref":"가이드① 온보딩 흐름"},{"id":"yt_b_023","type":"ox","question":"유튜브 쇼핑 연동 시 연동할 YouTube 채널에 소유자 또는 관리자 권한이 필요하다.","answer":true,"explanation":"유튜브 채널 연동에는 해당 채널의 소유자 또는 관리자 권한이 필요합니다. 권한이 없으면 채널이 목록에 나타나지 않아요.","guide_ref":"가이드① STEP 1 / STEP 3"},{"id":"yt_b_024","type":"multiple_choice","question":"유튜브 쇼핑에서 상품이 유튜브에 노출되기까지의 순서로 맞는 것은?","choices":["카페24 상품 등록 → 유튜브 노출 → 구글 심사","카페24 상품 등록 → 구글 상품 심사 → 승인 후 유튜브 노출","유튜브 스튜디오에서 등록 → 카페24 연동 → 노출","구글 심사 → 카페24 등록 → 유튜브 노출"],"answer":1,"explanation":"카페24에서 상품을 등록하면 구글 상품 심사가 진행되고, 승인 완료 후 유튜브에 노출됩니다. 승인 전까지는 노출되지 않아요.","guide_ref":"가이드① STEP 5"},{"id":"yt_b_025","type":"fill_blank","question":"유튜브 쇼핑 성과분석에서 유입 추적에 사용되는 UTM source 값은 '______'입니다.","answer":"youtube","acceptable_answers":["youtube","YouTube"],"explanation":"성과분석은 utm_source=youtube, utm_contents=yt3~~ 형식으로 유입 데이터를 추적합니다.","guide_ref":"가이드② 성과분석"}]},"intermediate":{"world_id":"youtube","stage_id":"intermediate","title":"유튜브 쇼핑 중급","description":"온보딩 절차·상품 상태·메뉴 경로·마이그레이션 (풀 26문항 중 14문항 랜덤 출제)","questions":[{"id":"yt_m_001","type":"multiple_choice","question":"에볼루션 온보딩 시 Google 로그인 후 계정 선택 화면에서 선택해야 하는 것은?","choices":["유튜브 채널(브랜드 계정)","일반 Google 계정(개인 Gmail)","회사 G Suite 관리자 계정","둘 중 아무거나 선택 가능"],"answer":1,"explanation":"반드시 일반 Google 계정(개인 Gmail)을 선택해야 합니다. 유튜브 채널(브랜드 계정)을 선택하면 오류가 발생해요. 자주 실수하는 포인트입니다.","guide_ref":"가이드② 온보딩 STEP 3"},{"id":"yt_m_002","type":"multiple_choice","question":"상품피드에서 '보류' 상태의 의미는?","choices":["Google 심사가 진행 중","Google 심사에서 반려됨","카페24 단계에서 GMC에 전송되지 않은 상품","판매자가 유튜브 노출을 직접 제외한 상품"],"answer":2,"explanation":"보류는 카페24 단계에서 GMC에 아예 전송되지 않은 상태입니다. 대표이미지 없음·판매가 0원 미만·금지 키워드 포함 등이 원인이에요. 반려는 GMC 전송 후 Google 심사에서 반려된 경우예요.","guide_ref":"가이드② 상품 관리"},{"id":"yt_m_003","type":"multiple_choice","question":"샵스(전용스토어) 사용자가 에볼루션으로 마이그레이션하는 절차는?","choices":["기존 연동 해제 후 신규 온보딩 진행","어드민 > 유튜브쇼핑 > 이용약관 동의 클릭 1번으로 전환 완료","신규 카페24 계정 생성 후 새로 시작","카페24 CS팀에 수동 전환 요청"],"answer":1,"explanation":"샵스 사용자는 가장 간단합니다. 백단 마이그레이션이 이미 완료되어 있어, 이용약관 동의 클릭 한 번으로 전환이 완료돼요.","guide_ref":"가이드② 마이그레이션"},{"id":"yt_m_004","type":"multiple_choice","question":"구유튜브(판매채널 > 유튜브 쇼핑) 사용자가 에볼루션으로 전환하는 방법은?","choices":["이용약관 동의 클릭 1번으로 자동 전환","기존 연동을 먼저 해제한 후 어드민 좌측 LNB > 유튜브쇼핑에서 새로 온보딩","전환 없이 자동으로 에볼루션 이용 가능","카페24 CS에 전환 신청서 제출"],"answer":1,"explanation":"구유튜브 사용자는 기존 연동을 먼저 해제한 후, LNB 유튜브쇼핑에서 새로 온보딩을 진행해야 합니다. 샵스 사용자보다 수동 작업이 필요해요.","guide_ref":"가이드② 마이그레이션"},{"id":"yt_m_005","type":"fill_blank","question":"도메인 소유권 인증 실패 시, 어드민 > 쇼핑몰 설정 > 기본 설정 > SEO > 고급 설정 > PC 쇼핑몰 ______ 영역에 구글 제공 HTML 태그를 삽입해야 합니다.","answer":"Head","acceptable_answers":["Head","head","HEAD"],"explanation":"PC 쇼핑몰 Head 영역에 구글 머천트 센터 제공 HTML 태그를 삽입 후 재인증합니다.","guide_ref":"가이드① STEP 2"},{"id":"yt_m_006","type":"multiple_choice","question":"고객이 '유튜브 채널 연결 실패' 메시지를 받았을 때 1차로 확인해야 할 것은?","choices":["카페24 PG 서비스 신청 여부","YPP 요구 사항 충족 여부 / 채널 소유자·관리자 권한","상품 피드 ON 여부","전환 추적 태그 설정 여부"],"answer":1,"explanation":"채널 연결 실패는 주로 YPP 미충족이거나 채널 권한 문제입니다. YPP 미가입이면 제휴 프로그램이나 파트너 특가 활용을 안내합니다.","guide_ref":"가이드① CS 대응"},{"id":"yt_m_007","type":"multiple_choice","question":"PG 심사가 자동 신청되는 시점은?","choices":["유튜브 쇼핑 시작하기 버튼 클릭 즉시","구글 판매자 계정 생성 완료 직후","홈 대시보드 튜토리얼 모든 단계 완료 시","상품 1개 등록 완료 직후"],"answer":2,"explanation":"홈 대시보드 튜토리얼의 모든 단계가 완료되면 PG 심사가 자동으로 진행됩니다.","guide_ref":"가이드① STEP 6"},{"id":"yt_m_008","type":"multiple_choice","question":"유튜브 쇼핑 계정 설정에서 '스토어명'에 해당하는 것은?","choices":["카페24 쇼핑몰 이름","Google 판매자 센터 업체명","YouTube 채널명","도메인 주소"],"answer":1,"explanation":"스토어명 = Google 판매자 센터 업체명입니다. 브랜드명 권장 형식은 '국문명 영문명(소문자)'이며, 특수기호·영문 대문자만 입력 시 웹사이트 주소로 표시될 수 있어요.","guide_ref":"가이드① 운영 가이드"},{"id":"yt_m_009","type":"multiple_choice","question":"특정 상품(예: 주류)을 유튜브에 전혀 노출하고 싶지 않을 때 사용할 기능은?","choices":["상품 피드 OFF","상품 전송 제외 처리","파트너 특가 설정","상품 공개 범위 '비공개'"],"answer":1,"explanation":"상품피드 내 '전송 제외' 기능을 사용하면 구글 판매자 센터에 등록되지 않아 유튜브에 전혀 노출되지 않습니다.","guide_ref":"예시 CS 16번"},{"id":"yt_m_010","type":"multiple_choice","question":"체크아웃 프로그램을 활성화할 수 있는 조건은?","choices":["YPP 가입 채널이거나 제휴프로그램 이용 중일 것","유튜브 구독자 1만 명 이상","카페24페이먼츠 사용 중","PG 심사 완료만 되면 됨"],"answer":0,"explanation":"체크아웃 프로그램은 YPP 채널이거나 제휴프로그램 이용 중인 경우에만 활성화 가능합니다.","guide_ref":"가이드② 체크아웃"},{"id":"yt_m_011","type":"fill_blank","question":"간접전환 기여매출은 유튜브 유입 후 ____일 이내 다른 경로로 재방문하여 구매한 경우 집계됩니다.","answer":"30","acceptable_answers":["30"],"explanation":"유튜브 쇼핑은 쿠키 유지 조건 하에 30일까지 간접전환 기여매출이 집계됩니다.","guide_ref":"예시 CS 23번"},{"id":"yt_m_012","type":"multiple_choice","question":"제휴 프로그램과 파트너 특가의 관계로 옳은 것은?","choices":["서로 독립적이라 어느 것이든 단독 사용 가능","파트너 특가는 제휴프로그램 이용 중인 경우에만 설정 가능","제휴프로그램은 파트너 특가 활성화 시에만 이용 가능","둘은 동일 기능의 다른 이름"],"answer":1,"explanation":"파트너 특가는 제휴프로그램 이용 중인 경우에만 설정 가능한 유튜브 전용 특가입니다.","guide_ref":"가이드② 제휴·체크아웃"},{"id":"yt_m_013","type":"multiple_choice","question":"성과분석 데이터 기준으로 옳은 것은?","choices":["실시간 집계 / 주문 생성 기준","전일 집계 / 결제완료 기준","월 1회 집계 / 구매확정 기준","주 1회 집계 / 배송완료 기준"],"answer":1,"explanation":"성과분석 데이터는 전일 집계(실시간 아님), 결제완료 기준입니다.","guide_ref":"가이드② 성과분석"},{"id":"yt_m_014","type":"multiple_choice","question":"상품피드에서 '반려' 상태의 의미는?","choices":["카페24에서 GMC로 전송 안 된 상품","GMC에 전송은 됐으나 Google 심사에서 반려된 상품","판매자가 직접 노출 제외한 상품","GMC 심사가 진행 중인 상품"],"answer":1,"explanation":"반려는 GMC에 전송은 됐으나 Google 심사에서 반려된 상태입니다. GMC에서 반려 사유를 확인 후 수정해야 해요. 보류(카페24 단계 미전송)와 구분해야 합니다.","guide_ref":"가이드② 상품 관리"},{"id":"yt_m_015","type":"multiple_choice","question":"온보딩 완료 후 연결에 문제가 있을 때 확인할 수 있는 경로는?","choices":["YouTube 스튜디오 > 설정","카페24 어드민 > 부가서비스","유튜브쇼핑 > 설정 > 계정설정 > 확인 필요 탭","구글 판매자 센터 > 진단"],"answer":2,"explanation":"온보딩 완료 후 문제가 있으면 대시보드 상단 빨간색 알림 또는 설정 > 계정설정 > 확인필요 탭에서 GMC 계정 문제, 토큰 문제 등 항목별 원인과 조치를 확인할 수 있어요.","guide_ref":"가이드② 온보딩 STEP 5"},{"id":"yt_m_016","type":"fill_blank","question":"PG 심사 필수 조건 중 상품은 최소 ____개 이상 등록되어 있어야 합니다.","answer":"1","acceptable_answers":["1"],"explanation":"PG 심사에는 상품 최소 1개 이상 등록이 필요합니다. 판매가도 반드시 입력되어 있어야 해요.","guide_ref":"가이드① STEP 5·6"},{"id":"yt_m_017","type":"ox","question":"상품 수정 시 구글 상품 심사 시간이 추가된다.","answer":true,"explanation":"승인 대기 중 상품을 수정하면 심사 시간이 추가됩니다. 고객에게 사전 안내가 필요해요.","guide_ref":"가이드① STEP 5"},{"id":"yt_m_018","type":"multiple_choice","question":"제휴프로그램 활성화를 위해 수수료를 설정하는 곳은?","choices":["카페24 어드민 > 유튜브쇼핑 > 확장","유튜브 스튜디오에서 수수료 설정","구글 판매자 센터 > 수수료 관리","카페24 페이먼츠 > 수수료"],"answer":1,"explanation":"제휴프로그램 활성화는 유튜브 스튜디오에서 수수료를 설정해야 합니다. 카페24 어드민에서는 제휴프로그램 신청을 하고, 수수료 설정은 유튜브 스튜디오에서 해요.","guide_ref":"가이드② 제휴 프로그램"},{"id":"yt_m_019","type":"ox","question":"4/30 이후 에볼루션 전환을 하지 않은 샵스 사용자는 전용스토어 접근 자체가 불가하다.","answer":true,"explanation":"4/30 이후 미전환 샵스 사용자는 전용스토어 접근이 불가해지고, 구유튜브 사용자는 유튜브 채널 상품 표시가 중단됩니다.","guide_ref":"가이드② 마이그레이션"},{"id":"yt_m_020","type":"multiple_choice","question":"보류 상태가 발생하는 주요 원인이 아닌 것은?","choices":["상품명에 금지 키워드 포함","판매가 0원 미만","상품 대표 이미지 없음","PG 심사 미완료"],"answer":3,"explanation":"보류는 상품 정보 자체의 문제(금지 키워드, 비정상 가격, 이미지 없음 등)로 카페24 단계에서 GMC 전송이 안 된 상태입니다. PG 심사는 보류와 무관해요.","guide_ref":"가이드② 상품 관리"},{"id":"yt_m_021","type":"multiple_choice","question":"GMC 승인 후 유튜브 스튜디오에서 상품이 보이지 않을 때 조치로 맞는 것은?","choices":["즉시 카페24 CS에 문의","72시간 대기 후에도 안 보이면 1:1 문의(라이브 일정 포함)","상품을 삭제 후 재등록","PG 심사를 다시 신청"],"answer":1,"explanation":"GMC 승인 후 72시간이 지나도 유튜브 스튜디오에서 상품이 보이지 않으면 1:1 문의로 라이브 일정과 함께 접수하세요.","guide_ref":"가이드② 상품피드 전송 흐름"},{"id":"yt_m_022","type":"multiple_choice","question":"제휴 상품의 수수료 설정 단위는?","choices":["상품별 개별 설정 가능","카테고리별로만 설정 가능","전 상품 동일 수수료만 가능","크리에이터별로만 설정 가능"],"answer":1,"explanation":"제휴 상품 수수료는 카테고리별로 입력 가능하며, 상품별 개별 설정은 불가합니다.","guide_ref":"예시 CS 9번"},{"id":"yt_m_023","type":"ox","question":"유튜브 쇼핑 초기화 시 모든 연결 설정이 초기화되므로 신중하게 진행해야 한다.","answer":true,"explanation":"초기화 시 모든 연결 설정이 초기화됩니다. 채널 연결, 상품피드, 제휴 설정 등 전체가 리셋되므로 신중해야 해요.","guide_ref":"가이드② 계정설정"},{"id":"yt_m_024","type":"multiple_choice","question":"유튜브 쇼핑에서 상품을 특정 시점에 공개하고 싶을 때 활용하는 기능은?","choices":["상품 피드 ON/OFF","전송 제외 처리","상품공개 설정","파트너 특가"],"answer":2,"explanation":"신제품 런칭, 이벤트 오픈 등 특정 시점에 상품을 공개하려면 '상품공개 설정'을 활용합니다. 경로: 유튜브쇼핑 > 확장 > 상품공개","guide_ref":"가이드② 상품관리"},{"id":"yt_m_025","type":"multiple_choice","question":"제휴프로그램에서 정산 기준으로 맞는 것은?","choices":["주문 생성 기준 즉시 정산","구매확정 후 15일 뒤 정산금액 확정, 매월 1일 수수료 청구","배송 완료 즉시 정산","크리에이터가 직접 청구"],"answer":1,"explanation":"구매확정 기준으로 15일 후 정산금액이 확정되고, 전월 말일 합산하여 매월 1일에 판매자에게 수수료를 청구하는 구조입니다.","guide_ref":"예시 CS 11번"},{"id":"yt_m_026","type":"fill_blank","question":"유튜브 채널 변경 시 기존 채널의 영상에 등록된 상품 태깅은 모두 ______됩니다.","answer":"제거","acceptable_answers":["제거","삭제"],"explanation":"채널을 변경하면 기존에 심사 승인된 상품은 재심사 불필요하지만, 영상에 등록된 상품 태깅은 모두 제거됩니다.","guide_ref":"예시 CS 13번"}]},"advanced":{"world_id":"youtube","stage_id":"advanced","title":"유튜브 쇼핑 고급","description":"실전 CS 시나리오·트러블슈팅·복합 상황 대응 (풀 25문항 중 13문항 랜덤 출제)","questions":[{"id":"yt_a_001","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑을 연동하려는데 id@pages.googleplus.com 이메일 형식은 지원하지 않는다는 문구가 보여요.\"\n\n가장 적절한 답변은?","choices":["해당 이메일로 본인 확인 절차를 거쳐야 한다고 안내","@pages.googleplus.com은 실제 이메일이 아닌 브랜드 계정 식별자이므로, 실제 운영에 사용할 Gmail 계정으로 연동 필요하다고 안내","YouTube 스튜디오에서 이메일 주소를 먼저 변경해야 한다고 안내","YPP 가입 후 재시도하라고 안내"],"answer":1,"explanation":"@pages.googleplus.com은 실제 이메일이 아닌 브랜드 계정 식별자입니다. 실제 유튜브 쇼핑 운영에 사용할 Gmail 형식 계정으로 연동해야 한다고 안내하세요.","guide_ref":"예시 CS 1번"},{"id":"yt_a_002","type":"multiple_choice","question":"[고객 문의]\n\"기존에 사용하던 유튜브 쇼핑이 사라졌어요! 유튜브 채널명 클릭하니까 일반 어드민으로 이동돼요.\"\n\n가장 적절한 대응 순서는?","choices":["현행 서비스 접속 경로 안내 → 멀티몰 이동 버튼 사용법","전용스토어가 신규 서비스로 마이그레이션됨 안내 → 약관 동의만 하면 그대로 이용 가능 → 미동의 시 4/30까지 설정 초기화 경고 → 사용 방법 설명","YouTube 스튜디오에서 채널 권한 확인 요청","유튜브 쇼핑 시작하기 재진입 안내"],"answer":1,"explanation":"고객이 '유튜브 채널명 클릭하니 일반 어드민'이라고 한 건 전용스토어가 에볼루션으로 바뀐 것을 모르는 상황이에요. (1) 서비스 변경 안내 (2) 약관 동의 1번으로 이용 가능 (3) 4/30 미동의 시 초기화 경고 (4) 사용법 순서로 안내합니다.","guide_ref":"예시 CS 4번 (팀장 코멘트)"},{"id":"yt_a_003","type":"multiple_choice","question":"[고객 문의]\n\"제휴 제품 검색 페이지에 제 상품이 검색되지 않아요!\"\n\n가장 먼저 확인할 것은?","choices":["카페24 PG 서비스 설정 상태","유튜브 스튜디오 내 수수료율이 0%가 아닌지 + 상품 승인 상태","YPP 가입 여부","체크아웃 프로그램 활성화 여부"],"answer":1,"explanation":"가장 흔한 원인은 수수료율 0%입니다. 유튜브 스튜디오에서 수수료율 확인 + 상품 승인 상태 점검이 우선이에요. 0%가 아닌데도 문제 지속 시 일정 시간 대기 후 카페24 게시판 문의 안내.","guide_ref":"예시 CS 8번"},{"id":"yt_a_004","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 채널을 3개 가지고 있는데, 하나의 쇼핑몰에 모두 연동 가능한가요? 불가능하면 서브 채널에 상품 등록 다른 방법은?\"\n\n가장 완전한 답변은?","choices":["1몰당 1채널 제한만 안내","1몰당 1채널 제한 + (스토어탭 노출 원하면) 멀티몰 생성해서 채널별 연결 / (영상 내 태깅 원하면) 제휴프로그램 또는 파트너 특가 활용 안내","모든 채널을 하나의 계정으로 병합하라고 안내","카페24 CS에 수동 연동 요청하라고 안내"],"answer":1,"explanation":"고객 니즈에 따라 해결책이 달라요. 스토어 탭 노출 → 채널 수만큼 멀티몰 생성 후 각각 연결. 영상 태깅만 → 제휴프로그램 상품 URL 또는 파트너 특가 활용. 단순 '안 됩니다'보다 대안 제시가 중요합니다.","guide_ref":"예시 CS 10번 (팀장 코멘트)"},{"id":"yt_a_005","type":"multiple_choice","question":"[고객 문의]\n\"상품 피드에서 어제까지 승인이었는데 오늘 대기 상태예요. 그런데 스토어 탭에는 정상 노출 중이에요.\"\n\n적절한 답변은?","choices":["스토어 탭 노출이 잘못된 것이니 내려야 한다고 안내","상품 수정 시 재전송 발생으로 대기 상태가 되며, 기존 승인 상품이므로 심사 완료 전까지 스토어 노출이 유지된다고 안내","구글 심사 오류이므로 카페24에서 처리해주겠다고 안내","피드 상태는 무시해도 된다고 안내"],"answer":1,"explanation":"상품 수정 시 피드 재전송이 필요해 대기로 전환됩니다. 기존 승인 상품이므로 심사 완료 전까지 스토어 노출은 유지돼요. 재심사는 최초 심사보다 빠릅니다.","guide_ref":"예시 CS 21번"},{"id":"yt_a_006","type":"multiple_choice","question":"[고객 문의]\n\"GMC 계정 문제로 상품이 모두 반려됐는데, 성과분석에 어제 매출이 잡혀있어요.\"\n\n정확한 답변은?","choices":["시스템 오류이므로 재집계 요청하겠다고 안내","간접전환 기준 쿠키 유지 조건 하에 30일 이내 재방문 구매가 기여매출로 집계된다고 설명","상품 상태와 매출은 무관하므로 걱정 없다고 단순 안내","카페24와 GMC 시스템이 달라 생긴 착오라고 안내"],"answer":1,"explanation":"간접전환 기여매출은 30일 이내 재방문 구매도 집계합니다. 고객이 '유튜브로 구매한 적 없다'고 재문의하면 JIRA 발행해서 집계 사유 확인이 필요해요.","guide_ref":"예시 CS 23번 (팀장 코멘트)"},{"id":"yt_a_007","type":"multiple_choice","question":"[고객 문의]\n\"채널을 3개 가지고 있는데 채널 선택 페이지에 2개만 나와요.\"\n\n확인해야 할 사항은?","choices":["로그인한 구글 계정에 해당 채널 권한이 없거나, 미노출 채널이 YPP 미충족일 가능성","카페24 쇼핑몰 등급 업그레이드 필요","결제 프로필 재등록 필요","전환 추적 태그 재설정 필요"],"answer":0,"explanation":"(1) 로그인한 구글 계정에 해당 채널 권한이 없거나 (2) 미노출 채널이 YPP 미충족. 유튜브 스튜디오에서 권한 확인을 안내합니다.","guide_ref":"예시 CS 24번"},{"id":"yt_a_008","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑 시작하기를 누르면 '쇼핑몰의 결제수단이 설정되지 않았어요.' 알럿이 나와요.\"\n\n고객이 쉽게 이해할 수 있게 안내하려면?","choices":["PG 서비스 신청 필수라고만 간단히 안내","PG 서비스 신청 필수 안내 + '유튜브 태깅 상품 클릭 시 자사몰에서 구매가 이루어지므로, PG 미설정 시 판매 불가해 이 알럿이 나온다'고 배경 설명","시스템 오류이니 잠시 후 재시도 안내","카페24 CS에 수동 세팅 요청 안내"],"answer":1,"explanation":"'필수입니다' 안내에 왜 필요한지 맥락을 같이 설명하면 고객 이해도가 훨씬 높아져요.","guide_ref":"예시 CS 5번 (팀장 코멘트)"},{"id":"yt_a_009","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑 소유권 주장이 실패했어요.\"\n\n우선 안내할 내용은?","choices":["즉시 JIRA 발행해서 개발팀에 전달하겠다고 안내","일시적/구글 시스템 오류 가능성 → 시간 두고 재클릭 요청 → 동일 증상 지속 시 캡처와 함께 문의 접수 안내","쇼핑몰 도메인을 변경해야 한다고 안내","해당 기능은 현재 제공되지 않는다고 안내"],"answer":1,"explanation":"소유권 주장 실패는 주로 일시적 또는 구글 시스템 오류입니다. 먼저 재시도하도록 안내하고, 지속 시 캡처와 함께 문의 안내.","guide_ref":"예시 CS 3번"},{"id":"yt_a_010","type":"multiple_choice","question":"[고객 문의]\n\"주문이 상품 준비중에서는 검색되는데 전체 주문조회에서는 안 돼요.\"\n\n안내할 내용은?","choices":["유튜브 주문은 전체 주문조회에서 안 되는 구조라고 안내","전체주문조회의 필터 설정 확인 → '초기화 > 검색조건저장' 후 재확인 안내","주문 누락이니 즉시 JIRA 발행하겠다고 안내","PG 심사 미완료로 인한 문제라고 안내"],"answer":1,"explanation":"전체주문조회에 필터가 설정되어 있어서 특정 조건 주문만 표시된 것일 수 있어요. '초기화 > 검색조건저장' 후 재확인 안내.","guide_ref":"예시 CS 18번"},{"id":"yt_a_011","type":"multiple_choice","question":"[고객 문의]\n\"제휴프로그램을 구글폼으로 신청했고, 내일 크리에이터 광고 예정이라 빠른 사용이 필요해요.\"\n\n적절한 대응은?","choices":["일반 심사 기간(1~2주)만 안내하고 대기 요청","심사 기간 안내 + 긴급 상황 고려하여 예외 오픈 가능한지 점검 후 재안내 + 내부에서 '제휴프로그램 예외 처리 요청 JIRA' 발행","크리에이터 일정을 연기하도록 안내","구글폼 재작성 요청"],"answer":1,"explanation":"긴급 상황에서는 예외 오픈 요청이 가능한지 내부 점검 후 안내합니다. 내부적으로는 JIRA 발행(제휴프로그램 예외 처리 요청) + 슬랙 푸시가 필요해요. YPP 예외처리 JIRA와 다르니 주의.","guide_ref":"예시 CS 22번 (팀장 코멘트)"},{"id":"yt_a_012","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑으로 해외 판매/해외 배송이 가능한가요?\"\n\n정확한 답변은?","choices":["유튜브 쇼핑은 해외 배송을 전혀 지원하지 않음","상품명에 '해외 배송·해외 결제' 단어 포함 시 승인 불가. 상품명에 해당 단어 없고 승인 완료됐으며 자사몰에서 해외배송 서비스 제공 중이면 해외 배송 가능","카페24페이먼츠 사용 시에만 해외 배송 가능","전용스토어에서만 해외 배송 가능"],"answer":1,"explanation":"에볼루션(자사몰 랜딩)에서는 승인된 상품에 한해 자사몰이 해외 배송을 지원하면 가능합니다. 단, 상품명에 '해외 배송/결제' 단어가 있으면 GMC 승인 불가.","guide_ref":"예시 CS 6번"},{"id":"yt_a_013","type":"multiple_choice","question":"[고객 문의]\n\"제휴프로그램으로 상품 판매 시 정산은 어떻게 되나요?\"\n\n올바른 설명은?","choices":["판매 즉시 크리에이터 계좌로 수수료 입금","구매확정 후 15일 뒤 정산금액 확정, 결제프로필에 등록된 결제수단으로 매월 1일 청구","크리에이터가 직접 판매자에게 수수료 청구","카페24가 중간에서 수수료 분배"],"answer":1,"explanation":"구매확정 기준 15일 후 정산 확정 → 전월 말일 합산 → 매월 1일 결제프로필 결제수단으로 청구. 유튜브에서 크리에이터에게 정산할 금액을 계산합니다.","guide_ref":"예시 CS 11번"},{"id":"yt_a_014","type":"multiple_choice","question":"[고객 문의]\n\"파트너 특가와 제휴프로그램의 차이가 뭐에요?\"\n\n올바른 설명은?","choices":["파트너 특가는 특정 파트너에게만 특별 할인가로 상품 전송 + 별도 정산 필요. 제휴프로그램은 불특정 다수 크리에이터에게 상품 공유 + 자동 정산","둘은 동일 기능의 다른 이름","파트너 특가가 더 저렴한 수수료율 적용","제휴프로그램은 YPP 채널만 이용 가능"],"answer":0,"explanation":"파트너 특가: 특정 크리에이터 한정 할인 적용, 정산은 별도. 제휴프로그램: 불특정 다수에게 공유, 자동 정산. 공통점은 둘 다 YPP 미가입 고객도 이용 가능하다는 것.","guide_ref":"예시 CS 20번 (팀장 코멘트)"},{"id":"yt_a_015","type":"multiple_choice","question":"[고객 문의]\n\"제휴프로그램 수수료에 부가세도 포함되나요?\"\n\n정확한 답변은?","choices":["부가세가 별도 추가됨","판매가 기준으로 수수료 부과되므로 부가세가 따로 추가되지 않음 (판매가 = 상품가 + 부가세)","부가세는 크리에이터가 부담","카페24가 부가세 별도 청구"],"answer":1,"explanation":"상품 등록 시 판매가 = 상품가 + 과세(부가세)로 설정되고, 카페24는 판매가 정보만 유튜브에 전달합니다. 유튜브는 판매가 기준으로 수수료를 부과하므로 별도 부가세 추가는 없어요.","guide_ref":"예시 CS 27번 (팀장 코멘트)"},{"id":"yt_a_016","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑을 쓰려고 PG 신청했는데 PG 심사가 반려되었어요. 이유가 뭐에요?\"\n\n적절한 안내는?","choices":["카페24에서 반려 사유를 확인해드리겠다고 안내","PG 심사·세팅은 PG사 정책에 따르므로 신청한 PG사에 반려 사유를 직접 확인해야 한다고 안내","다른 PG사로 재신청하라고 안내","유튜브 쇼핑은 특정 PG사만 사용 가능하다고 안내"],"answer":1,"explanation":"유튜브 쇼핑 PG 서비스 신청은 필수이지만, PG 심사·세팅은 PG사 및 쇼핑몰 정책에 따라 적용됩니다. 반려 사유는 신청한 PG사에 직접 확인이 필요해요.","guide_ref":"예시 CS 26번"},{"id":"yt_a_017","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑 연동은 완료했지만 제 채널은 수익 창출 조건이 안 맞아요. 계약한 유튜버의 채널을 대신 연동시켜야 하나요?\"\n\n적절한 안내는?","choices":["고객 채널 해제 + 크리에이터 채널 연동만 안내","채널 변경은 가능하나 리스크(피드 초기화, 태깅 제거, 계정 공유 필요) 안내 + 제휴프로그램·파트너 특가 활용이 더 적합할 수 있다고 대안 제시","수익 창출 조건 안 맞으면 유튜브 쇼핑 이용 불가라고 안내","크리에이터에게 카페24 어드민 접근 권한을 줘야 한다고 안내"],"answer":1,"explanation":"채널 해제·재연결은 가능하지만, 피드 초기화·태깅 제거 등 리스크가 있고 계정 공유도 필요할 수 있어요. 제휴프로그램이나 파트너 특가를 활용하면 채널 변경 없이 크리에이터 협업이 가능합니다.","guide_ref":"예시 CS 14번"},{"id":"yt_a_018","type":"multiple_choice","question":"[고객 문의]\n\"체크아웃 프로그램이 뭐에요?\"\n\n핵심 설명은?","choices":["자사몰에서 간편 결제를 제공하는 기능","유튜브 모바일 앱에서 영상 보면서 외부 사이트 이동 없이 바로 상품 확인 및 구매가 가능한 서비스","유튜브 광고 결제 기능","구글 판매자 센터의 재고 관리 기능"],"answer":1,"explanation":"체크아웃 프로그램은 유튜브 모바일 앱에서 영상 시청 중 외부 사이트 이동 없이 상품정보 확인 + 구매까지 완료할 수 있는 기능이에요. 구매자 이탈 가능성을 줄여줍니다.","guide_ref":"예시 CS 15번"},{"id":"yt_a_019","type":"multiple_choice","question":"[고객 문의]\n\"제휴프로그램으로 상품을 판매하고 싶은데 어떤 항목을 설정해야 하나요?\"\n\n필수 확인 항목이 아닌 것은?","choices":["수수료율 설정 (0% 아닌 값)","결제프로필 세팅 완료","구매확정 기능 설정","유튜브 프리미엄 계정 보유"],"answer":3,"explanation":"제휴프로그램 이용에 유튜브 프리미엄은 필요 없어요. 필수 항목: 수수료율 설정, 결제프로필 세팅, 구매확정 기능 설정, 상품 카테고리 설정, 상품 승인 상태 확인 등입니다.","guide_ref":"예시 CS 19번 (팀장 코멘트)"},{"id":"yt_a_020","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑으로 주문이 들어왔는데, 이후 주문/배송/환불은 어떻게 하면 돼요?\" (신규 회원, 기존 자사몰 없었음)\n\n안내할 범위로 맞는 것은?","choices":["유튜브 쇼핑 전용 주문관리 메뉴 안내","자사몰 절차와 동일하게 처리 + 신규 회원이므로 주문-배송-CS 처리 전반 과정 안내 필요","카페24 CS팀이 대신 처리해주겠다고 안내","유튜브 측에 문의하라고 안내"],"answer":1,"explanation":"에볼루션은 자사몰 랜딩 구조이므로 주문/배송/환불 모두 자사몰 절차와 동일합니다. 신규 회원이라면 주문~배송~CS 처리 전반 과정(입금전→상품준비→배송→구매확정, 취소/교환/반품/환불)을 함께 안내해야 해요.","guide_ref":"예시 CS 17번"},{"id":"yt_a_021","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 스토어와 동영상에 상품을 다르게 노출할 수 있나요?\"\n\n정확한 답변은?","choices":["불가능하다. 스토어와 동영상 노출 상품은 항상 동일","스토어에는 노출하지 않고 특정 동영상에만 태그 가능. 다만 기존 영상에 상품 표기 시 동일한 상품 세트가 노출됨","동영상마다 개별 상품을 자유롭게 선택 가능","유튜브 스튜디오에서만 설정 가능하고 카페24에서는 불가"],"answer":1,"explanation":"스토어 미노출 + 특정 동영상에만 태그는 가능합니다. 다만 기존 영상에 상품을 표기할 때는 개별 선택이 아닌 동일 상품 세트(스토어 상품과 동일)가 노출되는 방식이에요.","guide_ref":"가이드① FAQ"},{"id":"yt_a_022","type":"multiple_choice","question":"[고객 문의]\n\"제휴프로그램 수수료 정산에서, 결제 수단별 수수료는 얼마인가요?\"\n\n정확한 답변은?","choices":["결제수단별로 제휴 수수료가 다르게 적용됨","제휴 수수료는 기본 수수료 또는 카테고리별 수수료로만 설정되며 결제수단별 차이 없음. 결제수단별 PG 수수료는 사용 중인 PG사에 문의 필요","모든 결제수단에 동일하게 3% 적용","유튜브가 결제수단별 수수료를 자동 계산"],"answer":1,"explanation":"제휴 수수료는 기본 수수료 또는 카테고리별로 설정되며, 결제수단별 차이는 없어요. 자사몰 PG 수수료는 사용 중인 PG사 정책이므로 PG사에 문의해야 합니다.","guide_ref":"예시 CS 28번"},{"id":"yt_a_023","type":"multiple_choice","question":"[고객 문의]\n\"제휴프로그램 심사 기간이 어떻게 되나요?\"\n\n정확한 정보는?","choices":["1~3 영업일","1주~2주","최대 5주","즉시 활성화"],"answer":1,"explanation":"제휴프로그램 심사는 일반적으로 1주~2주 소요됩니다.","guide_ref":"예시 CS 22번"},{"id":"yt_a_024","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 채널 변경하면 기존 심사 승인 상품도 다시 심사 받아야 하나요?\"\n\n정확한 답변은?","choices":["네, 모든 상품 재심사 필요","아니오, 기존 승인 상품은 재심사 불필요. 단, 영상에 등록된 상품 태깅은 모두 제거됨","채널 변경 자체가 불가능","상품과 태깅 모두 그대로 유지됨"],"answer":1,"explanation":"채널을 변경해도 기존 심사 승인 상품은 재심사 불필요합니다. 단, 영상에 등록된 상품 태깅은 모두 제거되는 점에 유의해야 해요.","guide_ref":"예시 CS 13번"},{"id":"yt_a_025","type":"multiple_choice","question":"[고객 문의]\n\"유튜브 쇼핑에서 상품이 보이지 않아요.\"\n\n확인할 순서로 맞는 것은?","choices":["① 구글 승인 대기 확인 → ② 상품 피드 ON 확인 → ③ 상품 수정 이력 확인 → ④ YouTube 스튜디오에서 직접 선택 여부 확인","① PG 심사 확인 → ② 결제 프로필 확인 → ③ 채널 권한 확인","① 유튜브 프리미엄 여부 확인 → ② 도메인 SSL 확인","① JIRA 발행 → ② 고객에게 대기 요청"],"answer":0,"explanation":"상품 미노출 시: ① 구글 승인 대기 여부 ② 상품 피드 ON 상태 ③ 상품 수정으로 인한 재심사 ④ YouTube 스튜디오 '직접 제품 선택하기'로 수동 지정 여부를 순서대로 확인합니다.","guide_ref":"가이드① CS 대응 / STEP 7"}]}}}};
+const MANIFEST = QUIZ_BUNDLE.manifest;
+const QUIZZES = QUIZ_BUNDLE.quizzes;
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  page: 'login', // login|map|quiz|result|wrongnotes|dashboard
+  userName: localStorage.getItem('cs_academy_user') || '',
+  userData: null,
+  currentQuiz: null, // {wid, sid, questions, answers:{}}
+  lastResult: null,
+};
+
+// ============================================================
+// FIREBASE HELPERS
+// ============================================================
+function userRef(name) { return fireDb.collection('users').doc(name); }
+
+async function loadUser(name) {
+  const doc = await userRef(name).get();
+  if (doc.exists) return doc.data();
+  const newUser = { name, total_xp:0, level:1, created_at: new Date().toISOString(), progress:{}, badges:[] };
+  await userRef(name).set(newUser);
+  return newUser;
+}
+
+async function saveUser(name, data) {
+  await userRef(name).set(data, {merge:true});
+}
+
+async function logQuiz(name, wid, sid, qid, correct, answer) {
+  await fireDb.collection('quiz_logs').add({
+    user_name:name, world_id:wid, stage_id:sid, quiz_id:qid,
+    is_correct:correct, user_answer:answer, answered_at: new Date().toISOString()
+  });
+}
+
+async function getWrongQuizIds(name) {
+  const logs = await fireDb.collection('quiz_logs').where('user_name','==',name).get();
+  const wrongIds = new Set();
+  const correctIds = new Set();
+  logs.forEach(d => {
+    const data = d.data();
+    const key = `${data.world_id}|${data.stage_id}|${data.quiz_id}`;
+    if (data.is_correct) correctIds.add(key); else wrongIds.add(key);
+  });
+  return [...wrongIds].filter(k => !correctIds.has(k)).map(k => {
+    const [wid,sid,qid] = k.split('|');
+    return {wid,sid,qid};
+  });
+}
+
+// ============================================================
+// GAME LOGIC
+// ============================================================
+function getLevelInfo(xp) {
+  const t = MANIFEST.level_thresholds;
+  let cur = t[0], nxt = null;
+  for (let i=0;i<t.length;i++) {
+    if (xp >= t[i].xp_required) { cur=t[i]; nxt=t[i+1]||null; }
+  }
+  return {
+    level:cur.level, title:cur.title, xp,
+    nextXp: nxt?nxt.xp_required:null, nextTitle:nxt?nxt.title:null,
+    progress: nxt ? Math.round((xp-cur.xp_required)/(nxt.xp_required-cur.xp_required)*100) : 100
+  };
+}
+
+function shuffleArray(arr, rng) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*a.length);[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function sampleQuiz(wid, sid) {
+  const stageConf = MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);
+  const pool = JSON.parse(JSON.stringify(QUIZZES[wid][sid].questions));
+  const size = stageConf.sample_size || pool.length;
+  const rng = Math.random;
+  let questions = shuffleArray(pool, rng).slice(0, size);
+  if (stageConf.shuffle_choices) {
+    questions.forEach(q => {
+      if (q.type==='multiple_choice' && q.choices) {
+        const correctText = q.choices[q.answer];
+        q.choices = shuffleArray(q.choices, rng);
+        q.answer = q.choices.indexOf(correctText);
+      }
+    });
+  }
+  return questions;
+}
+
+function checkAnswer(q, ans) {
+  if (q.type==='ox') {
+    return q.answer ? (ans==='true') : (ans==='false');
+  }
+  if (q.type==='multiple_choice') {
+    return parseInt(ans) === q.answer;
+  }
+  if (q.type==='fill_blank') {
+    const norm = (ans||'').replace(/\s/g,'').toLowerCase();
+    const answers = [q.answer, ...(q.acceptable_answers||[])];
+    return answers.some(a => a.replace(/\s/g,'').toLowerCase() === norm);
+  }
+  return false;
+}
+
+function isStageUnlocked(userData, wid, sid) {
+  const stage = MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);
+  if (!stage.unlock_condition) return true;
+  const uc = stage.unlock_condition;
+  if (uc.type==='stage_clear') {
+    const key = `${wid}_${uc.stage_id}`;
+    return userData.progress && userData.progress[key] && userData.progress[key].status === 'cleared';
+  }
+  return true;
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+const $app = document.getElementById('app');
+
+function render() {
+  switch(state.page) {
+    case 'login': return renderLogin();
+    case 'map': return renderMap();
+    case 'quiz': return renderQuiz();
+    case 'result': return renderResult();
+    case 'wrongnotes': return renderWrongNotes();
+    case 'dashboard': return renderDashboard();
+  }
+}
+
+function renderLogin() {
+  $app.innerHTML = `
+  <div class="login-wrap">
+   <div class="login-card">
+    <div style="font-size:56px">🎓</div>
+    <h1>CS Academy</h1>
+    <p class="sub">Cafe24 유튜브 쇼핑 온보딩 트레이닝</p>
+    <label>이름을 입력하세요</label>
+    <input type="text" id="login-name" placeholder="예: 강정원" value="${state.userName}">
+    <button onclick="doLogin()">시작하기</button>
+    <p class="hint">동일한 이름으로 재접속하면 진도가 이어집니다.</p>
+   </div>
+  </div>`;
+  document.getElementById('login-name').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+}
+
+async function doLogin() {
+  const name = document.getElementById('login-name').value.trim();
+  if (!name) return;
+  state.userName = name;
+  localStorage.setItem('cs_academy_user', name);
+  $app.innerHTML = '<div class="loading">Loading...</div>';
+  state.userData = await loadUser(name);
+  state.page = 'map';
+  render();
+}
+
+function nav(wrongCount) {
+  return `<nav class="nav"><div class="nav-brand">🎓 CS Academy</div>
+  <div class="nav-links">
+    <a onclick="goMap()" class="${state.page==='map'?'active':''}">맵</a>
+    <a onclick="goWrongNotes()" class="${state.page==='wrongnotes'?'active':''}">오답노트${wrongCount>0?`<span class="nav-badge">${wrongCount}</span>`:''}</a>
+    <a onclick="goDashboard()" class="${state.page==='dashboard'?'active':''}">대시보드</a>
+    <a onclick="doLogout()" class="nav-logout">로그아웃</a>
+  </div></nav>`;
+}
+
+async function renderMap() {
+  const u = state.userData;
+  const lvl = getLevelInfo(u.total_xp);
+  const wrong = await getWrongQuizIds(u.name);
+  const wCount = wrong.length;
+
+  // calc stats
+  const logs = await fireDb.collection('quiz_logs').where('user_name','==',u.name).get();
+  let total=0, correct=0;
+  logs.forEach(d => { total++; if(d.data().is_correct) correct++; });
+  const acc = total ? Math.round(correct/total*100) : 0;
+  const badges = u.badges || [];
+
+  let html = nav(wCount) + `<div class="page">`;
+
+  // User card
+  html += `<div class="uc">
+    <div class="uc-left">
+      <div class="uc-avatar">👤<div class="uc-lvl">Lv.${lvl.level}</div></div>
+      <div>
+        <div class="uc-name">${u.name}</div>
+        <div class="uc-title">${lvl.title}</div>
+        <div class="xp-bar"><div class="xp-fill" style="width:${lvl.progress}%"></div></div>
+        <div class="xp-txt">${lvl.xp}${lvl.nextXp?' / '+lvl.nextXp+' XP → '+lvl.nextTitle:' XP (MAX)'}</div>
+      </div>
+    </div>
+    <div class="uc-stats">
+      <div class="uc-stat"><div class="uc-stat-n">${total}</div><div class="uc-stat-l">푼 문제</div></div>
+      <div class="uc-stat"><div class="uc-stat-n">${acc}%</div><div class="uc-stat-l">정답률</div></div>
+      <div class="uc-stat"><div class="uc-stat-n">${badges.length}</div><div class="uc-stat-l">배지</div></div>
+    </div>
+  </div>`;
+
+  if (badges.length) {
+    html += `<div class="badges">${badges.map(bid => {
+      const b = MANIFEST.badges.find(x=>x.id===bid);
+      return b ? `<div class="bdg">${b.icon} ${b.name}</div>` : '';
+    }).join('')}</div>`;
+  }
+
+  if (wCount > 0) {
+    html += `<div class="wb"><span>📝 오답노트에 ${wCount}문제가 있어요!</span><a onclick="goWrongNotes()">복습하러 가기 →</a></div>`;
+  }
+
+  // Worlds
+  for (const world of MANIFEST.worlds) {
+    html += `<div class="world"><div class="world-hdr"><div class="world-icon">${world.icon}</div><div><div class="world-t">${world.title}</div><div class="world-s">${world.subtitle}</div></div></div><div class="stages">`;
+    for (const stg of world.stages) {
+      const unlocked = isStageUnlocked(u, world.id, stg.id);
+      const pKey = `${world.id}_${stg.id}`;
+      const prog = (u.progress||{})[pKey] || {};
+      const cleared = prog.status === 'cleared';
+      const poolSize = QUIZZES[world.id][stg.id].questions.length;
+      const cls = !unlocked?'locked':(cleared?'cleared':'');
+      html += `<div class="stg ${cls}">
+        <div class="stg-icon">${unlocked?stg.icon:'🔒'}</div>
+        <div class="stg-t">${stg.title}</div>
+        <div class="stg-s">${stg.subtitle}</div>`;
+      if (!unlocked) {
+        html += `<div style="font-size:11px;color:var(--tx3);margin-bottom:8px;font-style:italic">이전 스테이지 클리어 필요</div><button class="stg-btn" disabled>잠김</button>`;
+      } else {
+        html += `<div class="stg-meta">
+          <div><span>최고점수</span><strong>${prog.best_score||0}점</strong></div>
+          <div><span>도전</span><strong>${prog.attempts||0}회</strong></div>
+          <div><span>통과기준</span><strong>${stg.pass_score}점</strong></div>
+          <div><span>문항풀</span><strong>${poolSize}개 중 ${stg.sample_size}개</strong></div>
+        </div>
+        <button class="stg-btn" onclick="startQuiz('${world.id}','${stg.id}')">${cleared?'재도전':(prog.attempts>0?'이어하기':'시작하기')}</button>`;
+        if (cleared) html += `<div class="cleared-mk">✓ 클리어</div>`;
+      }
+      html += `</div>`;
+    }
+    html += `</div></div>`;
+  }
+  html += `</div>`;
+  $app.innerHTML = html;
+}
+
+function startQuiz(wid, sid) {
+  const questions = sampleQuiz(wid, sid);
+  state.currentQuiz = { wid, sid, questions, answers:{} };
+  state.page = 'quiz';
+  render();
+}
+
+function renderQuiz() {
+  const {wid, sid, questions, answers} = state.currentQuiz;
+  const world = MANIFEST.worlds.find(w=>w.id===wid);
+  const stage = world.stages.find(s=>s.id===sid);
+  const poolSize = QUIZZES[wid][sid].questions.length;
+  const answered = Object.keys(answers).length;
+
+  let html = `<nav class="nav"><div class="nav-brand">🎓 CS Academy</div><div class="nav-links"><a onclick="goMap()">← 맵으로</a></div></nav>`;
+  html += `<div class="page"><div class="quiz-hdr"><div style="font-size:11px;color:var(--tx2)">${world.title} › ${stage.title}</div>
+    <h2>${stage.title} ${stage.icon}</h2>
+    <div class="desc">${questions.length}문항 (풀 ${poolSize}개 중 랜덤 출제)</div>
+    <div class="quiz-meta"><span>⭐ ${stage.xp_per_question} XP/문항</span><span>🎯 통과 ${stage.pass_score}점</span></div></div>`;
+
+  questions.forEach((q,i) => {
+    html += `<div class="qc"><div class="qn">문제 ${i+1} / ${questions.length}</div>
+      <div class="qt">${q.question.replace(/\n/g,'<br>')}</div>`;
+    if (q.type==='ox') {
+      html += `<div class="ans-g ox">
+        <div class="ans-o ox-yes ${answers[q.id]==='true'?'selected':''}" onclick="selectAnswer('${q.id}','true')">O</div>
+        <div class="ans-o ox-no ${answers[q.id]==='false'?'selected':''}" onclick="selectAnswer('${q.id}','false')">X</div></div>`;
+    } else if (q.type==='multiple_choice') {
+      html += `<div class="ans-g">${q.choices.map((c,ci) =>
+        `<div class="ans-o ${answers[q.id]===''+ci?'selected':''}" onclick="selectAnswer('${q.id}','${ci}')">${c}</div>`
+      ).join('')}</div>`;
+    } else if (q.type==='fill_blank') {
+      html += `<div class="ans-g"><input class="blank-in" placeholder="답을 입력하세요" value="${answers[q.id]||''}" oninput="selectAnswer('${q.id}',this.value)"></div>`;
+    }
+    html += `</div>`;
+  });
+
+  html += `<div class="submit-bar">
+    <div class="prog"><b>${answered}</b> / ${questions.length} 답변 완료</div>
+    <button class="submit-btn ${answered===questions.length?'ready':''}" onclick="submitQuiz()">제출하고 결과 보기</button>
+  </div></div>`;
+  $app.innerHTML = html;
+}
+
+function selectAnswer(qid, val) {
+  state.currentQuiz.answers[qid] = val;
+  // Update UI without full re-render
+  const answered = Object.keys(state.currentQuiz.answers).filter(k=>state.currentQuiz.answers[k]).length;
+  const total = state.currentQuiz.questions.length;
+  const prog = document.querySelector('.submit-bar .prog');
+  if(prog) prog.innerHTML = `<b>${answered}</b> / ${total} 답변 완료`;
+  const btn = document.querySelector('.submit-btn');
+  if(btn) btn.classList.toggle('ready', answered===total);
+
+  // Highlight selected option (for radio-style)
+  const q = state.currentQuiz.questions.find(q=>q.id===qid);
+  if (q && q.type !== 'fill_blank') {
+    const cards = document.querySelectorAll(`.qc`);
+    cards.forEach(card => {
+      if (card.querySelector(`.qn`)?.textContent.includes('문제')) {
+        // Find the right card
+        const opts = card.querySelectorAll('.ans-o');
+        opts.forEach(o => {
+          const onclick = o.getAttribute('onclick');
+          if (onclick && onclick.includes(`'${qid}'`)) {
+            const isThis = onclick.includes(`'${val}'`);
+            o.classList.toggle('selected', isThis);
+          }
+        });
+      }
+    });
+  }
+}
+
+async function submitQuiz() {
+  const {wid, sid, questions, answers} = state.currentQuiz;
+  const stage = MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);
+  const u = state.userData;
+
+  const unanswered = questions.filter(q => !answers[q.id] && answers[q.id]!=='0');
+  if (unanswered.length > 0) {
+    if (!confirm(`${unanswered.length}문제가 남아있어요. 제출할까요?`)) return;
+  }
+
+  $app.innerHTML = '<div class="loading">채점 중...</div>';
+
+  let correctCount = 0;
+  const results = [];
+  for (const q of questions) {
+    const ua = answers[q.id] || '';
+    const correct = checkAnswer(q, ua);
+    if (correct) correctCount++;
+
+    let userChoice, correctChoice;
+    if (q.type==='multiple_choice') {
+      userChoice = ua!=='' ? (q.choices[parseInt(ua)]||'(미응답)') : '(미응답)';
+      correctChoice = q.choices[q.answer];
+    } else if (q.type==='ox') {
+      userChoice = ua==='true'?'O (맞다)':ua==='false'?'X (틀리다)':'(미응답)';
+      correctChoice = q.answer?'O (맞다)':'X (틀리다)';
+    } else {
+      userChoice = ua || '(미응답)';
+      correctChoice = q.answer;
+    }
+
+    results.push({...q, userAnswer:ua, userChoice, correctChoice, isCorrect:correct});
+    await logQuiz(u.name, wid, sid, q.id, correct, ua);
+  }
+
+  const total = questions.length;
+  const score = Math.round(correctCount/total*100);
+  const wrongCount = total - correctCount;
+  const passed = score >= stage.pass_score;
+  const earnedXp = correctCount * stage.xp_per_question;
+
+  // Update user data
+  const oldLevel = u.level;
+  u.total_xp += earnedXp;
+  const lvl = getLevelInfo(u.total_xp);
+  u.level = lvl.level;
+
+  // Progress
+  if (!u.progress) u.progress = {};
+  const pKey = `${wid}_${sid}`;
+  const prev = u.progress[pKey] || {status:'', best_score:0, attempts:0};
+  const newStatus = passed ? 'cleared' : (prev.status==='cleared'?'cleared':'in_progress');
+  u.progress[pKey] = {
+    status: newStatus,
+    best_score: Math.max(prev.best_score, score),
+    attempts: (prev.attempts||0)+1
+  };
+
+  // Badges
+  if (!u.badges) u.badges = [];
+  const newBadges = [];
+  function tryBadge(id) { if(!u.badges.includes(id)){u.badges.push(id);const b=MANIFEST.badges.find(x=>x.id===id);if(b)newBadges.push(b);}}
+  tryBadge('first_step');
+  if(passed) tryBadge(`${wid}_${sid}`);
+  if(passed && score===100) {
+    const world = MANIFEST.worlds.find(w=>w.id===wid);
+    const allCleared = world.stages.every(s => {
+      const p = u.progress[`${wid}_${s.id}`];
+      return p && p.best_score === 100;
+    });
+    if(allCleared) tryBadge(`${wid}_perfect`);
+  }
+
+  await saveUser(u.name, u);
+  state.userData = u;
+
+  state.lastResult = {
+    wid, sid, results, score, correctCount, wrongCount, total,
+    passed, passScore: stage.pass_score, earnedXp,
+    newLevel: lvl.level, newLevelTitle: lvl.title,
+    leveledUp: lvl.level > oldLevel, newBadges
+  };
+  state.page = 'result';
+  render();
+}
+
+function renderResult() {
+  const r = state.lastResult;
+  const world = MANIFEST.worlds.find(w=>w.id===r.wid);
+  const stage = world.stages.find(s=>s.id===r.sid);
+
+  let html = `<nav class="nav"><div class="nav-brand">🎓 CS Academy</div><div class="nav-links"><a onclick="goMap()">← 맵으로</a></div></nav>`;
+  html += `<div class="page">`;
+
+  // Hero
+  html += `<div class="res-hero ${r.passed?'passed':'failed'}">
+    <div style="font-size:56px">${r.passed?'🎉':'💪'}</div>
+    <h1>${r.passed?'고생하셨습니다! 통과!':'아쉽지만 다시 도전해봐요!'}</h1>
+    <div class="res-summary">
+      <div class="rs-c"><div class="l">총 문제</div><div class="v">${r.total}</div></div>
+      <div class="rs-c"><div class="l">정답</div><div class="v">${r.correctCount}</div></div>
+      <div class="rs-c"><div class="l">오답</div><div class="v">${r.wrongCount}</div></div>
+      <div class="rs-c sc"><div class="l">점수</div><div class="v">${r.score}점</div></div>
+    </div>
+    <div class="res-sub">통과 기준 ${r.passScore}점</div>
+    <div class="gain">
+      <div class="gain-c"><span>⭐</span> +${r.earnedXp} XP</div>
+      ${r.leveledUp?`<div class="gain-c lvl"><span>🎊</span> 레벨업! → ${r.newLevelTitle} (Lv.${r.newLevel})</div>`:''}
+    </div>
+    ${r.newBadges.length?`<div class="nb-area"><div class="nb-title">🏆 새 배지 획득</div><div class="nb-list">${r.newBadges.map(b=>`<div class="nb-card"><div class="i">${b.icon}</div><div class="n">${b.name}</div><div class="d">${b.desc}</div></div>`).join('')}</div></div>`:''}
+  </div>`;
+
+  // Wrong banner
+  if (r.wrongCount > 0) {
+    html += `<div class="wb wb-r"><span>📝 ${r.wrongCount}문제를 틀렸어요. 오답노트에서 복습해보세요!</span><a onclick="goWrongNotes()">오답노트 바로가기 →</a></div>`;
+  }
+
+  // Review - wrong first
+  const wrongs = r.results.filter(x=>!x.isCorrect);
+  const corrects = r.results.filter(x=>x.isCorrect);
+
+  if (wrongs.length) {
+    html += `<h2 class="sec-t">✗ 오답 문항</h2>`;
+    wrongs.forEach((rv,i) => {
+      html += renderReviewCard(rv, i+1, false);
+    });
+  }
+
+  if (corrects.length) {
+    html += `<h2 class="sec-t ok-t">✓ 정답 문항 (클릭하여 펼치기)</h2>`;
+    corrects.forEach((rv,i) => {
+      html += renderReviewCard(rv, i+1, true);
+    });
+  }
+
+  html += `<div class="actions">
+    <button class="btn-p" onclick="goMap()">맵으로</button>
+    <button class="btn-s" onclick="startQuiz('${r.wid}','${r.sid}')">한 번 더 도전 (다른 문제!)</button>
+  </div></div>`;
+
+  $app.innerHTML = html;
+}
+
+function renderReviewCard(rv, idx, isCorrect) {
+  let html = `<div class="rv ${isCorrect?'correct collapsed':'wrong'}" ${isCorrect?'onclick="this.classList.toggle(\'collapsed\')"':''}>
+    <div class="rv-h"><div class="rv-num">${isCorrect?rv.question.substring(0,40)+(rv.question.length>40?'...':''):'문제 '+idx}</div><div class="rv-tag ${isCorrect?'correct':'wrong'}">${isCorrect?'✓ 정답':'✗ 오답'}</div></div>
+    <div class="rv-body">
+    <div class="rv-q">${rv.question.replace(/\n/g,'<br>')}</div>`;
+
+  if (!isCorrect) {
+    html += `<div class="rv-ar"><span class="lbl">내 답변:</span><span class="val wt">${rv.userChoice}</span></div>
+      <div class="rv-ar"><span class="lbl">정답:</span><span class="val ct">${rv.correctChoice}</span></div>`;
+  }
+
+  if (rv.type==='multiple_choice' && rv.choices && !isCorrect) {
+    html += `<div class="rv-choices">${rv.choices.map((c,ci) => {
+      let cls = '';
+      if (ci===rv.answer) cls='cc';
+      else if (''+ci===rv.userAnswer && ci!==rv.answer) cls='wc';
+      return `<div class="rv-ch ${cls}">${c}</div>`;
+    }).join('')}</div>`;
+  }
+
+  if (rv.explanation) {
+    html += `<div class="rv-exp"><div class="el">💡 해설</div><div class="et">${rv.explanation}</div>${rv.guide_ref?`<div class="er">📖 ${rv.guide_ref}</div>`:''}</div>`;
+  }
+  html += `</div></div>`;
+  return html;
+}
+
+async function renderWrongNotes() {
+  const u = state.userData;
+  const wrongItems = await getWrongQuizIds(u.name);
+
+  let html = nav(wrongItems.length) + `<div class="page">
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:6px">📝 오답노트</h1>
+    <p style="color:var(--tx2);font-size:13px;margin-bottom:20px">아직 한 번도 맞추지 못한 문제들이에요. 해설을 읽고 다시 도전해보세요!</p>`;
+
+  if (!wrongItems.length) {
+    html += `<div class="empty"><div class="ei">🎉</div><div class="et">오답이 없어요! 모든 문제를 맞추셨습니다.</div><button class="btn-p" onclick="goMap()">맵으로 돌아가기</button></div>`;
+  } else {
+    html += `<div class="wn-bar">총 ${wrongItems.length}개 문제</div>`;
+    wrongItems.forEach(item => {
+      const q = QUIZZES[item.wid]?.[item.sid]?.questions.find(x=>x.id===item.qid);
+      if (!q) return;
+      let ansHtml;
+      if (q.type==='multiple_choice') {
+        ansHtml = `<div class="rv-choices" style="margin-bottom:10px">${q.choices.map((c,ci)=>
+          `<div class="rv-ch ${ci===q.answer?'cc':''}">${c}${ci===q.answer?' ← 정답':''}</div>`
+        ).join('')}</div>`;
+      } else if (q.type==='ox') {
+        ansHtml = `<div class="wn-ans">정답: ${q.answer?'O (맞다)':'X (틀리다)'}</div>`;
+      } else {
+        ansHtml = `<div class="wn-ans">정답: ${q.answer}</div>`;
+      }
+      html += `<div class="wn" onclick="this.classList.toggle('open')">
+        <div class="wn-h">
+          <div class="wn-stg">${item.sid}</div>
+          <div class="wn-prev">${q.question.substring(0,60)}${q.question.length>60?'...':''}</div>
+          <div class="wn-arr">▼</div>
+        </div>
+        <div class="wn-body">
+          <div class="wn-q">${q.question.replace(/\n/g,'<br>')}</div>
+          ${ansHtml}
+          ${q.explanation?`<div class="rv-exp"><div class="el">💡 해설</div><div class="et">${q.explanation}</div>${q.guide_ref?`<div class="er">📖 ${q.guide_ref}</div>`:''}</div>`:''}
+        </div>
+      </div>`;
+    });
+    html += `<div class="actions"><button class="btn-p" onclick="goMap()">맵으로 돌아가기</button></div>`;
+  }
+  html += `</div>`;
+  $app.innerHTML = html;
+}
+
+async function renderDashboard() {
+  const u = state.userData;
+  const lvl = getLevelInfo(u.total_xp);
+  const logs = await fireDb.collection('quiz_logs').where('user_name','==',u.name).get();
+  let total=0, correct=0;
+  logs.forEach(d => { total++; if(d.data().is_correct) correct++; });
+  const acc = total ? Math.round(correct/total*100) : 0;
+  const badges = (u.badges||[]).map(id=>MANIFEST.badges.find(b=>b.id===id)).filter(Boolean);
+
+  let html = nav(0) + `<div class="page">
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:16px">📊 ${u.name} 학습 현황</h1>
+    <div class="dash-g">
+      <div class="dc"><div class="dc-l">레벨</div><div class="dc-v">${lvl.level}</div><div class="dc-s">${lvl.title}</div></div>
+      <div class="dc"><div class="dc-l">총 XP</div><div class="dc-v">${lvl.xp}</div><div class="dc-s">${lvl.nextXp?'다음 '+(lvl.nextXp-lvl.xp)+' XP':''}</div></div>
+      <div class="dc"><div class="dc-l">정답률</div><div class="dc-v">${acc}%</div><div class="dc-s">${correct} / ${total}</div></div>
+      <div class="dc"><div class="dc-l">배지</div><div class="dc-v">${badges.length}</div><div class="dc-s">개</div></div>
+    </div>`;
+
+  // Stage progress table
+  for (const world of MANIFEST.worlds) {
+    html += `<div style="background:var(--sf);padding:16px 20px;border-radius:10px;margin-bottom:14px">
+      <h3 style="font-size:15px;font-weight:800;margin-bottom:10px">${world.icon} ${world.title}</h3>
+      <table class="dash-tbl"><thead><tr><th>스테이지</th><th>상태</th><th>최고점수</th><th>도전</th><th>문제풀</th></tr></thead><tbody>`;
+    for (const s of world.stages) {
+      const p = (u.progress||{})[`${world.id}_${s.id}`] || {};
+      const pool = QUIZZES[world.id][s.id].questions.length;
+      const unlocked = isStageUnlocked(u, world.id, s.id);
+      html += `<tr><td><strong>${s.icon} ${s.title}</strong></td>
+        <td>${!unlocked?'🔒':p.status==='cleared'?'✅':p.attempts>0?'🏃':'⏸'}</td>
+        <td>${p.best_score||0}점</td><td>${p.attempts||0}회</td><td>${pool}개 중 ${s.sample_size}개</td></tr>`;
+    }
+    html += `</tbody></table></div>`;
+  }
+
+  if (badges.length) {
+    html += `<h2 class="sec-t">획득 배지</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
+      ${badges.map(b=>`<div class="dc" style="text-align:center"><div style="font-size:32px">${b.icon}</div><div style="font-weight:800;font-size:13px;margin-top:4px">${b.name}</div><div style="font-size:10px;color:var(--tx2)">${b.desc}</div></div>`).join('')}
+    </div>`;
+  }
+  html += `</div>`;
+  $app.innerHTML = html;
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+async function goMap() { state.page='map'; await renderMap(); }
+async function goWrongNotes() { state.page='wrongnotes'; await renderWrongNotes(); }
+async function goDashboard() { state.page='dashboard'; await renderDashboard(); }
+function doLogout() { state.userName=''; state.userData=null; localStorage.removeItem('cs_academy_user'); state.page='login'; render(); }
+
+// Auto-login if name saved
+(async function init() {
+  if (state.userName) {
+    $app.innerHTML = '<div class="loading">Loading...</div>';
+    try {
+      state.userData = await loadUser(state.userName);
+      state.page = 'map';
+      await renderMap();
+    } catch(e) {
+      console.error(e);
+      state.page = 'login';
+      render();
+    }
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>
