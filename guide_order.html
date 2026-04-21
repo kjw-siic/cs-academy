@@ -3,536 +3,1177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>주문관리 가이드 | CS Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>주문관리 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--pri:#4F46E5;--pri-l:#E0E7FF;--ok:#10B981;--ok-l:#D1FAE5;--ng:#EF4444;--acc:#F59E0B;--acc-l:#FEF3C7;--bg:#F8FAFC;--sf:#FFF;--bd:#E5E7EB;--tx:#111827;--tx2:#6B778C;--tx3:#9CA3AF}
+:root{
+  --pri:#2563EB; --pri-l:#EFF6FF; --pri-d:#1E40AF;
+  --ok:#059669; --ok-l:#ECFDF5;
+  --warn:#D97706; --warn-l:#FEF3C7;
+  --ng:#DC2626; --ng-l:#FEE2E2;
+  --bg:#F8FAFC; --sf:#FFF; --bd:#E2E8F0;
+  --tx:#0F172A; --tx2:#475569; --tx3:#94A3B8;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.7}
-.hero{background:linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%);padding:48px 40px;color:#fff;text-align:center}
-.hero h1{font-size:28px;font-weight:900;margin-bottom:8px}
-.hero p{font-size:14px;opacity:.85}
-.toc{max-width:900px;margin:24px auto;padding:0 20px}
-.toc-title{font-size:16px;font-weight:800;color:var(--pri);margin-bottom:12px}
-.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
-.toc-item{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
-.toc-item:hover{border-color:var(--pri);background:var(--pri-l);transform:translateY(-1px)}
-.toc-icon{font-size:18px}
-.main{max-width:900px;margin:0 auto;padding:0 20px 60px}
-.section{background:var(--sf);border-radius:12px;padding:24px;margin-bottom:20px;border:1px solid var(--bd);scroll-margin-top:20px}
-.sec-hdr{display:flex;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:14px;border-bottom:2px solid var(--pri-l)}
-.sec-icon{font-size:28px;background:var(--pri-l);width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center}
-.sec-title{font-size:17px;font-weight:800;color:var(--tx)}
-.g-heading{font-size:14px;font-weight:700;color:var(--pri);margin:14px 0 6px;padding-top:10px;border-top:1px solid var(--bd)}
-.g-heading:first-child{border-top:none;padding-top:0}
-.g-text{font-size:13px;margin:4px 0;line-height:1.7;color:var(--tx)}
-.g-path{font-size:12px;color:var(--pri);background:var(--pri-l);padding:8px 12px;border-radius:8px;margin:10px 0;font-weight:600;border-left:3px solid var(--pri)}
-.g-warn{font-size:12px;color:#92400E;background:var(--acc-l);padding:8px 12px;border-radius:8px;margin:8px 0;border-left:3px solid var(--acc)}
-.g-ref{font-size:11px;color:var(--tx3);font-style:italic;margin:4px 0;padding:4px 8px;background:#F9FAFB;border-radius:4px}
-.g-item{font-size:13px;margin:4px 0;padding:4px 0 4px 14px;border-left:3px solid var(--bd);line-height:1.6;color:var(--tx)}
-.g-step{font-size:13px;margin:4px 0;padding:6px 12px;background:var(--pri-l);border-radius:6px;font-weight:600;color:var(--pri)}
-.search-bar{max-width:900px;margin:20px auto;padding:0 20px}
-.search-input{width:100%;padding:12px 16px;border:2px solid var(--bd);border-radius:10px;font-size:14px;outline:none;font-family:inherit}
-.search-input:focus{border-color:var(--pri)}
-.back-top{position:fixed;bottom:20px;right:20px;background:var(--pri);color:#fff;border:none;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:100}
-.back-top:hover{background:#4338CA}
+html,body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* Header */
+.header{background:#fff;border-bottom:1px solid var(--bd);padding:20px 24px;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.header h1{font-size:18px;font-weight:800;color:var(--tx);display:flex;align-items:center;gap:8px}
+.header h1 .ic{font-size:22px}
+.header p{font-size:12px;color:var(--tx2);margin-top:2px}
+.search{position:relative;flex:1;max-width:320px}
+.search input{width:100%;padding:9px 14px 9px 34px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:var(--bg);transition:all .15s}
+.search input:focus{border-color:var(--pri);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.search::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.5}
+
+/* Category Tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{height:0}
+.tab{padding:7px 14px;border:1.5px solid var(--bd);background:#fff;border-radius:20px;font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+.tab:hover{border-color:var(--pri);color:var(--pri)}
+.tab.active{background:var(--pri);border-color:var(--pri);color:#fff}
+
+/* Container */
+.container{max-width:960px;margin:0 auto;padding:24px}
+
+/* Section Cards */
+.cat-group{margin-bottom:28px}
+.cat-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--pri-d);margin-bottom:12px;padding-left:4px;letter-spacing:.3px;text-transform:uppercase}
+.cat-title::before{content:'';width:4px;height:14px;background:var(--pri);border-radius:2px}
+
+.card{background:#fff;border:1px solid var(--bd);border-radius:10px;margin-bottom:10px;overflow:hidden;transition:all .15s}
+.card:hover{border-color:#CBD5E1;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card.open{border-color:var(--pri);box-shadow:0 2px 8px rgba(37,99,235,.08)}
+
+.card-head{padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none}
+.card-ic{width:36px;height:36px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--pri-l)}
+.card-title-wrap{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:2px}
+.card-sub{font-size:11px;color:var(--tx3);font-weight:500}
+.card-arrow{color:var(--tx3);font-size:12px;transition:transform .2s;flex-shrink:0}
+.card.open .card-arrow{transform:rotate(180deg);color:var(--pri)}
+
+.card-body{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.card.open .card-body{max-height:2000px;padding:4px 18px 18px 18px}
+.card-body-inner{padding-top:12px;border-top:1px dashed var(--bd)}
+
+/* Content blocks */
+.path{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--pri-d);background:var(--pri-l);padding:6px 10px;border-radius:6px;font-weight:600;margin-bottom:12px;font-family:'SF Mono',Consolas,monospace}
+.path::before{content:'📍';font-size:11px}
+
+.block{margin-bottom:14px}
+.block:last-child{margin-bottom:0}
+.block-title{font-size:12.5px;font-weight:700;color:var(--tx);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.block-title .n{width:18px;height:18px;background:var(--pri);color:#fff;border-radius:4px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+.steps{list-style:none;margin:0;padding:0}
+.steps li{position:relative;padding:4px 0 4px 20px;font-size:12.5px;color:var(--tx2);line-height:1.65}
+.steps li::before{content:'▸';position:absolute;left:6px;color:var(--pri);font-weight:700}
+.steps li strong{color:var(--tx);font-weight:600}
+
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.flow-step{background:var(--pri-l);color:var(--pri-d);padding:5px 10px;border-radius:5px;font-size:11.5px;font-weight:600}
+.flow-arr{color:var(--tx3);font-size:11px}
+
+.note{display:flex;gap:8px;padding:10px 12px;border-radius:7px;font-size:12px;line-height:1.6;margin:8px 0}
+.note-warn{background:var(--warn-l);color:#78350F;border-left:3px solid var(--warn)}
+.note-tip{background:var(--ok-l);color:#064E3B;border-left:3px solid var(--ok)}
+.note-danger{background:var(--ng-l);color:#7F1D1D;border-left:3px solid var(--ng)}
+.note-ic{flex-shrink:0;font-size:14px}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;border-radius:7px;overflow:hidden;border:1px solid var(--bd)}
+.tbl th,.tbl td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--bd)}
+.tbl th{background:var(--bg);font-weight:700;color:var(--tx);font-size:11.5px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td{color:var(--tx2)}
+
+/* Sub-group within card */
+.sub{background:var(--bg);border-radius:7px;padding:11px 13px;margin:8px 0}
+.sub-title{font-size:12px;font-weight:700;color:var(--pri-d);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.sub-title::before{content:'▎';color:var(--pri)}
+
+/* Empty state */
+.empty{text-align:center;padding:48px 24px;color:var(--tx3);font-size:13px;background:#fff;border:1px dashed var(--bd);border-radius:10px}
+.empty-ic{font-size:32px;margin-bottom:8px;opacity:.5}
+
+/* Responsive */
+@media(max-width:640px){
+  .header{padding:14px 16px}
+  .header-top{flex-direction:column;align-items:stretch;gap:10px}
+  .search{max-width:100%}
+  .container{padding:16px}
+  .card-head{padding:12px 14px}
+  .card.open .card-body{padding:4px 14px 14px 14px}
+  .card-ic{width:32px;height:32px;font-size:16px}
+  .card-title{font-size:13px}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#94A3B8}
+
+/* Hidden state for search */
+.hidden{display:none!important}
+.cat-group.empty-cat{display:none}
 </style>
 </head>
 <body>
-<div class="hero">
-<h1>📦 주문관리 가이드</h1>
-<p>Cafe24 쇼핑몰 주문 처리·배송·CS·결제·통계 완전 정복</p>
+
+<header class="header">
+  <div class="header-top">
+    <div>
+      <h1><span class="ic">📦</span>주문관리 가이드</h1>
+      <p>Cafe24 주문 처리 전 과정 · 클릭하여 펼쳐보기</p>
+    </div>
+    <div class="search">
+      <input id="q" type="text" placeholder="키워드 검색 (예: 환불, 네이버페이)" oninput="search(this.value)">
+    </div>
+  </div>
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="all">전체</div>
+    <div class="tab" data-cat="order">주문 조회/입금</div>
+    <div class="tab" data-cat="ship">배송 처리</div>
+    <div class="tab" data-cat="cs">취소/교환/반품/환불</div>
+    <div class="tab" data-cat="pay">결제/정산</div>
+    <div class="tab" data-cat="doc">증빙/세무</div>
+    <div class="tab" data-cat="etc">기타</div>
+  </div>
+</header>
+
+<div class="container" id="content">
+
+<!-- ============ 주문 조회/입금 ============ -->
+<div class="cat-group" data-cat="order">
+<div class="cat-title">주문 조회 / 입금</div>
+
+<div class="card" data-keywords="전체주문 조회 검색 아이콘">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔍</div>
+    <div class="card-title-wrap">
+      <div class="card-title">전체 주문 조회</div>
+      <div class="card-sub">기간·결제상태·경로별 주문 검색</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 전체 주문 조회</div>
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>조회 방법</div>
+      <ul class="steps">
+        <li>기간 선택 + 주문번호·주문자명·상품명으로 특정 주문 검색</li>
+        <li>날짜·결제상태·주문상태·주문경로 조건 저장하여 재사용 가능</li>
+        <li>주문번호 앞 <strong>아이콘</strong>으로 주문/매출 경로 확인 가능</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
 
-<div class="search-bar">
-<input class="search-input" placeholder="🔍 키워드로 검색 (예: 환불, 네이버페이, 배송중)" oninput="filterSections(this.value)">
+<div class="card" data-keywords="입금전 무통장 자동취소">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">💰</div>
+    <div class="card-title-wrap">
+      <div class="card-title">입금 전 관리</div>
+      <div class="card-sub">무통장 입금 확인 및 자동 취소 설정</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 입금 전 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>입금 확인</div>
+      <div class="flow">
+        <span class="flow-step">주문 선택</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">입금 확인</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">배송준비중 자동 전환</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>입금 전 취소</div>
+      <ul class="steps">
+        <li>주문 선택 → <strong>주문 취소</strong> 버튼 클릭</li>
+        <li>취소된 주문은 [취소/교환/반품/환불] &gt; 입금 전 취소 관리에서 확인</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>미입금 자동 취소 설정</div>
+      <div class="path">[쇼핑몰 설정] 주문 설정 &gt; 주문 후 설정 &gt; 미입금 주문 자동 취소</div>
+      <ul class="steps">
+        <li>사용함 선택 + 기한 설정 후 하단 저장</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
 
-<div class="toc">
-<div class="toc-title">📑 목차 (클릭하여 이동)</div>
-<div class="toc-grid">
+</div>
 
-<div class="toc-item" onclick="document.getElementById('sec-0').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">🔍</span>전체 주문 조회</div>
-<div class="toc-item" onclick="document.getElementById('sec-1').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">💰</span>입금 전 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-2').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">📦</span>배송 준비중 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-3').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">⏳</span>배송 대기 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-4').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">🚚</span>배송중 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-5').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">✅</span>배송완료 조회</div>
-<div class="toc-item" onclick="document.getElementById('sec-6').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">❌</span>취소 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-7').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">🔄</span>교환 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-8').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">↩️</span>반품 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-9').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">💳</span>환불 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-10').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">💴</span>결제수단별 환불 방법</div>
-<div class="toc-item" onclick="document.getElementById('sec-11').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">📋</span>주문 배송상태별 취소 방법</div>
-<div class="toc-item" onclick="document.getElementById('sec-12').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">📅</span>예약주문 관리</div>
-<div class="toc-item" onclick="document.getElementById('sec-13').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">✔️</span>구매확정 기능</div>
-<div class="toc-item" onclick="document.getElementById('sec-14').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">🧾</span>현금영수증</div>
-<div class="toc-item" onclick="document.getElementById('sec-15').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">📄</span>세금계산서</div>
-<div class="toc-item" onclick="document.getElementById('sec-16').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">🔢</span>할인금액 자동계산</div>
-<div class="toc-item" onclick="document.getElementById('sec-17').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">💚</span>네이버페이</div>
-<div class="toc-item" onclick="document.getElementById('sec-18').scrollIntoView({behavior:'smooth'})"><span class="toc-icon">📊</span>통계관리</div>
-</div></div><div class="main">
-<div class="section" id="sec-0"><div class="sec-hdr"><div class="sec-icon">🔍</div><div class="sec-title">전체 주문 조회</div></div>
-<h4 class="g-heading">주문 조회하기</h4>
-<p class="g-text">원하는 기간 선택, 검색어 주문번호/주문자명/상품명 기재하여 특정 주문건만 검색 가능</p>
-<p class="g-text">날짜/결제상태/주문상태/주문경로 선택 후 검색 조건 저장하여 특정조건 주문만 조회 가능</p>
-<h4 class="g-heading">주문/매출 경로 구분</h4>
-<h4 class="g-heading">검색된 주문 결과에서</h4>
-<p class="g-text">주문번호 앞 아이콘에 따라 어떤 주문/매출 경로로 주문된 건인지 확인 가능</p>
-<div class="g-ref">가이드 : 전체 주문 조회</div>
-<h4 class="g-heading">전체 주문 조회</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 전체 주문 조회</div>
+<!-- ============ 배송 처리 ============ -->
+<div class="cat-group" data-cat="ship">
+<div class="cat-title">배송 처리</div>
+
+<div class="card" data-keywords="배송준비중 송장 택배 묶음배송 엑셀">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📦</div>
+    <div class="card-title-wrap">
+      <div class="card-title">배송 준비중 관리</div>
+      <div class="card-sub">송장 입력 · 배송중 처리 · 묶음배송</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 배송 준비중 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>배송중 처리</div>
+      <ul class="steps">
+        <li>주문 선택 → 택배사 선택 + 송장번호 입력 → 체크 후 <strong>배송중처리</strong> 클릭</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>배송대기 처리 (택배 연동용)</div>
+      <ul class="steps">
+        <li>택배사·송장번호 입력 → <strong>송장번호 저장</strong> → 배송 대기 관리로 이동</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>묶음 배송 처리</div>
+      <ul class="steps">
+        <li>수령자 정보 동일한 주문 일괄 선택 → <strong>묶음 배송 처리</strong> 클릭</li>
+        <li>묶음배송 탭에서 택배사·송장 입력 후 배송중처리</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>엑셀 일괄 처리</div>
+      <ul class="steps">
+        <li>페이지 하단 엑셀 양식 다운로드 → 수정 → 쇼핑몰·배송사 선택 → 파일 등록</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-1"><div class="sec-hdr"><div class="sec-icon">💰</div><div class="sec-title">입금 전 관리</div></div>
-<h4 class="g-heading">입금 전 관리 메뉴</h4>
-<p class="g-text">고객이 무통장 입금으로 결제한 주문 확인하는 메뉴, 입금 확인 또는 주문 취소 가능</p>
-<h4 class="g-heading">입금 확인하기</h4>
-<p class="g-text">입금 전 관리 메뉴에서 주문 선택 후 입금 확인 > 배송준비중 (또는 상품준비중) 으로 주문 상태 변경</p>
-<h4 class="g-heading">입금 전 취소하기</h4>
-<h4 class="g-heading">입금 전 관리 메뉴에서 주문 선택 후 주문 취소 > 주문 상태가 입금전 취소로 변경되며</h4>
-<p class="g-text">취소된 주문은 [관리자] 주문 > 취소/교환/반품/환불 > 입금 전 취소 관리에서 확인 가능</p>
-<h4 class="g-heading">미입금 주문 자동 취소 설정하기</h4>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 주문 설정 > '주문 후 설정' > 미입금 주문 자동 취소 사용함 선택 후 기한 설정 > 페이지 하단 저장</p>
-<div class="g-ref">가이드 : 입금전관리</div>
-<h4 class="g-heading">입금 전 관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 입금 전 관리</div>
+
+<div class="card" data-keywords="배송대기 택배연동">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">⏳</div>
+    <div class="card-title-wrap">
+      <div class="card-title">배송 대기 관리</div>
+      <div class="card-sub">택배 연동 주문건 중간 처리</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 배송 대기 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>배송중 처리</div>
+      <ul class="steps">
+        <li>주문 체크 → <strong>배송중 처리</strong> → 배송중 관리로 이동</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>배송준비중 되돌리기</div>
+      <ul class="steps">
+        <li>주문 선택 → 배송준비중 처리 → 배송준비중 관리로 이동</li>
+      </ul>
+    </div>
+
+    <div class="note note-warn">
+      <span class="note-ic">⚠️</span>
+      <div><strong>연동택배 주문건</strong>은 임의로 상태를 변경하지 말 것. 배송대기까지 처리하면 1~2시간 내 택배 시스템에 전달되어 이후 실제 배송 상태에 따라 자동 전환됨.</div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-2"><div class="sec-hdr"><div class="sec-icon">📦</div><div class="sec-title">배송 준비중 관리</div></div>
-<h4 class="g-heading">배송중 처리하기</h4>
-<p class="g-text">배송준비중 관리 메뉴에서 주문 선택 > 운송장 정보의 택배사 선택/송장번호 기재 후 체크박스 체크 > 배송중처리 버튼 클릭</p>
-<h4 class="g-heading">배송대기 처리하기</h4>
-<p class="g-text">배송준비중 관리 메뉴에서 주문 선택 > 운송장 정보의 택배사 선택/송장번호 기재 후 송장 번호 저장 > 주문이 배송 대기 관리로 이동</p>
-<h4 class="g-heading">묶음 배송 처리하기</h4>
-<h4 class="g-heading">수령자 정보가 동일한 주문건 일괄 선택 > 체크박스 체크하여 묶음 배송 처리 버튼 클릭</h4>
-<div class="g-item">>  묶음배송 탭에서 운송장 정보의 택배사 선택/송장번호 기재하여 배송중처리 버튼 클릭</div>
-<h4 class="g-heading">엑셀 배송 처리하기</h4>
-<p class="g-text">배송준비중 관리 메뉴 하단 엑셀 일괄 배송 처리에서 엑셀 양식 다운로드 > 엑셀 수정 후 쇼핑몰 선택/배송사 선택/파일선택 > 등록 (가이드)</p>
-<div class="g-ref">가이드 : 배송 준비중 관리</div>
-<h4 class="g-heading">배송 준비중 관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 배송 준비 중 관리</div>
+
+<div class="card" data-keywords="배송중 배송완료">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🚚</div>
+    <div class="card-title-wrap">
+      <div class="card-title">배송중 관리</div>
+      <div class="card-sub">배송완료 처리 · 이전 단계 되돌리기</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 배송 중 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>배송완료 처리</div>
+      <ul class="steps">
+        <li>주문 선택 → <strong>배송완료 처리</strong> → 배송완료 조회로 이동</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>이전 단계로 되돌리기</div>
+      <ul class="steps">
+        <li>배송대기 처리 / 배송준비중 처리 버튼으로 해당 메뉴로 이동</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-3"><div class="sec-hdr"><div class="sec-icon">⏳</div><div class="sec-title">배송 대기 관리</div></div>
-<h4 class="g-heading">배송중 처리하기</h4>
-<p class="g-text">배송 대기 관리 메뉴에서 주문건 체크박스 선택 > 배송중 처리 버튼 클릭 > 주문이 배송중 관리 메뉴로 이동</p>
-<div class="g-warn">※ 연동택배 주문건</div>
-<p class="g-text">배송대기는 택배 연동 서비스 사용시 주로 사용하며, 연동택배 주문건의 경우 임의로 주문 상태를 변경하지 않고</p>
-<p class="g-text">배송대기까지 처리하면 1~2시간 내 연동된 택배 시스템에 전달 > 이후 실제 택배 배송 상태에 따라 자동으로 상태 변경됨</p>
-<h4 class="g-heading">배송준비중 되돌리기</h4>
-<p class="g-text">배송 대기 관리 메뉴에서 주문 선택 후 배송준비중 처리 버튼 클릭 > 주문이 배송준비중 관리 메뉴로 이동</p>
-<div class="g-ref">가이드 : 배송 대기 관리</div>
-<h4 class="g-heading">배송 대기 관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 배송 대기 관리</div>
+
+<div class="card" data-keywords="배송완료 자동체크">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">✅</div>
+    <div class="card-title-wrap">
+      <div class="card-title">배송완료 조회</div>
+      <div class="card-sub">완료 주문 검색 · 자동체크 앱</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 배송 완료 조회</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>조회</div>
+      <ul class="steps">
+        <li>원하는 조건 선택하여 검색</li>
+      </ul>
+    </div>
+
+    <div class="note note-danger">
+      <span class="note-ic">🚫</span>
+      <div><strong>배송완료는 이전 상태(배송중)로 되돌릴 수 없음.</strong> 필요 시 사유·주문번호 기재하여 1:1 문의 접수 필요.</div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-title">배송완료 자동체크 (유료 앱)</div>
+      <ul class="steps">
+        <li>택배 연동 미사용 쇼핑몰용 자동 처리 기능</li>
+        <li>자동 처리 가능한 9개 택배사 주문 → 실제 배송 상황에 맞춰 자동 완료 처리</li>
+        <li>설치: 앱 &gt; 앱스토어 &gt; <strong>배송완료 자동체크</strong> 검색 후 설치 → 건수 충전 + 활성화</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-4"><div class="sec-hdr"><div class="sec-icon">🚚</div><div class="sec-title">배송중 관리</div></div>
-<h4 class="g-heading">배송완료 처리하기</h4>
-<p class="g-text">배송중 관리 메뉴에서 주문 선택 후 배송완료 처리 버튼 클릭 > 주문이 배송완료 조회 메뉴로 이동</p>
-<h4 class="g-heading">배송대기 또는 배송준비중 되돌리기</h4>
-<p class="g-text">배송중 관리 메뉴에서 주문 선택 후 배송 대기 처리 또는 배송준비중 처리 버튼 클릭 > 주문이 배송대기 또는 배송준비중 메뉴로 이동</p>
-<div class="g-ref">가이드 : 배송 중 관리</div>
-<h4 class="g-heading">배송중관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 배송 중 관리</div>
+
 </div>
-<div class="section" id="sec-5"><div class="sec-hdr"><div class="sec-icon">✅</div><div class="sec-title">배송완료 조회</div></div>
-<h4 class="g-heading">배송완료 조회하기</h4>
-<p class="g-text">배송 완료 조회 메뉴에서 원하는 조건 선택하여 검색 시 배송완료된 주문 조회 가능</p>
-<div class="g-warn">※ 배송완료 메뉴의 경우 이전 상태값(배송중)으로 되돌리기 불가, 필요 시 사유/주문번호 기재하여 1:1 문의 접수 필요</div>
-<h4 class="g-heading">배송완료 자동체크 기능 (유료서비스)</h4>
-<p class="g-text">택배 연동을 사용하지 않으나 배송중 주문을 자동으로 배송완료 처리 하고 싶은 경우 배송완료 자동체크 앱 사용 가능</p>
-<p class="g-text">자동 처리 가능한 9개의 택배사 주문건이라면 택배 배송상황에 맞춰 자동으로 배송완료 처리됨</p>
-<h4 class="g-heading">앱 > 앱스토어 바로가기 > 배송완료 자동체크 검색하여 이동하기 > 동의함 > 설치완료</h4>
-<p class="g-text">설치 후 처리 건수 충전 및 자동체크 활성화 하여 이용 가능</p>
-<div class="g-ref">가이드 : 배송 완료 조회</div>
-<div class="g-ref">관련 앱 : 배송완료 자동체크</div>
-<h4 class="g-heading">배송완료조회</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 배송 완료 조회</div>
+
+<!-- ============ 취소/교환/반품/환불 ============ -->
+<div class="cat-group" data-cat="cs">
+<div class="cat-title">취소 · 교환 · 반품 · 환불</div>
+
+<div class="card" data-keywords="취소 접수 철회">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">❌</div>
+    <div class="card-title-wrap">
+      <div class="card-title">취소 관리</div>
+      <div class="card-sub">취소 접수 · 완료 · 철회</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 취소/교환/반품/환불 &gt; 취소 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>고객 직접 취소신청 설정</div>
+      <div class="path">[쇼핑몰 설정] 주문 설정 &gt; 주문 정책 설정 &gt; 주문 후 설정</div>
+      <ul class="steps">
+        <li>구매자 취소/교환/반품 신청 사용함</li>
+        <li>신청 버튼 노출 범위 및 배송상태 체크 설정</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>취소 접수</div>
+      <div class="sub">
+        <div class="sub-title">구매자 취소 신청 주문</div>
+        <ul class="steps">
+          <li>취소 관리 메뉴 → 취소처리 <strong>처리 버튼</strong> → 상품 선택 + 취소 접수 → 구분 선택 후 확인</li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">운영자 취소 처리</div>
+        <ul class="steps">
+          <li>전체주문조회 → 주문번호 클릭 → <strong>주문 취소</strong> → 상품 선택 + 취소 접수 → 구분 선택 후 확인</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>취소 완료</div>
+      <ul class="steps">
+        <li>취소처리 중 상태는 환불처리까지 진행해야 완료 상태로 전환됨</li>
+        <li>주문번호 클릭 → 환불 탭 → 환불처리 <strong>처리 버튼</strong> → 환불완료처리</li>
+      </ul>
+      <div class="note note-warn">
+        <span class="note-ic">⚠️</span>
+        <div><strong>무통장</strong>은 자동환불 불가 → 운영자가 직접 송금. <strong>카드결제</strong>는 환불완료 처리 + PG 취소 처리 필요.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>취소 철회</div>
+      <ul class="steps">
+        <li>취소처리 <strong>상세</strong> → 취소철회 → 구분·사유 기재 후 철회완료</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-6"><div class="sec-hdr"><div class="sec-icon">❌</div><div class="sec-title">취소 관리</div></div>
-<h4 class="g-heading">고객 직접 취소신청 가능하도록 설정하기</h4>
-<h4 class="g-heading">[관리자] 쇼핑몰 설정 > 주문 설정 > '주문 정책 설정' > '주문 후 설정'</h4>
-<div class="g-item">> 구매자 취소/교환/반품 신청 설정 > 취소/교환/반품 신청 사용 설정 항목 사용함</div>
-<div class="g-item">> 기본 또는 상세신청 항목 표시 > 취소/교환/반품 신청 버튼 노출 범위 설정</div>
-<div class="g-item">> 취소신청 항목 중 배송전/배송후 원하는 배송상태 체크하여 설정</div>
-<div class="g-ref">가이드 : 취소 관리</div>
-<h4 class="g-heading">취소관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 취소/교환/반품/환불 > 취소 관리</div>
-<h4 class="g-heading">취소접수하기</h4>
-<div class="g-item">- 구매자 취소 신청 주문 : 취소 관리 메뉴에서 취소할 주문건 취소처리의 처리 버튼 클릭 > 취소처리 팝업에서 상품 선택 후 취소 접수 > 구분 선택 후 확인</div>
-<div class="g-item">- 운영자 취소 처리 주문 : 전체주문조회 메뉴에서 주문번호 클릭 > 주문상세정보 창 주문 취소 > 취소처리 팝업에서 상품 선택 후 취소 접수 > 구분 선택 후 확인</div>
-<h4 class="g-heading">취소완료하기</h4>
-<p class="g-text">취소 관리 메뉴에서 주문상태 항목 취소처리 중인 경우 환불처리까지 진행해야 취소 완료 상태로 변경됨</p>
-<p class="g-text">취소 관리 메뉴에서 주문번호 클릭 > 환불 탭에서 환불처리/상세의 처리 버튼 클릭 >  환불완료처리</p>
-<div class="g-warn">※ 무통장 주문건의 경우 자동환불이 되지 않기 때문에 운영자가 구매자에게 직접 송금 필요</div>
-<div class="g-warn">※ 카드결제 주문건의 경우 환불완료 처리 및 신용카드 취소 처리 필요, 결제수단별 환불방법은 환불관리 메뉴 내용 참고</div>
-<h4 class="g-heading">취소철회하기</h4>
-<p class="g-text">취소관리 메뉴에서 취소처리의 상세 클릭 > 취소처리 상세정보창에서 취소철회 클릭 > 구분 선택, 사유 기재 후 철회완료</p>
-<h4 class="g-heading">취소관리</h4>
+
+<div class="card" data-keywords="교환 차액 수거">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔄</div>
+    <div class="card-title-wrap">
+      <div class="card-title">교환 관리</div>
+      <div class="card-sub">배송 전/후 교환 · 차액 처리 · 철회</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 취소/교환/반품/환불 &gt; 교환 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>배송 전 교환</div>
+      <table class="tbl">
+        <tr><th>유형</th><th>처리 방법</th></tr>
+        <tr><td>금액 변동 없음</td><td>접수 시 자동 교환 완료 → 교환 상품 포함 배송처리</td></tr>
+        <tr><td>차액 추가 결제</td><td>고객 무통장 입금 → 입금전 관리에서 입금 확인 → 배송처리</td></tr>
+        <tr><td>차액 환불</td><td>차액 환불 → 배송처리</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>배송 후 교환</div>
+      <table class="tbl">
+        <tr><th>유형</th><th>처리 방법</th></tr>
+        <tr><td>금액 변동 없음</td><td>상품 회수 → 교환 관리에서 <strong>수거완료</strong> → 교환 상품 배송</td></tr>
+        <tr><td>차액 결제 (왕복 배송비 포함)</td><td>차액 입금 확인 → 상품 회수 + 수거완료 → 교환 상품 배송</td></tr>
+        <tr><td>차액 환불</td><td>차액 환불 → 상품 회수 + 수거완료 → 교환 상품 배송</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>교환 철회</div>
+      <ul class="steps">
+        <li>교환처리 <strong>상세</strong> → 교환철회 → 구분 선택 후 철회완료</li>
+      </ul>
+      <div class="note note-warn">
+        <span class="note-ic">⚠️</span>
+        <div>
+          <strong>금액 변동 있는 교환 철회 시 유의사항:</strong><br>
+          • 추가 입금 발생 → 고객에게 다시 입금 받은 후 철회<br>
+          • 추가 환불 발생 → 고객에게 직접 환불 후 철회<br>
+          • PG 취소 발생 → PG사 관리자페이지에서 철회 가능 여부 확인 후 진행
+        </div>
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-7"><div class="sec-hdr"><div class="sec-icon">🔄</div><div class="sec-title">교환 관리</div></div>
-<h4 class="g-heading">배송전 교환완료하기</h4>
-<div class="g-item">- 금액 변동 없는 경우</div>
-<p class="g-text">접수되면 자동 교환 완료 상태가 되고, 교환된 상품을 포함해 배송처리 필요</p>
-<div class="g-item">- 차액 추가 결제 필요한 경우</div>
-<h4 class="g-heading">더 비싼 상품으로 교환했다면 고객에게 차액을 무통장 입금으로 결제 하도록 안내</h4>
-<div class="g-item">> 입금 확인 후 입금전 관리 메뉴에서 해당 주문 선택하여 입금 확인 > 이후 일반 상품과 동일하게 배송처리</div>
-<div class="g-item">- 차액 환불이 필요한 경우</div>
-<p class="g-text">더 저렴한 상품으로 교환했다면 고객에게 차액을 환불해 주고, 이후 일반 상품과 동일하게 배송처리</p>
-<h4 class="g-heading">교환관리</h4>
-<h4 class="g-heading">배송후 교환완료하기</h4>
-<div class="g-item">- 금액 변동이 없는 경우</div>
-<p class="g-text">고객에게 배송된 상품 반송 요청 > 상품 회수 시  [관리자] 주문 > 취소/교환/반품/환불 > 교환 관리 메뉴에서 주문건 체크 후 수거완료 버튼 클릭</p>
-<div class="g-item">> 이후 교환 상품 배송처리</div>
-<div class="g-item">- 차액 추가 결제 필요한 경우</div>
-<p class="g-text">더 비싼 상품으로 교환하거나 왕복 배송비가 추가되면 고객에게 차액 결제 안내 및 상품 반송 요청 > 입금 확인되면 [관리자] 주문 > 입금전 관리에서</p>
-<p class="g-text">해당 주문건 입금 확인 > 상품 회수되면 [관리자] 주문 > 취소/교환/반품/환불 > 교환 관리에서 주문건 선택 후 수거완료 버튼 클릭 > 이후 교환 상품 배송처리</p>
-<div class="g-item">- 차액 환불이 필요한 경우</div>
-<p class="g-text">저렴한 상품으로 교환했다면 고객에게 차액 환불 후 배송된 상품 반송 요청 > 상품 회수 후  [관리자] 주문 > 취소/교환/반품/환불 > 교환 관리에서</p>
-<h4 class="g-heading">주문건 선택 후 수거완료 버튼 클릭 > 이후 교환 상품 배송 처리</h4>
-<h4 class="g-heading">교환관리</h4>
-<h4 class="g-heading">교환 철회하기</h4>
-<p class="g-text">[관리자] 주문 > 취소/교환/반품/환불 > 교환 관리에서 철회하려는 주문건 교환처리 항목의 상세 버튼 클릭</p>
-<div class="g-item">> 교환처리 상세정보 창에서 교환철회 버튼 클릭 > 교환 철회 구분 선택 후 철회완료</div>
-<div class="g-warn">※ 금액 변동이 있는 교환 철회하는 경우 유의해야 할 사항</div>
-<p class="g-text">교환처리 중 추가 입금이 발생되면 고객에게 다시 입금 받은 후 철회 필요</p>
-<p class="g-text">교환처리 중 추가 환불 발생 시 고객에게 직접 환불 후 철회 필요</p>
-<p class="g-text">교환처리 중 PG 취소 발생 시 PG사 관리자페이지에서 승인 취소 철회 가능한지 확인 후 철회 진행 필요</p>
-<h4 class="g-heading">교환관리</h4>
-<h4 class="g-heading">고객 직접 반품신청 가능하도록 설정하기</h4>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 주문 설정 > '주문 정책 설정' > '주문 후 설정' > '구매자 취소/교환/반품 신청 설정'</p>
-<div class="g-item">> 취소/교환/반품 신청버튼 노출 범위 설정 > 반품신청 항목에 배송후 원하는 배송상태 체크하여 설정</div>
-<h4 class="g-heading">반품 접수하기</h4>
-<div class="g-item">- 구매자 반품 신청 주문건</div>
-<p class="g-text">반품 관리에서 반품신청된 주문건 반품 처리 항목의 처리 버튼 클릭 > 반품처리 팝업창에서 상품 선택하고 반품접수 > 반품 접수 구분 선택 후 확인 클릭</p>
-<div class="g-item">- 운영자 반품 처리 필요 주문건</div>
-<p class="g-text">전체주문조회 메뉴에서 주문번호 클릭 > 주문상세정보창에서 상품 반품 클릭 > 반품처리 팝업창에서 상품 선택 후 반품 접수 클릭 > 반품 접수 구분 선택 후 확인</p>
-<h4 class="g-heading">반품관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 취소/교환/반품/환불 > 반품 관리</div>
+
+<div class="card" data-keywords="반품 접수 수거">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">↩️</div>
+    <div class="card-title-wrap">
+      <div class="card-title">반품 관리</div>
+      <div class="card-sub">반품 신청 설정 · 접수 처리</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 취소/교환/반품/환불 &gt; 반품 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>고객 직접 반품신청 설정</div>
+      <div class="path">[쇼핑몰 설정] 주문 설정 &gt; 주문 정책 설정 &gt; 주문 후 설정</div>
+      <ul class="steps">
+        <li>구매자 취소/교환/반품 신청 설정 → 반품신청 항목에 배송 후 상태 체크</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>반품 접수</div>
+      <div class="sub">
+        <div class="sub-title">구매자 반품 신청 주문</div>
+        <ul class="steps">
+          <li>반품 관리 → 반품처리 <strong>처리 버튼</strong> → 상품 선택 + 반품접수 → 구분 선택 후 확인</li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">운영자 반품 처리</div>
+        <ul class="steps">
+          <li>전체주문조회 → 주문번호 클릭 → <strong>상품 반품</strong> → 상품 선택 + 반품 접수 → 구분 선택 후 확인</li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-8"><div class="sec-hdr"><div class="sec-icon">↩️</div><div class="sec-title">반품 관리</div></div>
-<div class="g-path">메뉴 경로 :</div>
-<h4 class="g-heading">환불 접수하기</h4>
-<p class="g-text">고객이 상품 구매 후 취소/교환/반품 진행하여 고객에게 차액 반환 해야 하는 경우, 환불 진행 필요</p>
-<p class="g-text">취소/교환/반품 접수 시 환불이 자동으로 접수됨</p>
-<h4 class="g-heading">환불 완료하기</h4>
-<p class="g-text">[관리자] 주문 > 취소/교환/반품/환불 > 환불 관리에서 환불처리 항목의 처리 버튼 클릭 > 환불처리 팝업창에서 환불 관련 정보 입력 후 환불 완료 처리 버튼 클릭 > PG 결제 주문건의 경우 주문 상세정보 창에서 PG 취소까지 완료해야 카드결제 승인 취소됨</p>
-<h4 class="g-heading">환불 철회하기</h4>
-<p class="g-text">[관리자] 주문 > 취소/교환/반품/환불 > 환불 관리에서 환불처리 항목 상세 클릭 > 환불 처리 상세정보 팝업창에서 환불 전 처리 클릭하면 환불전 상태로 변경됨</p>
-<h4 class="g-heading">환불관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 취소/교환/반품/환불 > 환불 관리</div>
+
+<div class="card" data-keywords="환불 완료 PG">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">💳</div>
+    <div class="card-title-wrap">
+      <div class="card-title">환불 관리</div>
+      <div class="card-sub">환불 접수 · 완료 · 철회</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 취소/교환/반품/환불 &gt; 환불 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>환불 접수</div>
+      <ul class="steps">
+        <li>취소/교환/반품 접수 시 환불이 <strong>자동 접수</strong>됨</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>환불 완료</div>
+      <div class="flow">
+        <span class="flow-step">환불처리 처리버튼</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">정보 입력</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">환불 완료 처리</span>
+      </div>
+      <div class="note note-warn">
+        <span class="note-ic">💡</span>
+        <div>PG 결제 주문은 주문상세정보 창에서 <strong>PG 취소</strong>까지 완료해야 카드결제 승인 취소됨.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>환불 철회</div>
+      <ul class="steps">
+        <li>환불처리 <strong>상세</strong> → 환불 전 처리 클릭 → 환불 전 상태로 변경</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-9"><div class="sec-hdr"><div class="sec-icon">💳</div><div class="sec-title">환불 관리</div></div>
-<div class="g-item">- 카드결제 주문건</div>
-<p class="g-text">취소 처리 진행 후 주문상세정보창 결제 수단 부분에서 신용카드 전체취소/신용카드 부분취소 버튼 클릭</p>
-<div class="g-warn">※ 유의사항</div>
-<h4 class="g-heading">배송비를 차감하거나 부분 취소/반품인 경우 신용카드 부분취소 버튼 클릭 필요,</h4>
-<h4 class="g-heading">부분취소 하려는 주문건도 신용카드 전체취소 버튼을 클릭하면</h4>
-<p class="g-text">결제한 금액 전액 취소되기 때문에 유의하여 진행 필요</p>
+
+<div class="card" data-keywords="결제수단 휴대폰 카드 환불방법">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">💴</div>
+    <div class="card-title-wrap">
+      <div class="card-title">결제수단별 환불 방법</div>
+      <div class="card-sub">카드 · 휴대폰 결제별 처리</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>카드 결제 주문</div>
+      <ul class="steps">
+        <li>취소 처리 후 주문상세정보 창 결제수단에서 <strong>신용카드 전체취소</strong> / <strong>신용카드 부분취소</strong> 클릭</li>
+      </ul>
+      <div class="note note-danger">
+        <span class="note-ic">⚠️</span>
+        <div>배송비 차감 또는 부분 취소/반품인 경우 <strong>부분취소 버튼 필수</strong>. 전체취소를 누르면 결제액 전액이 취소됨.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>휴대폰 결제 주문</div>
+      <ul class="steps">
+        <li>취소/반품 처리 후 결제수단에서 <strong>휴대폰결제 취소</strong> 클릭</li>
+        <li><strong>당월(1일~31일)</strong> 결제건만 취소 가능 (이통사 정책)</li>
+        <li>결제월 지난 경우 적립금·예치금·무통장 등 다른 수단으로 환불</li>
+        <li>부분취소 미지원 → 다른 수단 환불 또는 전체 취소 후 재주문 안내</li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-10"><div class="sec-hdr"><div class="sec-icon">💴</div><div class="sec-title">결제수단별 환불 방법</div></div>
-<div class="g-item">- 휴대폰 결제 주문건</div>
-<h4 class="g-heading">취소/반품 처리 후 주문상세정보 창 결제수단에서 휴대폰결제 취소 버튼 클릭</h4>
-<p class="g-text">휴대폰 결제는 이동통신사 정책에 따라 당월(1일~31일) 결제건만 취소 가능</p>
-<p class="g-text">결제월이 지나 취소할 수 없는 경우 운영자가 고객에게 다른 수단(적립금, 예치금, 무통장 등)으로 환불 필요</p>
-<p class="g-text">휴대폰 결제는 부분취소가 지원되지 않아 다른 수단으로 환불하거나 전체 취소 후 재주문 안내 필요</p>
-<div class="g-ref">가이드 : 결제 수단에 따라 어떻게 환불해줘야 하나요</div>
-<h4 class="g-heading">주문 배송 상태별 부분/전체취소 방법</h4>
-<div class="g-item">- 배송전 부분/전체 취소</div>
-<p class="g-text">전체주문조회 메뉴에서 주문번호 클릭 > 주문상세정보 창에서 주문취소 버튼 클릭 > 취소처리 팝업창에서 상품 선택 후 취소접수 클릭</p>
-<div class="g-item">> 취소 접수 구분 선택 후 확인</div>
-<div class="g-item">- 배송후 부분/전체 취소</div>
-<p class="g-text">전체주문조회에서 주문번호 클릭 > 주문상세정보 창에서 상품반품 클릭 > 반품처리 팝업창에서 상품선택 후 반품접수 > 반품 접수 구분 선택 후 확인</p>
-<div class="g-warn">※ 부분취소와 전체취소의 처리 과정은 동일하나, 취소하고자 하는 상품을 일부 선택하는지 전체 선택하는지의 차이</div>
-<div class="g-ref">가이드 : 주문 배송상태별 부분 취소 방법을 알고 싶어요, 주문 배송 상태별 전체 취소 방법을 알고 싶어요</div>
-<h4 class="g-heading">고객변심, 부분취소나 반품으로 배송비 차감하여 환불 필요 시</h4>
-<p class="g-text">쇼핑몰설정 > 주문 설정 > 주문 정책 설정 > 주문 후 설정 메뉴의 입금/환불/반품처리 설정 > 취소/교환/반품 접수 시 환불접수 처리 설정에 따라 처리 방법 상이</p>
-<div class="g-item">- 취소/교환/반품 접수와 환불접수를 동시에 처리함 설정된 경우</div>
-<p class="g-text">전체주문조회 메뉴에서 주문번호 클릭 > 주문상세정보 창에서 주문취소 또는 상품반품 클릭 > 취소처리/반품처리 팝업창에서 상품 선택 후 취소/반품접수 클릭</p>
-<div class="g-item">> 취소/반품 접수 구분 선택 > 환불방식의 배송비 적용여부 > 반품배송비 적용 환불액에서 차감 선택 후 차감할 금액 기재</div>
-<div class="g-item">- 취소/교환/반품 접수와 환불접수를 분리하여 처리함 설정된 경우</div>
-<p class="g-text">전체주문조회 메뉴에서 주문번호 클릭 > 주문상세정보 창에서 주문취소 또는 상품반품 버튼 클릭 > 취소처리/반품처리 팝업창에서 상품 선택 후</p>
-<p class="g-text">취소접수/반품접수 클릭 > 취소/반품 접수 구분 선택 후 확인 > 주문상세정보창의 환불 탭 클릭 > 환불방식의 배송비 적용여부, 적립금 반환,</p>
-<h4 class="g-heading">각종 쿠폰 및 할인 취소 등 조정 후 > 확인</h4>
-<div class="g-ref">가이드 : 고객 변심, 부분 취소나 반품으로 환불해야 할 때 배송비를 차감하고 싶어요</div>
+
+<div class="card" data-keywords="배송상태별 부분취소 전체취소">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📋</div>
+    <div class="card-title-wrap">
+      <div class="card-title">배송상태별 취소 방법</div>
+      <div class="card-sub">배송 전/후 부분·전체 취소 · 배송비 차감</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>배송 전 부분/전체 취소</div>
+      <div class="flow">
+        <span class="flow-step">전체주문조회</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">주문번호 클릭</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">주문 취소</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">상품 선택 + 취소접수</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>배송 후 부분/전체 취소 (반품)</div>
+      <div class="flow">
+        <span class="flow-step">전체주문조회</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">주문번호 클릭</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">상품 반품</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">상품 선택 + 반품접수</span>
+      </div>
+      <div class="note note-tip">
+        <span class="note-ic">💡</span>
+        <div>부분취소 ↔ 전체취소 처리 과정은 동일. <strong>상품을 일부 선택하느냐 전체 선택하느냐</strong>의 차이.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>배송비 차감 환불 (고객 변심)</div>
+      <div class="path">[쇼핑몰 설정] 주문 설정 &gt; 주문 후 설정 &gt; 입금/환불/반품처리 설정</div>
+
+      <div class="sub">
+        <div class="sub-title">동시 처리 설정인 경우</div>
+        <ul class="steps">
+          <li>취소/반품처리 팝업에서 상품 선택 + 접수 → <strong>환불방식</strong>에서 반품배송비 적용 → 환불액 차감 금액 기재</li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">분리 처리 설정인 경우</div>
+        <ul class="steps">
+          <li>취소/반품 접수 완료 후 → 주문상세정보 창 <strong>환불 탭</strong> → 배송비·적립금·쿠폰 등 조정</li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-11"><div class="sec-hdr"><div class="sec-icon">📋</div><div class="sec-title">주문 배송상태별 취소 방법</div></div>
-<h4 class="g-heading">카페24 예약서비스</h4>
-<p class="g-text">다양한 예약/티켓 상품을 만들고 관리 가능, 상품별 예약달력과 지도 노출 가능</p>
-<p class="g-text">숙박형, 날짜+시간+사용자 옵션형, 날짜+사용자 옵션형, 사용자 옵션형 상품 등록 가능</p>
-<h4 class="g-heading">예약주문 관리</h4>
-<p class="g-text">예약주문 관리 메뉴에서 전체 예약목록을 리스트 또는 캘린더 형태로 확인하고 예약상태 변경 가능</p>
-<h4 class="g-heading">전체 예약 목록 (리스트형 or 캘린더형)</h4>
-<p class="g-text">주문 > 주문관리 부가기능 > 예약주문 관리 메뉴에서 원하는 검색 조건 설정 후 검색하여 확인 가능</p>
-<h4 class="g-heading">예약주문관리</h4>
-<div class="g-warn">※ 참고사항</div>
-<p class="g-text">예약주문의 경우 교환이 제공되지 않음</p>
-<p class="g-text">취소 및 반품처리는 쇼핑몰 관리자에서 처리 가능</p>
-<h4 class="g-heading">예약번호는 쇼핑몰 어드민에서 주문번호로 노출되며,</h4>
-<p class="g-text">예약 주문 목록에서 품목단위로 확인 가능</p>
-<p class="g-text">예약주문은 배송정보가 존재하지 않고 예약자 정보 확인 가능</p>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 주문관리 부가기능 > 예약주문관리</div>
-<h4 class="g-heading">예약주문관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 주문관리 부가기능 > 예약주문관리</div>
+
 </div>
-<div class="section" id="sec-12"><div class="sec-hdr"><div class="sec-icon">📅</div><div class="sec-title">예약주문 관리</div></div>
-<h4 class="g-heading">예약상품 유형</h4>
-<p class="g-text">전체 예약목록 리스트형 : 여러 상태 주문 모아서 조회하고, 조회 결과에서 예약 상태명 클릭 시 예약 상태 변경 가능</p>
-<p class="g-text">전체 예약목록 캘린더형 : 주간/일간으로 예약목록 확인 가능, 예약현황을 시간단위로 한눈에 확인 가능</p>
-<p class="g-text">예약상태 일괄 변경  : 여러 주문 일괄로 예약신청, 예약대기, 이용대기, 이용완료 처리 가능</p>
-<div class="g-step">1. '구매 확정' 이란?</div>
-<p class="g-text">구매 확정은 이후에 취소, 교환, 반품 의사가 없다는 뜻으로, 구매 확정한 상품은 취소, 교환, 반품 처리 불가</p>
-<p class="g-text">상품이 배송 중 또는 배송 완료 상태일 때, 구매자가 '구매 확정' 처리 가능</p>
-<p class="g-text">단, 불가피한 상황이라면 운영자가 구매 확정을 취소한 후 CS 처리를 진행 필요</p>
-<div class="g-warn">※ 유의사항 : 외부 주문(오픈마켓, 네이버페이, 카카오페이) 은 어드민에서 구매 확정으로 바꿔도 연동되지 않음</div>
-<div class="g-step">2. 구매 확정 설정/사용 방법</div>
-<h4 class="g-heading">1) 사용 설정하는 방법</h4>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 주문 설정 > 주문 정책 설정 > 주문 후 설정에서 '구매 확정 설정'</p>
-<p class="g-text">구매 확정 버튼을 '사용함'으로 선택하면, 쇼핑몰 '주문 조회' 목록에 구매 확정 버튼이 표시됨</p>
-<h4 class="g-heading">2) 구매 확정 처리하는 방법(구매자)</h4>
-<p class="g-text">상품이 배송 중, 배송 완료 상태면 쇼핑몰 마이 페이지의 '주문 조회' 목록에 구매 확정 버튼이 표시되며 버튼 클릭 시 구매확정 상태로 변경</p>
-<p class="g-text">구매확정 기능</p>
-<h4 class="g-heading">3) 구매 확정 처리하는 방법(운영자)</h4>
-<h4 class="g-heading">3-1) 수동 처리</h4>
-<p class="g-text">주문 번호 검색 후 주문 상세정보창에서 주문 상태 탭의 '상태 변경' 버튼을 눌러 운영자가 구매 확정 처리 가능</p>
-<h4 class="g-heading">3-2) 자동 처리</h4>
-<p class="g-text">'구매 확정 자동체크' 기능을 통해 운영자가 설정한 특정 기간이 지나면 자동으로 '구매확정' 상태가 됨</p>
-<p class="g-text">단, 배송 완료일이 최근 1개월 이내인 주문만 자동으로 구매확정 처리 가능</p>
-<h4 class="g-heading">4) 구매 확정 취소하는 방법</h4>
-<p class="g-text">운영자가 주문 상세 정보창의 주문 상태 탭에서 '구매 확정 취소' 버튼 클릭하여 취소 가능</p>
-<p class="g-text">구매 확정한 주문을 취소, 교환, 반품 처리해야 할 때 사용 가능</p>
-<h4 class="g-heading">5) 구매 확정 검색하는 방법</h4>
-<p class="g-text">구매 확정된 주문은 '전체 주문 조회'와 '배송 완료 조회' 메뉴에서 주문 상태를 '구매 확정'으로 하여 검색 가능</p>
+
+<!-- ============ 결제/정산 ============ -->
+<div class="cat-group" data-cat="pay">
+<div class="cat-title">결제 · 정산</div>
+
+<div class="card" data-keywords="예약주문 숙박 캘린더">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📅</div>
+    <div class="card-title-wrap">
+      <div class="card-title">예약주문 관리</div>
+      <div class="card-sub">예약/티켓 상품 관리 · 상태 변경</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 주문관리 부가기능 &gt; 예약주문 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>예약 상품 유형</div>
+      <ul class="steps">
+        <li>숙박형 · 날짜+시간+사용자 옵션형 · 날짜+사용자 옵션형 · 사용자 옵션형</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>예약 목록 조회</div>
+      <ul class="steps">
+        <li><strong>리스트형</strong>: 여러 상태 주문 모아 조회 + 상태명 클릭 시 상태 변경 가능</li>
+        <li><strong>캘린더형</strong>: 주간/일간 예약 현황을 시간 단위로 확인</li>
+        <li>예약상태 <strong>일괄 변경</strong>: 예약신청/예약대기/이용대기/이용완료 일괄 처리</li>
+      </ul>
+    </div>
+
+    <div class="note note-warn">
+      <span class="note-ic">📌</span>
+      <div>
+        • 예약주문은 <strong>교환 불가</strong> (취소·반품만 관리자에서 처리)<br>
+        • 예약번호 = 쇼핑몰 어드민 주문번호 (품목 단위 확인)<br>
+        • 배송정보 없음, 예약자 정보만 확인
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-13"><div class="sec-hdr"><div class="sec-icon">✔️</div><div class="sec-title">구매확정 기능</div></div>
-<div class="g-step">3. 구매 확정되면 적립금 즉시 지급</div>
-<p class="g-text">구매 확정을 사용하면 적립금을 즉시 지급하도록 설정할 수 있어요.</p>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 고객 설정 > 회원 정책 설정 > 적립금 설정의 '적립금 지급 시점 설정'에서 주문 상태를</p>
-<p class="g-text">'구매확정 후'로 설정하시고 지급 시점을 즉시로 변경하시면 구매 확정 시 적립금이 즉시 지급되도록 설정하실 수 있어요.</p>
-<div class="g-ref">가이드 : 구매 확정 기능</div>
-<h4 class="g-heading">현금영수증 신청 방법</h4>
-<h4 class="g-heading">[관리자] 부가서비스 > 기본 운영 서비스 > 현금 영수증 메뉴에서 서비스 신청</h4>
-<div class="g-item">> 현금영수증 서비스 사용현황 및 신청 항목에 신청하기 클릭 > 서비스 신청의 신청서 작성 필수항목 모두 기재</div>
-<div class="g-warn">※ 참고사항</div>
-<p class="g-text">신청서의 사업자등록 번호와 [관리자] 쇼핑몰 설정 > 기본 설정 의 '쇼핑몰 정보 > 내 쇼핑몰 정보' 사업자등록번호가 일치해야 현금영수증 정상적으로 발행 가능</p>
-<div class="g-warn">※ 유의사항</div>
-<p class="g-text">현금영수증은 현금결제(계좌이체, 가상계좌, 무통장입금 등)에 대해서만 발급 가능하며 신용카드, 휴대폰결제 주문건은 발급되지 않음</p>
-<p class="g-text">현금영수증 발행 금액에 배송비 포함되며, 적립금 사용 금액은 포함되지 않음</p>
-<p class="g-text">통합결제서비스(PG) 신청시 현금영수증 서비스 자동 가입되나 KSNET를 이용 시 자동 가입되지 않으므로 이니시스 현금영수증 서비스 신청 필요</p>
-<h4 class="g-heading">현금영수증</h4>
-<div class="g-path">메뉴 경로 : [관리자] 부가서비스 > 기본 운영 서비스 > 현금영수증</div>
-<h4 class="g-heading">현금영수증 발행 설정</h4>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 결제 설정 > 매출 증빙 서비스 > 현금영수증 발행 설정에서 발행기능 사용여부 자동발행 또는 수동발행,</p>
-<p class="g-text">주문서 표시 설정 표시함으로 설정 > 발행신청 기간 제한설정과 현금영수증 이용 안내 수정 후 설정완료</p>
-<p class="g-text">[공지/소식] 업그레이드 > [상점관리] 현금영수증 결제페이지 표시 설정 기능 추가 참고하여 디자인 수정 필요</p>
-<div class="g-warn">※ 참고</div>
-<p class="g-text">자동 발행(권장): 입금 완료 및 취소, 반품 시에 자동으로 발행, 취소됨. 자동 발행 설정하더라도 구매 고객이 현금영수증 신청을 해야 처리됨</p>
-<p class="g-text">수동 발행: 운영자가 직접 발행해야 하고, 취소/반품 시 직접 수정 필요. 현금영수증 신청 후 반품/환불이 발생할 수 있어 확인 후 발행/취소 필요</p>
+
+<div class="card" data-keywords="구매확정 적립금">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">✔️</div>
+    <div class="card-title-wrap">
+      <div class="card-title">구매확정 기능</div>
+      <div class="card-sub">설정 · 수동/자동 처리 · 취소</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>구매확정이란</div>
+      <ul class="steps">
+        <li>취소·교환·반품 의사 없음을 뜻함 → 확정 후 <strong>취소·교환·반품 불가</strong></li>
+        <li>배송중 또는 배송완료 상태일 때 구매자가 처리 가능</li>
+        <li>불가피한 경우 운영자가 구매확정 취소 후 CS 처리</li>
+      </ul>
+      <div class="note note-danger">
+        <span class="note-ic">🚫</span>
+        <div><strong>외부 주문(오픈마켓·네이버페이·카카오페이)</strong>은 어드민에서 구매확정으로 바꿔도 연동되지 않음.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>사용 설정</div>
+      <div class="path">[쇼핑몰 설정] 주문 설정 &gt; 주문 정책 설정 &gt; 주문 후 설정 &gt; 구매 확정 설정</div>
+      <ul class="steps">
+        <li>구매 확정 버튼 <strong>사용함</strong> → 쇼핑몰 주문 조회 목록에 버튼 표시</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>구매확정 처리</div>
+      <div class="sub">
+        <div class="sub-title">구매자</div>
+        <ul class="steps">
+          <li>마이페이지 주문 조회 목록의 <strong>구매 확정 버튼</strong> 클릭</li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">운영자 - 수동</div>
+        <ul class="steps">
+          <li>주문번호 검색 → 주문상세정보 → 주문 상태 탭 → <strong>상태 변경</strong></li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">운영자 - 자동</div>
+        <ul class="steps">
+          <li><strong>구매 확정 자동체크</strong> 기능: 특정 기간 경과 시 자동 확정</li>
+          <li>배송완료일 <strong>최근 1개월 이내</strong> 주문만 자동 처리 가능</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>구매확정 취소</div>
+      <ul class="steps">
+        <li>주문상세정보 → 주문 상태 탭 → <strong>구매 확정 취소</strong> 버튼 클릭</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">5</span>구매확정 시 적립금 즉시 지급 설정</div>
+      <div class="path">[쇼핑몰 설정] 고객 설정 &gt; 회원 정책 설정 &gt; 적립금 설정</div>
+      <ul class="steps">
+        <li>적립금 지급 시점 → 주문 상태 <strong>구매확정 후</strong> + 지급 시점 <strong>즉시</strong></li>
+      </ul>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-14"><div class="sec-hdr"><div class="sec-icon">🧾</div><div class="sec-title">현금영수증</div></div>
-<h4 class="g-heading">현금영수증 발급 방법</h4>
-<div class="g-item">- 자동발행 이용시</div>
-<p class="g-text">자동발행 설정해둔 경우 고객이 현금영수증 신청하면 자동 발행되고, 주문 취소/반품 시 현금영수증 자동 발행 취소됨</p>
-<div class="g-item">- 수동발행 이용시</div>
-<h4 class="g-heading">수동발행 설정해둔 경우 고객이 현금영수증 신청하면 운영자가 처리해야 발행되며,</h4>
-<p class="g-text">주문 취소/반품 시 현금영수증 발행취소도 운영자가 처리 필요</p>
-<div class="g-item">- 구매자가 신청하지 않은 경우</div>
-<p class="g-text">고객이 신청하지 않았으나 현금영수증 발행해야 하는 경우 쇼핑몰 관리자페이지에서 직접 신청 하면 자동 발행 가능</p>
-<p class="g-text">전체주문조회에서 주문번호 클릭 > 주문상세정보 창의 결제정보(탭)에서 현금영수증 신청 버튼 클릭하여 발행</p>
-<h4 class="g-heading">현금영수증 발급 내역 확인</h4>
-<p class="g-text">[관리자] 주문 > 현금영수증 관리 > 발행 내역 관리에서 검색 버튼을 누르면 현금영수증 발행건 확인 가능</p>
-<p class="g-text">발급되어야 하나 미발행 상태인 주문건은 해당 메뉴에서 발행 버튼으로 발행 가능</p>
-<p class="g-text">발행된 현금영수증은 영수증 모양 아이콘 클릭하여 주문정보 입력 후 확인 가능</p>
-<h4 class="g-heading">현금영수증 발행 취소</h4>
-<p class="g-text">[관리자] 주문 > 현금영수증 관리 > 발행 내역 관리에서 발행취소 버튼 클릭 > 알림창에서 확인 버튼 클릭 > 발행취소로 표시됨</p>
-<p class="g-text">재발행 필요 시 발행하기의 재발행 클릭하여 처리 가능</p>
-<div class="g-warn">※ 참고사항</div>
-<p class="g-text">현금영수증 취소 기능과 무관하게 현금영수증 취소는 이용 중인 PG사의 현금 영수증 취소 가능 기간에 따라 처리 불가능</p>
-<h4 class="g-heading">KCP, 헥토파이낸셜(구.세틀뱅크): 18개월</h4>
-<h4 class="g-heading">올앳, 이니시스(KSNET), 나이스페이, 토스: 12개월</h4>
-<h4 class="g-heading">스마트로: 3개월</h4>
-<h4 class="g-heading">현금영수증 의무발행</h4>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 결제 설정 > 매출 증빙 서비스 > 현금영수증 발행 설정에서 아래와 같이 설정 필요</p>
-<div class="g-item">- 발행 기능 사용 여부: '자동 또는 수동 발행'</div>
-<div class="g-item">- 의무 발행 설정: '사용함' / 신청금액 입력</div>
-<div class="g-item">- 주문서 표시 설정: '표시함'</div>
-<div class="g-warn">※ 참고사항</div>
-<h4 class="g-heading">의무발행 설정 '사용함' 으로 설정 시, 고객이 현금 영수증 발급을 원하지 않아도</h4>
-<p class="g-text">구매 금액이 '총 신청금액' 이상인 경우 국세청 지정 번호(010-000-1234)로 자진 발급됨</p>
-<h4 class="g-heading">세금계산서 발행 방법</h4>
-<h4 class="g-heading">-일반세금계산서 이용중인 경우</h4>
-<p class="g-text">[관리자] 주문 > 세금계산서관리 > 발행 신청 관리에서 세금계산서 선택 후 확인 버튼 클릭하여 발행 가능</p>
-<p class="g-text">단, 일반 세금계산서는 영수증 역할일 뿐 국세청에 전송되지 않아 전자세금계산서를 이용하거나 국세청에서 직접 발행 필요</p>
-<h4 class="g-heading">-전자세금계산서 이용중인 경우</h4>
-<p class="g-text">고객이 세금계산서 신청 후 주문상태가 배송완료 되면 약 1시간 후 전자세금계산서 신청정보가 ETAX로 자동 전송</p>
-<p class="g-text">취소/교환/환불 내역 존재하는 경우 자동으로 전송되지 않음</p>
-<p class="g-text">ETAX로 전송된 세금계산서 정보를 국세청으로 전송하기 위해 ETAX 내 작성문서 관리 > 국세청발행 버튼 클릭 필요</p>
-<h4 class="g-heading">세금계산서</h4>
-<div class="g-path">메뉴 경로 : [관리자] 주문 > 세금계산서관리 > 발행 신청 관리</div>
-<h4 class="g-heading">매출 세금 계산서 발행하기</h4>
-<div class="g-warn">※ 구매 고객이 세금 계산서를 신청하지 않았을 때, 인터넷으로 주문하지 않았을 때,</div>
-<h4 class="g-heading">주문 내용과 다르게 세금 계산서 발행이 필요할 때 이용</h4>
-<p class="g-text">[관리자] 홈 > 주요 부가서비스의 전자세금계산서 건수 클릭 > ETAX로 이동 > ETAX에서 문서 작성 > 매출 세금 계산서로 이동</p>
-<div class="g-item">> 매출 전자 세금 계산서 작성 페이지에서 발행할 세금 계산서 내용을 입력하고, '국세청 전송' 버튼 클릭</div>
-<div class="g-warn">※ 유의 사항</div>
-<p class="g-text">세금 계산서는 작성일 기준으로 다음 달 10일까지 발행 필요하며, 발행 지연 시 가산세 부과됨</p>
-<p class="g-text">전자세금계산서는 공인인증서로 전자 서명 후 발행 가능</p>
-<p class="g-text">세금계산서는 발행일 지난 경우 쇼핑몰 관리자에서 발행 어려우며 국세청 e세로에서 직접 발행 필요</p>
-<p class="g-text">발행일이 지난 건은 가산세가 부과되며 가산세 관련 사항은 국세청에 문의 필요</p>
+
+<div class="card" data-keywords="할인금액 자동계산 리소스">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔢</div>
+    <div class="card-title-wrap">
+      <div class="card-title">할인금액 자동계산</div>
+      <div class="card-sub">CS 처리 시 할인액 자동 계산/회수</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[쇼핑몰 설정] 주문 설정 &gt; 주문 정책 설정 &gt; 주문 후 설정</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>기능 개요</div>
+      <ul class="steps">
+        <li>주문 CS 처리 시 기존 할인금액을 <strong>자동 계산·적용</strong></li>
+        <li>반복적인 계산 업무 리소스 절감</li>
+        <li>교환/반품으로 할인 조건 미충족 시 혜택 회수하여 손실 방지</li>
+        <li>품목별 실 결제금액 제공으로 정산 오류 최소화</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>설정 방법</div>
+      <ul class="steps">
+        <li>입금/환불/반품 처리 설정 → 취소/교환/반품 접수 시 품목별 할인/적립 금액설정 → <strong>할인금액 자동 계산</strong> 선택</li>
+      </ul>
+      <div class="note note-warn">
+        <span class="note-ic">📌</span>
+        <div>설정 변경 시점부터 <strong>새로 생성된 주문</strong>에만 적용됨. 기존 주문은 소급 적용되지 않음.</div>
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-15"><div class="sec-hdr"><div class="sec-icon">📄</div><div class="sec-title">세금계산서</div></div>
-<h4 class="g-heading">작성문서 관리로 발행하기</h4>
-<div class="g-warn">※ 구매 고객이 세금 계산서를 신청했을 때, 인터넷으로 주문한 내역에 대한 세금계산서 발행이 필요할 때 이용</div>
-<div class="g-item">- 구매자가 신청하지 않은 경우</div>
-<p class="g-text">[관리자] 주문 > '전체 주문 조회' 에서 주문번호 클릭 > 주문 상세정보 창에서 세금계산서 신청 버튼 클릭 (배송완료일 때만 가능) ></p>
-<p class="g-text">구매 고객의 사업자 정보 입력 후 확인 버튼 클릭 > ETAX에서 문서관리 > 작성문서관리에서 발행할 주문건 선택 후 국세청 전송 ></p>
-<p class="g-text">범용 공인인증서 선택하여 비밀번호 입력하고 확인버튼 클릭 > 전송완료된 세금계산서는 국세청 전송 상태가 접수완료로 노출됨</p>
-<div class="g-item">- 구매자가 신청한 경우</div>
-<p class="g-text">[관리자] 홈 > 주요 부가서비스의 전자세금계산서 건수 클릭 > ETAX에서 문서관리 > 작성문서관리에서 발행할 주문건 선택 후 국세청 전송 ></p>
-<p class="g-text">범용 공인인증서 선택하여 비밀번호 입력하고 확인버튼 클릭 > 전송완료된 세금계산서는 국세청 전송 상태가 접수완료로 노출됨</p>
-<p class="g-text">어떤 설정인가요</p>
-<p class="g-text">[할인금액 자동계산]이란, 주문의 CS처리 시 적용되었던 할인금액을 자동으로 계산/적용하는 기능</p>
-<p class="g-text">주문CS처리 과정에서 반복적인 할인 금액 계산 과정을 줄여 운영자의 업무 적 리소스를 절감할 수 있으며</p>
-<p class="g-text">교환/반품 등으로 기존에 적용된 할인혜택의 조건이 충족되지 않을 경우 할인혜택을 회수하여 쇼핑몰의 금전적 손실을 막을 수 있음</p>
-<p class="g-text">또한 품목별 실 결제금액 정보를 제공하여, 정산 시 금액 계산 이슈를 최소화 할 수 있음</p>
-<h4 class="g-heading">할인금액 적용계산 설정 방법</h4>
-<p class="g-text">[관리자] 쇼핑몰 설정 > 주문 설정 > 주문 정책 설정 > 주문 후 설정 메뉴의 입금/환불/반품 처리 설정</p>
-<div class="g-item">> 취소/교환/반품 접수 시 품목별 할인/적립 금액설정 > 할인금액 자동 계산 항목 선택하여 설정 가능</div>
-<div class="g-warn">※ 참고사항</div>
-<p class="g-text">설정을 변경한 시점부터 생성된 주문 건에대해서만 ''할인 금액 자동 계산''이 주문서에 적용. 변경 시점 이전 주문에 대해서는, 설정 이후에도 적용되지 않음</p>
-<h4 class="g-heading">할인금액 자동계산</h4>
-<div class="g-path">메뉴 경로 : [관리자] 쇼핑몰 설정 > 주문 설정 > 주문 정책 설정 > 주문 후 설정</div>
-<h4 class="g-heading">네이버페이 가입 방법</h4>
-<p class="g-text">[관리자] 판매 채널 > 네이버 > '네이버 페이 안내'에서 서비스 신청 버튼 클릭 > 네이버페이 센터로 이동</p>
-<div class="g-item">> 네이버페이 센터에서 신청서 작성 및 구비서류 제출하면 가입 신청 완료</div>
-<h4 class="g-heading">주문형 가입 시 필수서류</h4>
-<p class="g-text">개인사업자/법인사업자 각각 다르며 상세 내용은 가이드 참고, 네이버페이 가입 심사는 서류 접수 완료일 부터 1주일 정도 소요되며</p>
-<p class="g-text">1차 심사 완료 후 카페24 관리자페이지에서 네이버페이 정보 입력 후 네이버페이 최종승인 완료되어야 정상 이용 가능</p>
-<div class="g-warn">※ 유의사항</div>
-<p class="g-text">네이버페이 서비스(주문형/결제형)의 경우, 카페24 솔루션과 네이버페이 간 사양이 달라 모든 설정이 전부 반영되지 않을 수 있으며</p>
-<p class="g-text">이용 원하는 부분이 있다면 1차적으로 네이버페이 센터에서 기능상 사용 가능한지 확인 필요</p>
-<p class="g-text">네이버페이 가입시 발생되는 오류 및 제휴되지 않는 PG사 연동 문의는 네이버페이 고객센터로 문의 필요</p>
-<p class="g-text">쇼핑몰 판매 상품 중 교환/환불 불가 품목이 있는 경우, 관련 법령 위반에 따라 네이버페이 가입 불가</p>
-<h4 class="g-heading">네이버페이</h4>
-<div class="g-path">메뉴 경로 : [관리자] 판매 채널 > 네이버 > 네이버 페이 안내</div>
+
+<div class="card" data-keywords="네이버페이 가입 연동 인증키">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">💚</div>
+    <div class="card-title-wrap">
+      <div class="card-title">네이버페이</div>
+      <div class="card-sub">가입 · 연동 · 주문 처리</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 판매 채널 &gt; 네이버 &gt; 네이버 페이 안내</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>가입 방법</div>
+      <div class="flow">
+        <span class="flow-step">서비스 신청</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">네이버페이 센터</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">신청서 작성 + 구비서류</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">1차 심사(약 1주)</span>
+      </div>
+      <div class="note note-warn">
+        <span class="note-ic">⚠️</span>
+        <div>쇼핑몰에 <strong>교환/환불 불가 품목</strong>이 있으면 관련 법령 위반으로 네이버페이 가입 불가.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>1차 승인 후 연동</div>
+      <div class="path">[관리자] 판매 채널 &gt; 네이버 &gt; 네이버 페이 설정 &gt; 서비스설정</div>
+      <ul class="steps">
+        <li>승인 메일의 <strong>가맹점 인증키·버튼인증키·네이버공통인증키</strong> 입력</li>
+        <li>구매버튼 <strong>노출함</strong>, 주문연동 <strong>사용함</strong> → 하단 등록</li>
+        <li>이후 2차 심사(영업일 기준 평균 2일) → 최종 승인 후 이용 가능</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>버튼 노출 설정</div>
+      <ul class="steps">
+        <li>[상품] 상품목록 → 판매정보 탭 → 네이버 페이 서비스 <strong>사용함</strong></li>
+        <li>[상점] 판매채널 &gt; 네이버 &gt; 네이버페이 구매 버튼 노출 <strong>노출함</strong></li>
+        <li>[상품] 분류관리 &gt; 상품 분류 관리 → 제휴서비스 <strong>사용함</strong></li>
+        <li>[상품] 분류관리 &gt; 기획전 분류 관리 → 제휴서비스 <strong>사용함</strong></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>버튼 미노출 사유</div>
+      <ul class="steps">
+        <li>판매가 0원·품절·대체문구 상품, 1+N 이벤트·해외배송 상품</li>
+        <li>상품명/분류에 "개인결제·결제창·고객님" 등 포함된 상품</li>
+        <li>쇼핑몰 로그인 여부 관련</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">5</span>주문 처리</div>
+      <table class="tbl">
+        <tr><th>구분</th><th>처리 방법</th></tr>
+        <tr><td>배송중 처리</td><td>일반 주문과 동일 (주문관리는 <strong>네이버페이 센터 권장</strong>)</td></tr>
+        <tr><td>취소</td><td>주문상세정보 → 주문취소 → 사유 입력</td></tr>
+        <tr><td>교환</td><td><strong>네이버페이 센터에서만 가능</strong>. 동일 상품만 교환, 옵션 변경 불가</td></tr>
+        <tr><td>반품</td><td>구매자 요청 시 카페24에서 처리 가능. <strong>승인 전 반드시 수거 확인</strong></td></tr>
+      </table>
+      <div class="note note-danger">
+        <span class="note-ic">🚫</span>
+        <div>
+          <strong>반드시 네이버페이 센터에서 처리:</strong><br>
+          • 반품 배송비 차감 등 부분환불<br>
+          • 반품 철회 / 반품 거부<br>
+          • 구매확정된 주문건
+        </div>
+      </div>
+      <div class="note note-warn">
+        <span class="note-ic">💡</span>
+        <div>일정 기간 배송 지연 처리 없이 진행되지 않으면 <strong>패널티 부과</strong> 가능. 재고 부족 시 네이버페이 센터에서 배송보류 처리 필요.</div>
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-16"><div class="sec-hdr"><div class="sec-icon">🔢</div><div class="sec-title">할인금액 자동계산</div></div>
-<h4 class="g-heading">네이버페이 1차 승인 후 연동 방법</h4>
-<p class="g-text">네이버페이 센터에서 발송된 네이버페이 가입 승인 메일에서 연동 메뉴얼 및 가맹점 인증키, 버튼인증키, 네이버공통인증키 확인 후</p>
-<p class="g-text">[관리자] 판매 채널 > 네이버 > '네이버 페이 설정' >  서비스설정 메뉴에  메일에 기재된 인증키 정보 입력</p>
-<p class="g-text">네이버페이 구매버튼 노출을 노출함, 주문연동을 사용함으로 선택 후 페이지 하단 등록 버튼 클릭</p>
-<div class="g-warn">※ 참고사항</div>
-<p class="g-text">[관리자] 판매 채널 > 네이버 > '네이버 페이 설정' 메뉴에서 인증키 입력 후 네이버측에서 2차 심사 진행되며, 심사 완료 후 이용 가능</p>
-<p class="g-text">2차 심사 완료까지는 영업일 기준 평균 2일 소요되며 해당 기간내 승인 완료 안내를 받지 못하면 네이버페이 고객센터로 문의 필요</p>
-<p class="g-text">최종 승인 완료 후 네이버페이 버튼 노출 설정 필요</p>
+
 </div>
-<div class="section" id="sec-17"><div class="sec-hdr"><div class="sec-icon">💚</div><div class="sec-title">네이버페이</div></div>
-<h4 class="g-heading">네이버페이 버튼 노출 설정 방법</h4>
-<div class="g-item">- [관리자] 상품 > '상품목록' 내 상품 수정창에서 판매정보(탭) > '네이버 페이 서비스'에서 사용함 설정</div>
-<div class="g-item">- [관리자] 상점 > 판매채널 > 네이버 > '네이버 페이 설정' 내 '네이버페이 구매 버튼 노출 항목'을 '노출함'으로 설정</div>
-<div class="g-item">- [관리자] 상품 > 분류관리 > '상품 분류 관리'  내 제휴서비스 설정에서 '네이버페이 서비스' > 사용함</div>
-<div class="g-item">- [관리자] 상품 > 분류관리 > '기획전 분류 관리' 내 제휴서비스 설정 > '네이버페이 서비스'  > 사용함</div>
-<div class="g-item">- 위와 같이 설정했음에도 노출되지 않는 경우 디자인 수정 필요</div>
-<h4 class="g-heading">네이버페이 버튼이 노출되지 않는 경우</h4>
-<div class="g-item">- 판매가 0원 상품, 품절 상품, 판매가 대체 문구 사용 상품, 1+N 이벤트 등록 상품, 해외배송 상품</div>
-<div class="g-item">- 쇼핑몰 로그인 여부, 상품명/상품분류에 개인결제, 개인결제, 결제창, 고객님 등 포함된 상품</div>
-<div class="g-item">- 이외 경우 하기 가이드 참고</div>
-<div class="g-ref">가이드 : 네이버페이 버튼이 노출되지 않아요</div>
-<h4 class="g-heading">네이버페이 주문의 배송처리</h4>
-<div class="g-item">- 네이버페이 주문 배송중 처리</div>
-<p class="g-text">[관리자] 주문>배송준비중 관리에서 네이버페이 주문 선택 후 송장번호와 택배사 선택하고 배송중 처리 (일반 주문과 동일하게 처리)</p>
-<p class="g-text">단, 네이버페이 주문관리는 네이버페이센터에서 진행하는 것을 권장함</p>
-<p class="g-text">또한 일정기간 동안 배송지연처리 없이 배송진행되지 않는 경우 배송지연으로 네이버페이측에서 패널티를 부과할 수 있음</p>
-<p class="g-text">재고 부족 등으로 배송 지연되는 경우 네이버페이 센터에서 배송보류처리 진행 필요</p>
-<div class="g-item">- 네이버페이 주문 취소 처리</div>
-<p class="g-text">전체주문조회 등 메뉴에서 취소하려는 네이버페이 주문번호 클릭 > 주문상세정보창에서 주문취소 클릭</p>
-<div class="g-item">> 주문취소 처리창에서 취소접수 > 취소 사유 입력하여 취소처리 완료</div>
-<div class="g-item">- 네이버페이 주문 교환 처리</div>
-<p class="g-text">네이버페이 주문은 네이버페이센터에서만 교환처리 가능. 또한 네이버페이는 교환시 동일 상품만 교환 가능하며 옵션 변경 불가</p>
-<p class="g-text">네이버페이센터에서 수거완료 처리 시 카페24 기존 주문은 교환완료 상태가 되며 교환처리로 생성된 주문은</p>
-<p class="g-text">재배송준비중 상태로 수집됨. 교환처리된 주문은 구매자가 구매확정 시 카페24 주문 상태도 배송완료 상태로 변경됨</p>
-<div class="g-item">- 네이버페이 주문 반품 처리</div>
-<p class="g-text">구매자가 반품 요청한 경우에만 카페24에서 반품 처리 가능</p>
-<p class="g-text">카페24에서 반품처리 시 네이버페이센터에서 승인하지 않아도 상품 반품 및 환불까지 한번에 진행되기 때문에 반드시 상품 수거 확인 후 승인 처리 필요</p>
-<p class="g-text">네이버페이 주문건의 경우 전체 품목 반품접수되더라도 특정 품목만 선택하여 반품처리 가능하나</p>
-<p class="g-text">반품철회 및 반품거부처리는 네이버페이 센터에서만 가능하며 카페24에서는 불가함</p>
-<div class="g-warn">※ 네이버페이센터에서 반품처리 필요한 경우 : 반품 배송비 차감 등 부분환불 필요한 경우, 반품 철회 필요한 경우 , 구매확정이 된 주문건</div>
-<h4 class="g-heading">통계관리</h4>
-<p class="g-text">매출분석 메뉴에서 일/주/월별 매출, 결제수단별 매출, 멀티쇼핑몰별 매출, 매출 집계 확인 가능</p>
-<p class="g-text">상품분석 메뉴에서 판매상품, 판매분류, 취소/반품 상품 순위, 공급사/브랜드 판매 순위, 장바구니 상품 분석, 방바구니 상세 내역, 관심상품 순위 확인 가능</p>
-<p class="g-text">고객분석 메뉴에서 요일/시간별 고객 분석, 회원등급/배송지역별 고객분석, 적립금/예치금 분석 통계 확인 가능</p>
-<h4 class="g-heading">매출/상품/고객분석</h4>
-<p class="g-text">쇼핑몰 매출, 상품, 고객 분석 통계 확인 가능</p>
-<p class="g-text">통계 데이터 활용하여 쇼핑몰 효율적으로 운영 가능</p>
-<p class="g-text">매출/상품/고객 분석 통계 데이터는 1시간마다 업데이트 됨</p>
-<p class="g-text">고객분석 > 적립금/예치금 분석은 실시간 데이터 확인 가능</p>
-<p class="g-text">통계자료는 국세청/기타 제출용으로 사용할 수 없으며 쇼핑몰 운영 참고 자료로 이용 필요</p>
-<div class="g-ref">가이드 :  통계</div>
-<h4 class="g-heading">통계관리</h4>
-<div class="g-path">메뉴 경로 : [관리자] 통계</div>
-<h4 class="g-heading">접속통계</h4>
-<p class="g-text">쇼핑몰 접속 관련 다양한 통계 확인 가능, PC 쇼핑몰, 모바일 쇼핑몰, 모바일 앱 통계 확인 가능</p>
-<h4 class="g-heading">카페24 접속통계 용어</h4>
-<div class="g-item">- 세션</div>
-<p class="g-text">방문자를 구분하기 위한 구분 단위 의미, 방문자가 웹 브라우저 통해 쇼핑몰에 접속한 시점에 세션 시작</p>
-<p class="g-text">연결되지 않은 웹 브라우저의 단위별로 세션 각각 집계됨 (탭 또는 클릭에 의해 나타난 웹 브라우저는 연결된 브라우저임)</p>
-<p class="g-text">연결된 브라우저를 모두 종료하거나 클릭/이동 등 조작 없이 2시간 이상 경과 시 세션 종료</p>
-<div class="g-item">- 쿠키</div>
-<p class="g-text">쇼핑몰에 접속할 때 방문자가 이용한 브라우저에 분석을 위한 쿠키를 저장한 후 저장된 정보를 기준으로 방문자 유입, 전환 관련 데이터 분석</p>
-<p class="g-text">방문자의 컴퓨터에 쿠키 사용이 허용되었을 때만 저장 가능</p>
-<h4 class="g-heading">접속통계</h4>
-<div class="g-path">메뉴 경로 : [관리자] 통계 > 접속통계</div>
+
+<!-- ============ 증빙/세무 ============ -->
+<div class="cat-group" data-cat="doc">
+<div class="cat-title">증빙 · 세무</div>
+
+<div class="card" data-keywords="현금영수증 의무발행 자동">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🧾</div>
+    <div class="card-title-wrap">
+      <div class="card-title">현금영수증</div>
+      <div class="card-sub">신청 · 발행 · 취소 · 의무발행</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 부가서비스 &gt; 기본 운영 서비스 &gt; 현금영수증</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>서비스 신청</div>
+      <ul class="steps">
+        <li>서비스 사용현황 → <strong>신청하기</strong> → 필수항목 기재</li>
+        <li>신청서 사업자등록번호 = 쇼핑몰 정보의 사업자등록번호 <strong>일치 필수</strong></li>
+      </ul>
+      <div class="note note-warn">
+        <span class="note-ic">⚠️</span>
+        <div>
+          • <strong>현금결제만 발급 가능</strong> (계좌이체·가상계좌·무통장)<br>
+          • 신용카드·휴대폰결제 <strong>발급 불가</strong><br>
+          • 발행금액에 배송비 포함, 적립금 사용액은 미포함<br>
+          • KSNET 이용 시 자동 가입 안 됨 → 이니시스 현금영수증 별도 신청
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>발행 설정</div>
+      <div class="path">[쇼핑몰 설정] 결제 설정 &gt; 매출 증빙 서비스 &gt; 현금영수증 발행 설정</div>
+      <table class="tbl">
+        <tr><th>방식</th><th>설명</th></tr>
+        <tr><td><strong>자동발행 (권장)</strong></td><td>입금 완료·취소·반품 시 자동 처리 (고객이 신청해야 함)</td></tr>
+        <tr><td>수동발행</td><td>운영자가 직접 발행·취소 처리 필요</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>발급 방법</div>
+      <div class="sub">
+        <div class="sub-title">고객이 신청하지 않은 경우</div>
+        <ul class="steps">
+          <li>전체주문조회 → 주문번호 클릭 → 결제정보 탭 → <strong>현금영수증 신청</strong> 버튼</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>발급 내역 확인 / 취소</div>
+      <div class="path">[관리자] 주문 &gt; 현금영수증 관리 &gt; 발행 내역 관리</div>
+      <ul class="steps">
+        <li>검색 → 발행건 확인, 미발행 건은 <strong>발행</strong> 버튼으로 처리</li>
+        <li>취소: <strong>발행취소</strong> 버튼 → 확인 → 발행취소 표시</li>
+        <li>재발행: 발행하기의 <strong>재발행</strong> 클릭</li>
+      </ul>
+      <div class="sub">
+        <div class="sub-title">PG사별 현금영수증 취소 가능 기간</div>
+        <table class="tbl">
+          <tr><th>PG사</th><th>기간</th></tr>
+          <tr><td>KCP, 헥토파이낸셜(구 세틀뱅크)</td><td>18개월</td></tr>
+          <tr><td>올앳, 이니시스(KSNET), 나이스페이, 토스</td><td>12개월</td></tr>
+          <tr><td>스마트로</td><td>3개월</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">5</span>의무발행 설정</div>
+      <ul class="steps">
+        <li>발행 기능: <strong>자동 또는 수동 발행</strong></li>
+        <li>의무 발행 설정: <strong>사용함</strong> + 신청금액 입력</li>
+        <li>주문서 표시 설정: <strong>표시함</strong></li>
+      </ul>
+      <div class="note note-tip">
+        <span class="note-ic">💡</span>
+        <div>의무발행 사용 시, 고객이 원치 않아도 구매 금액이 총 신청금액 이상이면 <strong>국세청 지정번호(010-000-1234)</strong>로 자진 발급됨.</div>
+      </div>
+    </div>
+  </div></div>
 </div>
-<div class="section" id="sec-18"><div class="sec-hdr"><div class="sec-icon">📊</div><div class="sec-title">통계관리</div></div>
-<h4 class="g-heading">카페24 애널리틱스</h4>
-<p class="g-text">기존 접속 통계의 모든 데이터를 포함하면서 고객 행동을 더 깊이 있게 분석할 수 있는 기능들이 추가된 새로운 통합 분석 서비스</p>
-<p class="g-text">모든 데이터를 포함하는 통합분석 (기존 접속통계 데이터와 카페24 애널리틱스의 분석데이터 모두 포함하여 제공)</p>
-<p class="g-text">더 정확해진 방문자 집계 방식 (접속통계는 IP 기준으로 순 방문자 집계, 카페24 애널리틱스는 세션과 쿠키 기준으로 집계)</p>
-<p class="g-text">새롭게 추가된 인사이트 기능 (멀티 채널 분석이나 구매 퍼널 분석 같은 인사이트 기능으로 어떤 광고가 매출에 기여했는지 등 확인 가능)</p>
-<p class="g-text">주요기능</p>
-<h4 class="g-heading">매출, 방문자, 전환율 등 핵심 지표의 최근 7일치 데이터를 제공하는 종합 대시보드</h4>
-<p class="g-text">데이터를 자동 해석하는 인사이트 기능 (어떤 광고가 효과적인지, 고객이 왜 구매를 포기하는지 등)</p>
-<p class="g-text">매출부터 광고효과까지 상세분석 (매출분석, 고객분석, 광고유입분석, 상품분석 등 다양한 조건 직접 설정하여 상세 데이터 조회 가능)</p>
-<div class="g-ref">가이드 : 애널리틱스</div>
-<h4 class="g-heading">체크리스트</h4>
-<h4 class="g-heading">유형별 예약 주문 상품 등록 및 주문 생성하기</h4>
-<h4 class="g-heading">구매확정 기능 설정 후 구매자가 구매확정 진행하기</h4>
-<h4 class="g-heading">운영자가 구매확정 수동처리 및 취소해보기</h4>
-<h4 class="g-heading">무통장 주문 생성 후 입금확인 ~ 배송완료 처리하기</h4>
-<h4 class="g-heading">구매자가 취소/교환/반품 신청 가능하도록 설정하기</h4>
-<h4 class="g-heading">무통장 주문 취소/교환/반품 진행하기</h4>
-<h4 class="g-heading">무통장 주문 취소/교환/반품 철회 진행하기</h4>
-<h4 class="g-heading">교환/반품 시 배송비 결제 가능하도록 설정하기</h4>
-<h4 class="g-heading">주문 처리</h4>
-<p class="g-text">주문 부가 기능</p>
-<h4 class="g-heading">주문관리</h4>
-<h4 class="g-heading">자주 묻는 CS</h4>
-<p class="g-text">주문이 다수 들어온 경우 일괄 배송처리도 가능한가요</p>
-<p class="g-text">택배연동 후 배송처리는 어떻게 하나요</p>
-<p class="g-text">배송 상태별(배송 전, 중, 완료) 주문 전체 취소 방법을 알고 싶어요</p>
-<p class="g-text">구매자가 직접 취소/교환/반품 신청하도록 설정하고 싶어요</p>
-<p class="g-text">고객이 반품/교환 신청 시 배송비 결제하도록 설정하고 싶어요</p>
-<p class="g-text">고객 변심, 부분 취소나 반품으로 환불해야 할 때 배송비를 차감하고 싶어요</p>
-<p class="g-text">결제 수단에 따라 환불하는 방법이 궁금해요</p>
-<p class="g-text">쿠폰 사용한 주문건 교환처리 할 때 쿠폰 할인이 적용되지 않아요</p>
-<p class="g-text">현금영수증 신청 및 발행, 취소는 어떻게 하나요</p>
-<p class="g-text">현금영수증 의무 발행 방법을 알고 싶어요</p>
-<p class="g-text">세금계산서 발행은 어떻게 하나요</p>
-<p class="g-text">발행된 세금계산서 어떻게 수정하나요</p>
-<p class="g-text">네이버페이 1차 승인 후 카페24 연동작업은 어떻게 하나요</p>
-<p class="g-text">네이버페이 버튼이 노출되지 않아요</p>
-<p class="g-text">네이버페이 주문과 카페24 주문 상태값은 어떻게 매칭되나요</p>
-<p class="g-text">세무자료 제출을 위해 PG사 매출정보와 카페24 주문정보를 비교해보고 싶어요</p>
-<p class="g-text">통계 메뉴의 데이터를 부가가치세 신고자료로 활용할 수 있나요</p>
-<h4 class="g-heading">기존 접속통계와 카페24 애널리틱스는 무엇이 다른가</h4>
-<p class="g-text">감사합니다</p>
+
+<div class="card" data-keywords="세금계산서 전자 etax 국세청">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📄</div>
+    <div class="card-title-wrap">
+      <div class="card-title">세금계산서</div>
+      <div class="card-sub">일반/전자 발행 · ETAX 연동</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 주문 &gt; 세금계산서 관리 &gt; 발행 신청 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>발행 방법</div>
+      <div class="sub">
+        <div class="sub-title">일반 세금계산서</div>
+        <ul class="steps">
+          <li>발행 신청 관리에서 선택 → 확인 → 발행</li>
+          <li><strong>영수증 역할</strong>만 할 뿐 국세청 미전송 → 전자세금계산서 이용 또는 국세청 직접 발행 필요</li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">전자 세금계산서</div>
+        <ul class="steps">
+          <li>고객 신청 + 배송완료 후 <strong>약 1시간</strong> 뒤 ETAX로 자동 전송</li>
+          <li>취소·교환·환불 있으면 자동 전송 안 됨</li>
+          <li>ETAX 작성문서 관리 → <strong>국세청 발행</strong> 버튼 클릭하여 국세청 전송</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>매출 세금계산서 발행 (수동)</div>
+      <div class="note note-tip">
+        <span class="note-ic">💡</span>
+        <div>고객이 미신청했거나, 인터넷 주문 외, 주문 내용과 다르게 발행 필요할 때 사용.</div>
+      </div>
+      <ul class="steps">
+        <li>홈 &gt; 주요 부가서비스의 <strong>전자세금계산서 건수</strong> 클릭 → ETAX 이동</li>
+        <li>문서 작성 → 매출 세금계산서 → 내용 입력 → <strong>국세청 전송</strong></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>작성문서 관리 발행</div>
+      <div class="sub">
+        <div class="sub-title">구매자 미신청</div>
+        <ul class="steps">
+          <li>전체주문조회 → 주문번호 → 주문상세정보 → <strong>세금계산서 신청</strong> (배송완료 시만)</li>
+          <li>사업자 정보 입력 → ETAX 문서관리 &gt; 작성문서관리 → 국세청 전송</li>
+          <li>범용 공인인증서 + 비밀번호 → 확인 → 상태 <strong>접수완료</strong></li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">구매자 신청</div>
+        <ul class="steps">
+          <li>홈 &gt; 전자세금계산서 건수 → ETAX 작성문서관리 → 주문건 선택 → 국세청 전송</li>
+          <li>범용 공인인증서 입력 → 확인 → 상태 <strong>접수완료</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note note-danger">
+      <span class="note-ic">⚠️</span>
+      <div>
+        <strong>유의사항</strong><br>
+        • 작성일 기준 <strong>다음 달 10일까지 발행</strong> 필수 (지연 시 가산세)<br>
+        • 전자세금계산서는 <strong>공인인증서 전자서명</strong> 후 발행<br>
+        • 발행일 지난 건은 관리자 발행 불가 → <strong>국세청 e세로</strong>에서 직접 발행<br>
+        • 가산세 관련은 국세청 문의
+      </div>
+    </div>
+  </div></div>
 </div>
+
 </div>
-<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ 맨 위로</button>
+
+<!-- ============ 기타 ============ -->
+<div class="cat-group" data-cat="etc">
+<div class="cat-title">통계</div>
+
+<div class="card" data-keywords="통계 매출 상품 고객 분석">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📊</div>
+    <div class="card-title-wrap">
+      <div class="card-title">통계 관리</div>
+      <div class="card-sub">매출 · 상품 · 고객 · 접속 통계</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 통계</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>매출/상품/고객 분석</div>
+      <table class="tbl">
+        <tr><th>메뉴</th><th>확인 내용</th></tr>
+        <tr><td>매출 분석</td><td>일/주/월별 매출, 결제수단별·멀티쇼핑몰별 매출</td></tr>
+        <tr><td>상품 분석</td><td>판매·분류·취소/반품 상품 순위, 공급사/브랜드 판매, 장바구니, 관심상품</td></tr>
+        <tr><td>고객 분석</td><td>요일/시간별, 회원등급/배송지역별, 적립금/예치금</td></tr>
+      </table>
+      <div class="note note-tip">
+        <span class="note-ic">💡</span>
+        <div>
+          • 분석 통계 데이터는 <strong>1시간마다 업데이트</strong><br>
+          • 적립금/예치금 분석은 <strong>실시간</strong><br>
+          • 통계자료는 <strong>국세청/세무 제출용 불가</strong>, 운영 참고 자료
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>접속 통계</div>
+      <div class="path">[관리자] 통계 &gt; 접속통계</div>
+      <div class="sub">
+        <div class="sub-title">용어 정리</div>
+        <ul class="steps">
+          <li><strong>세션</strong>: 방문자 구분 단위. 브라우저 접속 시점 시작, 모든 연결된 브라우저 종료 또는 2시간 미조작 시 종료</li>
+          <li><strong>쿠키</strong>: 방문자 브라우저에 저장된 분석용 데이터. 쿠키 허용 시에만 저장</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>카페24 애널리틱스</div>
+      <ul class="steps">
+        <li>기존 접속통계 + 고객 행동 심층 분석 통합 서비스</li>
+        <li>접속통계(IP 기준) vs 애널리틱스(<strong>세션·쿠키 기준</strong>)</li>
+        <li>주요 기능: 최근 7일 종합 대시보드, 인사이트, 매출/광고유입/상품 상세분석</li>
+        <li>멀티 채널 분석·구매 퍼널 분석 등 인사이트 기능 제공</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<div id="empty" class="empty hidden">
+  <div class="empty-ic">🔍</div>
+  검색 결과가 없습니다
+</div>
+
+</div>
+
 <script>
-function filterSections(kw) {
-  const secs = document.querySelectorAll('.section');
-  const k = kw.toLowerCase();
-  secs.forEach(s => {
-    s.style.display = (!k || s.textContent.toLowerCase().includes(k)) ? '' : 'none';
+function toggle(el){
+  el.parentElement.classList.toggle('open');
+}
+
+// 탭 전환
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const cat = t.dataset.cat;
+    document.querySelectorAll('.cat-group').forEach(g=>{
+      g.style.display = (cat==='all' || g.dataset.cat===cat) ? '' : 'none';
+    });
+    document.getElementById('q').value='';
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('hidden'));
+    document.getElementById('empty').classList.add('hidden');
   });
+});
+
+// 검색
+function search(kw){
+  const k = kw.trim().toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  let hits = 0;
+
+  if(!k){
+    cards.forEach(c=>c.classList.remove('hidden'));
+    document.querySelectorAll('.cat-group').forEach(g=>g.classList.remove('empty-cat'));
+    // 현재 탭 상태 복원
+    const activeCat = document.querySelector('.tab.active').dataset.cat;
+    document.querySelectorAll('.cat-group').forEach(g=>{
+      g.style.display = (activeCat==='all' || g.dataset.cat===activeCat) ? '' : 'none';
+    });
+    document.getElementById('empty').classList.add('hidden');
+    return;
+  }
+
+  // 검색 시엔 전체 카테고리 열기
+  document.querySelectorAll('.cat-group').forEach(g=>g.style.display='');
+
+  cards.forEach(c=>{
+    const txt = (c.textContent + ' ' + (c.dataset.keywords||'')).toLowerCase();
+    if(txt.includes(k)){
+      c.classList.remove('hidden');
+      hits++;
+    } else {
+      c.classList.add('hidden');
+    }
+  });
+
+  // 카테고리 그룹 빈 것 숨기기
+  document.querySelectorAll('.cat-group').forEach(g=>{
+    const visible = g.querySelectorAll('.card:not(.hidden)').length;
+    g.classList.toggle('empty-cat', visible===0);
+  });
+
+  document.getElementById('empty').classList.toggle('hidden', hits>0);
 }
 </script>
-</body></html>
+
+</body>
+</html>
