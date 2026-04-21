@@ -363,29 +363,6 @@ body {
 </style>
 </head>
 <body>
-<div style="position:sticky;top:0;z-index:9999;background:#FEF3C7;border-bottom:3px solid #F59E0B;padding:16px 24px;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:#92400E;line-height:1.7;">
-<strong style="font-size:15px;color:#D97706;">⚠️ 가이드 수정사항 안내 (2026-04-20 반영)</strong><br>
-아래 항목은 에볼루션(현행 서비스) 기준으로 수정된 내용입니다. 가이드 원문과 다를 수 있으니 참고하세요.<br>
-<div style="margin-top:10px;padding:12px;background:#FFF;border-radius:8px;border:1px solid #FDE68A;font-size:12px;">
-<strong>1. 공통 사전 조건</strong><br>
-• SSL 인증서 발급 필수 → <strong style="color:#DC2626;">구 유튜브쇼핑 사양. 에볼루션에서는 불필요</strong><br>
-• 전환 추적 태그 ON 필수 → <strong style="color:#DC2626;">구 유튜브쇼핑 사양. 에볼루션에서는 미설정해도 연결 가능</strong><br><br>
-<strong>2. 온보딩 순서</strong><br>
-• PG 심사가 완료되어야 유튜브 쇼핑 채널 연동이 가능 (순서 주의)<br><br>
-<strong>3. 운영 가이드</strong><br>
-• 구글 승인 상태: 승인 / 대기 / <strong>보류 / 반려</strong> (4단계)<br>
-• 파트너 특가 → 파트너 채널 전용 특별 할인가 설정<br>
-• 유튜브 전용 특가 → <strong style="color:#DC2626;">구 유튜브쇼핑 기능. 에볼루션에서는 별도 설정 어려움</strong><br>
-• 성과 분석 → 전환추적 태그 미설정해도 연결 가능<br><br>
-<strong>4. CS 대응</strong><br>
-• 채널 연결 실패 → YPP와 무관, <strong>스튜디오 권한 문제</strong>일 수 있음<br>
-• PG 심사 문의 → PG 심사 후 채널 연동 가능, 쇼핑몰 PG 관련 문의<br>
-• 구글 계정 변경 → 유튜브쇼핑 > 설정 > 계정설정 > 확인필요 탭 > <strong>유튜브쇼핑 설정 초기화 > 전체 연동 설정 초기화</strong><br>
-• 유튜브 주문 관리 → 카페24 어드민 '주문' 메뉴에서 확인, <strong>별도 탭 분리 없음</strong><br><br>
-<strong>5. 핵심 수치</strong><br>
-• 스토어 상품 노출 한도: 직접 선택 최대 30개 / <strong>자동선택 최대 100개</strong>
-</div>
-</div>
 
 
 <!-- ── 헤더 ── -->
@@ -496,7 +473,8 @@ body {
       <div class="alert a-amber">
         <p>⚠️ <strong>여전히 필수인 항목</strong><br>
         결제프로필 설정 (미설정 시 연결 불가)<br>
-        상품피드 활성화 · 전환 추적 태그 설정</p>
+        상품피드 활성화<br>
+        <span style="color:#9CA3AF;text-decoration:line-through">전환 추적 태그 설정</span> <span style="color:#EF4444;font-size:11px;font-weight:700">(구 유튜브쇼핑 사양, 에볼루션 불필요)</span></p>
       </div>
     </div>
   </div>
@@ -842,7 +820,7 @@ body {
 
   <div class="card">
     <div class="card-title"><div class="card-icon">💰</div> 파트너 특가</div>
-    <p style="font-size:13px;color:var(--gray-700);margin-bottom:10px;"><strong>제휴프로그램 이용 중인 경우에만</strong> 설정 가능한 유튜브 전용 특가입니다. 크리에이터 채널에서만 노출되는 특별 할인가를 설정할 수 있어요.</p>
+    <p style="font-size:13px;color:var(--gray-700);margin-bottom:10px;"><strong>제휴프로그램 이용 중인 경우에만</strong> 설정 가능한 파트너 특가입니다. 특정 파트너 채널에 전용 특별 할인가를 설정할 수 있어요.<br><span style='color:#EF4444;font-size:11px'>(※ 유튜브 전용 특가(자사몰과 별도 가격 설정)는 구 유튜브쇼핑 기능으로, 에볼루션에서는 별도 설정이 어렵습니다)</span></p>
     <div class="alert a-amber">
       <p>⚠️ 제휴프로그램 비활성 상태에서는 파트너 특가 설정이 불가합니다.</p>
     </div>
@@ -867,7 +845,7 @@ body {
       <li><span class="dot green">3</span><code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">utm_source=youtube</code> / <code style="background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;">utm_contents=yt3~~</code> 데이터 제공</li>
       <li><span class="dot">4</span>계정설정에서 <strong>GMC 상태, 채널 정보, 확인필요사항</strong> 확인 가능</li>
       <li><span class="dot">5</span>연결 채널 <strong>변경 가능</strong></li>
-      <li><span class="dot amber">6</span>유튜브 쇼핑 <strong>초기화 후 다시 세팅 가능</strong> (주의: 전체 설정 초기화)</li>
+      <li><span class="dot amber">6</span>유튜브 쇼핑 <strong>초기화 후 다시 세팅 가능</strong> (경로: 유튜브쇼핑 > 설정 > 계정설정 > 확인필요 탭 > 유튜브쇼핑 설정 초기화 > 전체 연동 설정 초기화)</li>
     </ul>
   </div>
 
