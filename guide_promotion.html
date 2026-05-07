@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로모션 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pri:#2563EB; --pri-l:#EFF6FF; --pri-d:#1E40AF;
+  --ok:#059669; --ok-l:#ECFDF5;
+  --warn:#D97706; --warn-l:#FEF3C7;
+  --ng:#DC2626; --ng-l:#FEE2E2;
+  --bg:#F8FAFC; --sf:#FFF; --bd:#E2E8F0;
+  --tx:#0F172A; --tx2:#475569; --tx3:#94A3B8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+.header{background:#fff;border-bottom:1px solid var(--bd);padding:20px 24px;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.header h1{font-size:18px;font-weight:800;color:var(--tx);display:flex;align-items:center;gap:8px}
+.header h1 .ic{font-size:22px}
+.header p{font-size:12px;color:var(--tx2);margin-top:2px}
+.search{position:relative;flex:1;max-width:320px}
+.search input{width:100%;padding:9px 14px 9px 34px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:var(--bg);transition:all .15s}
+.search input:focus{border-color:var(--pri);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.search::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.5}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{height:0}
+.tab{padding:7px 14px;border:1.5px solid var(--bd);background:#fff;border-radius:20px;font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+.tab:hover{border-color:var(--pri);color:var(--pri)}
+.tab.active{background:var(--pri);border-color:var(--pri);color:#fff}
+
+.container{max-width:960px;margin:0 auto;padding:24px}
+
+.cat-group{margin-bottom:28px}
+.cat-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--pri-d);margin-bottom:12px;padding-left:4px;letter-spacing:.3px;text-transform:uppercase}
+.cat-title::before{content:'';width:4px;height:14px;background:var(--pri);border-radius:2px}
+
+.card{background:#fff;border:1px solid var(--bd);border-radius:10px;margin-bottom:10px;overflow:hidden;transition:all .15s}
+.card:hover{border-color:#CBD5E1;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card.open{border-color:var(--pri);box-shadow:0 2px 8px rgba(37,99,235,.08)}
+
+.card-head{padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none}
+.card-ic{width:36px;height:36px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--pri-l)}
+.card-title-wrap{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:2px}
+.card-sub{font-size:11px;color:var(--tx3);font-weight:500}
+.card-arrow{color:var(--tx3);font-size:12px;transition:transform .2s;flex-shrink:0}
+.card.open .card-arrow{transform:rotate(180deg);color:var(--pri)}
+
+.card-body{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.card.open .card-body{max-height:3500px;padding:4px 18px 18px 18px}
+.card-body-inner{padding-top:12px;border-top:1px dashed var(--bd)}
+
+.path{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--pri-d);background:var(--pri-l);padding:6px 10px;border-radius:6px;font-weight:600;margin-bottom:12px;font-family:'SF Mono',Consolas,monospace}
+.path::before{content:'📍';font-size:11px}
+
+.block{margin-bottom:14px}
+.block:last-child{margin-bottom:0}
+.block-title{font-size:12.5px;font-weight:700;color:var(--tx);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.block-title .n{width:18px;height:18px;background:var(--pri);color:#fff;border-radius:4px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+.steps{list-style:none;margin:0;padding:0}
+.steps li{position:relative;padding:4px 0 4px 20px;font-size:12.5px;color:var(--tx2);line-height:1.65}
+.steps li::before{content:'▸';position:absolute;left:6px;color:var(--pri);font-weight:700}
+.steps li strong{color:var(--tx);font-weight:600}
+
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.flow-step{background:var(--pri-l);color:var(--pri-d);padding:5px 10px;border-radius:5px;font-size:11.5px;font-weight:600}
+.flow-arr{color:var(--tx3);font-size:11px}
+
+.note{display:flex;gap:8px;padding:10px 12px;border-radius:7px;font-size:12px;line-height:1.6;margin:8px 0}
+.note-warn{background:var(--warn-l);color:#78350F;border-left:3px solid var(--warn)}
+.note-tip{background:var(--ok-l);color:#064E3B;border-left:3px solid var(--ok)}
+.note-danger{background:var(--ng-l);color:#7F1D1D;border-left:3px solid var(--ng)}
+.note-ic{flex-shrink:0;font-size:14px}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;border-radius:7px;overflow:hidden;border:1px solid var(--bd)}
+.tbl th,.tbl td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--bd)}
+.tbl th{background:var(--bg);font-weight:700;color:var(--tx);font-size:11.5px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td{color:var(--tx2)}
+
+.sub{background:var(--bg);border-radius:7px;padding:11px 13px;margin:8px 0}
+.sub-title{font-size:12px;font-weight:700;color:var(--pri-d);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.sub-title::before{content:'▎';color:var(--pri)}
+
+.faq-q{font-size:12.5px;font-weight:700;color:var(--tx);margin-bottom:4px;padding-left:18px;position:relative}
+.faq-q::before{content:'Q.';position:absolute;left:0;color:var(--pri);font-weight:800}
+.faq-a{font-size:12px;color:var(--tx2);padding-left:18px;position:relative;line-height:1.65;margin-bottom:10px}
+.faq-a::before{content:'A.';position:absolute;left:0;color:var(--ok);font-weight:800}
+
+.empty{text-align:center;padding:48px 24px;color:var(--tx3);font-size:13px;background:#fff;border:1px dashed var(--bd);border-radius:10px}
+.empty-ic{font-size:32px;margin-bottom:8px;opacity:.5}
+
+@media(max-width:640px){
+  .header{padding:14px 16px}
+  .header-top{flex-direction:column;align-items:stretch;gap:10px}
+  .search{max-width:100%}
+  .container{padding:16px}
+  .card-head{padding:12px 14px}
+  .card.open .card-body{padding:4px 14px 14px 14px}
+  .card-ic{width:32px;height:32px;font-size:16px}
+  .card-title{font-size:13px}
+}
+
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#94A3B8}
+
+.hidden{display:none!important}
+.cat-group.empty-cat{display:none}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div>
+      <h1><span class="ic">🎁</span>프로모션 가이드</h1>
+      <p>Cafe24 고객 혜택 · 쿠폰 · 이벤트 · 리워드 프로그램</p>
+    </div>
+    <div class="search">
+      <input id="q" type="text" placeholder="키워드 검색 (예: 쿠폰, 사은품, 할인)" oninput="search(this.value)">
+    </div>
+  </div>
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="all">전체</div>
+    <div class="tab" data-cat="discount">할인 혜택</div>
+    <div class="tab" data-cat="gift">증정 혜택</div>
+    <div class="tab" data-cat="coupon">쿠폰 · 할인코드</div>
+    <div class="tab" data-cat="event">이벤트</div>
+    <div class="tab" data-cat="etc">기타</div>
+    <div class="tab" data-cat="faq">자주 묻는 CS</div>
+  </div>
+</header>
+
+<div class="container" id="content">
+
+<!-- ============ 할인 혜택 ============ -->
+<div class="cat-group" data-cat="discount">
+<div class="cat-title">할인 혜택</div>
+
+<div class="card" data-keywords="고객혜택관리 혜택등록 할인 증정">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🎯</div>
+    <div class="card-title-wrap">
+      <div class="card-title">고객 혜택 관리 개요</div>
+      <div class="card-sub">혜택 종류 · 등록 위치</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 고객 혜택 관리 &gt; 혜택 등록</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>혜택 구분</div>
+      <table class="tbl">
+        <tr><th>구분</th><th>유형</th></tr>
+        <tr><td><strong>할인</strong></td><td>기간 할인 / 재구매 할인 / 대량 구매 할인 / 회원 할인 / 신규 상품 할인 / 배송비 할인</td></tr>
+        <tr><td><strong>증정</strong></td><td>사은품 증정 / 1+N 이벤트</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>등록 절차</div>
+      <div class="flow">
+        <span class="flow-step">혜택 등록 메뉴 진입</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">할인/증정 선택</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">혜택 구분에 따라 유형 선택</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">조건 설정 후 저장</span>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="기간할인 PC 모바일 회원 등급 프로모션">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">⏱️</div>
+    <div class="card-title-wrap">
+      <div class="card-title">기간 할인</div>
+      <div class="card-sub">지정 기간 동안 상품 할인 적용</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>설정 항목</div>
+      <ul class="steps">
+        <li><strong>기간 설정</strong>: 할인이 진행되는 기간</li>
+        <li><strong>사용 범위 설정</strong>: PC / 모바일 / 앱(플러스앱 사용자에 한함)</li>
+        <li><strong>참여 대상 설정</strong>: 할인 적용 대상 선택. <strong>회원 선택 시 등급별 적용 가능</strong></li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="재구매할인 동일상품 회원 구매횟수 옵션 품목">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔁</div>
+    <div class="card-title-wrap">
+      <div class="card-title">재구매 할인</div>
+      <div class="card-sub">동일 상품 N회 이상 구매 시 할인</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>설정 항목</div>
+      <ul class="steps">
+        <li><strong>참여 대상</strong>: 기존 구매 이력 확인이 필요하므로 <strong>회원에게만 설정 가능</strong></li>
+        <li><strong>상품 범위 설정</strong>: 적용 대상 상품 지정 또는 제외</li>
+        <li><strong>구매 횟수 설정</strong>: 동일 상품·옵션의 재구매 횟수에 따라 혜택 제공</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>상품 vs 품목 기준 차이</div>
+      <table class="tbl">
+        <tr><th>기준</th><th>체크 방식</th></tr>
+        <tr><td><strong>상품 선택</strong></td><td>구매 상품 기준 구매 횟수 체크</td></tr>
+        <tr><td><strong>품목 선택</strong></td><td>옵션 기준 구매 횟수 체크</td></tr>
+      </table>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="대량구매 동일상품 개수 수량 회원">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📦</div>
+    <div class="card-title-wrap">
+      <div class="card-title">대량 구매 할인</div>
+      <div class="card-sub">동일 상품 N개 이상 구매 시 할인</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>설정 항목</div>
+      <ul class="steps">
+        <li><strong>참여 대상</strong>: 회원/비회원 선택 가능, 회원 선택 시 등급별 적용 가능</li>
+        <li><strong>상품 범위</strong>: 적용 대상 지정 또는 제외</li>
+        <li><strong>구매 수량</strong>: 동일 상품·옵션의 구매 수량에 따라 혜택 제공 (상품 선택/품목 선택 기준은 재구매 할인과 동일)</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="배송비할인 무료배송 기본 공급사 개별 지역별 해외">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🚚</div>
+    <div class="card-title-wrap">
+      <div class="card-title">배송비 할인</div>
+      <div class="card-sub">기본/공급사/개별 배송비 무료 처리</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>적용 범위 (한국어몰)</div>
+      <ul class="steps">
+        <li>기본/공급사/개별 배송비 <strong>전액 무료 할인</strong></li>
+        <li>지역별 배송비 포함 여부 설정 가능</li>
+      </ul>
+      <div class="note note-warn">
+        <span class="note-ic">📌</span>
+        <div><strong>해외배송, 네이버페이, 마켓 주문</strong>에는 배송비 할인 적용되지 않음.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>적용 범위 (해외몰)</div>
+      <ul class="steps">
+        <li>기본/공급사/개별 배송비, <strong>해외 배송 보험료</strong>, <strong>해외 배송 부가 금액</strong>, 지역별 배송비 등 무료 할인 가능</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>혜택 제공 금액 기준 설정</div>
+      <ul class="steps">
+        <li><strong>사용함</strong> 설정 시: 총 주문 금액(할인 적용 전 상품 구매 금액 기준) 기준으로 적용</li>
+      </ul>
+      <div class="note note-danger">
+        <span class="note-ic">⚠️</span>
+        <div>
+          <strong>혜택 제공 금액 기준이 "사용 안함"</strong>인 경우 → 주문 금액과 관계없이 <strong>배송비가 무조건 할인 처리됨</strong>.<br>
+          동일 조건의 다른 혜택이 진행 중이면 <strong>가장 먼저 등록된 혜택</strong>이 적용됨.
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- ============ 증정 혜택 ============ -->
+<div class="cat-group" data-cat="gift">
+<div class="cat-title">증정 혜택</div>
+
+<div class="card" data-keywords="사은품 증정 첫구매 구매가격 회원 비회원">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🎀</div>
+    <div class="card-title-wrap">
+      <div class="card-title">사은품 증정</div>
+      <div class="card-sub">상품 구매 시 사은품 지급 · 첫구매 한정</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>주요 설정 항목</div>
+      <ul class="steps">
+        <li><strong>기간 설정</strong>: 증정품 제공 기간</li>
+        <li><strong>사용 범위</strong>: PC / 모바일 / 앱</li>
+        <li><strong>참여 대상</strong>: 회원/비회원, 회원 선택 시 등급별 적용</li>
+        <li><strong>상품 범위</strong>: 적용 대상 상품·분류 지정 또는 특정 상품 제외</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>첫 구매 한정 설정</div>
+      <ul class="steps">
+        <li>처음 구매할 때만 제공 (주문 결제 취소 여부와 무관)</li>
+        <li><strong>회원에게만 제공</strong> — 참여 대상을 "회원+비회원"으로 설정해도 비회원에게는 적용 안 됨</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>구매 가격 범위</div>
+      <ul class="steps">
+        <li>설정한 금액 범위 내에서만 사은품 지급</li>
+        <li>계산 방식은 <strong>[쇼핑몰 설정] 프로모션 설정 &gt; 혜택 환경 설정</strong>의 "사은품 제공 계산 범위 설정"에 따라 다름</li>
+      </ul>
+    </div>
+
+    <div class="note note-warn">
+      <span class="note-ic">📌</span>
+      <div><strong>사전 설정 필수</strong>: <strong>[쇼핑몰 설정] 프로모션 설정 &gt; 고객혜택 설정</strong>에서 사은품 기능 사용 여부 <strong>사용함</strong> 설정 + 사은품 선택 단계 항목에서 선택 방법 설정 필요.</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="1+N 이벤트 증정 N개 장바구니 옵션">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🎉</div>
+    <div class="card-title-wrap">
+      <div class="card-title">1+N 이벤트</div>
+      <div class="card-sub">1개 구매 시 N개 추가 증정</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>주요 설정 항목</div>
+      <ul class="steps">
+        <li><strong>기간/참여 대상/상품 범위</strong> 설정 (사은품 증정과 유사)</li>
+        <li><strong>상품 선택</strong>: 세트 상품·추가 구성 상품·관련 상품 제외, <strong>기본 상품만</strong> 설정 가능</li>
+      </ul>
+      <div class="note note-tip">
+        <span class="note-ic">💡</span>
+        <div>1+N 이벤트 상품은 <strong>장바구니에서 수량 변경 불가</strong>.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>유의사항</div>
+      <ul class="steps">
+        <li>할인 적용 상품과 <strong>중복 설정 가능</strong></li>
+        <li>구매주문단위·최소/최대 주문수량 설정이 있으면 <strong>1+N 이벤트 설정이 우선 적용</strong>됨</li>
+        <li>옵션별 추가 금액이 있는 상품은 <strong>증정 상품으로 추가 불가</strong></li>
+        <li>상품 추가 후 옵션별 추가 금액 수정 시 주문 시 <strong>0원 처리</strong>되므로 유의</li>
+        <li><strong>상품 연동형 옵션</strong> 등록 상품 추가 시 1+N 이벤트 설정 적용되지 않음</li>
+      </ul>
+      <div class="note note-danger">
+        <span class="note-ic">🚫</span>
+        <div>사은품 또는 1+N 이벤트로 등록된 상품은 <strong>네이버페이 버튼 노출되지 않음</strong>. 사은품은 쇼핑몰 주문서 페이지 주문 완료 시 선택하는 구조라 네이버페이 적용 불가.</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- ============ 쿠폰 · 할인코드 ============ -->
+<div class="cat-group" data-cat="coupon">
+<div class="cat-title">쿠폰 · 할인코드</div>
+
+<div class="card" data-keywords="쿠폰 발급 조회 일괄관리 삭제 회수 다운로드">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🎟️</div>
+    <div class="card-title-wrap">
+      <div class="card-title">쿠폰 발급/조회</div>
+      <div class="card-sub">발급 · 조회 · 일괄 관리 · 삭제</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 쿠폰 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>주요 버튼 기능</div>
+      <table class="tbl">
+        <tr><th>버튼</th><th>기능</th></tr>
+        <tr><td><strong>발급</strong></td><td>쿠폰 발급하기 화면 → 회원/조건 선택해 쿠폰 발급</td></tr>
+        <tr><td><strong>조회</strong></td><td>쿠폰 발급 내역 관리 → 발급/사용 일자, 주문번호, 사용 여부 확인</td></tr>
+        <tr><td><strong>설정 복사</strong></td><td>발급된 쿠폰과 동일 설정으로 새 쿠폰 생성</td></tr>
+        <tr><td><strong>경로 복사</strong></td><td>쿠폰 다운로드 URL 복사 (고객 다운로드 쿠폰만 표시)</td></tr>
+        <tr><td><strong>일괄 관리</strong></td><td>쿠폰 선택 후 일괄 발급 또는 회수</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>삭제 vs 완전 삭제</div>
+      <div class="sub">
+        <div class="sub-title">삭제 버튼</div>
+        <ul class="steps">
+          <li>쿠폰이 삭제되어도 <strong>이미 발급된 쿠폰은 회수되지 않음</strong></li>
+          <li>발급받은 고객은 계속 사용 가능</li>
+        </ul>
+      </div>
+      <div class="sub">
+        <div class="sub-title">완전 삭제 버튼</div>
+        <ul class="steps">
+          <li>이미 발급된 쿠폰도 <strong>회수됨</strong></li>
+          <li>처리 시 주의 필요</li>
+          <li>쿠폰 목록에 표시되지 않으며, 검색 조건의 <strong>삭제 여부 선택</strong> 시 확인 가능</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note note-danger">
+      <span class="note-ic">⚖️</span>
+      <div>
+        <strong>법적 유의사항 — 쿠폰 임의 삭제 금지</strong><br>
+        • 이미 발급된 쿠폰은 <strong>회원의 자산</strong>으로 법적 보호 대상<br>
+        • 약관에 회수 조항이 없으면 <strong>사전 고지 필수</strong><br>
+        • 임의 삭제 시 전자금융거래법, 표시 광고 공정화법, 전자상거래법 저촉<br>
+        • 상품권성 쿠폰: 유효기간 경과 후에도 <strong>5년 이내 90% 환불</strong> 필요<br>
+        • 소셜커머스 발급 쿠폰: 유효기간 경과 후 <strong>구입가 70% 환불</strong> 필요
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="시리얼쿠폰 마이페이지 쿠폰인증번호 자동 수동">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔢</div>
+    <div class="card-title-wrap">
+      <div class="card-title">시리얼 쿠폰</div>
+      <div class="card-sub">번호 발급 · 등록 · 수정</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 시리얼 쿠폰</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>시리얼 쿠폰 만들기</div>
+      <div class="flow">
+        <span class="flow-step">시리얼 쿠폰 만들기</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">사용 기간/기준 설정</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">시리얼번호 자동/수동 생성</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">저장</span>
+      </div>
+      <ul class="steps">
+        <li>발급된 시리얼 쿠폰은 구매자가 <strong>마이페이지에 등록하여 사용</strong></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>조회 및 제공</div>
+      <ul class="steps">
+        <li><strong>시리얼 쿠폰 발급/조회</strong>에서 발급한 쿠폰의 <strong>조회</strong> 버튼 클릭</li>
+        <li>발행된 쿠폰 번호를 <strong>SMS, 메일, 팝업, 종이쿠폰</strong> 등으로 구매자에게 제공</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>수정 가능 범위</div>
+      <table class="tbl">
+        <tr><th>상태</th><th>수정 가능 범위</th></tr>
+        <tr><td><strong>발행 전</strong></td><td>전체 항목 수정 가능</td></tr>
+        <tr><td><strong>발행 후</strong></td><td>기본정보 <strong>쿠폰명</strong> + 상세정보 <strong>쿠폰적용 상품 선택</strong>·<strong>쿠폰적용 분류 선택</strong>만 수정 가능</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>구매자 등록 방법</div>
+      <ul class="steps">
+        <li>쇼핑몰 로그인 → <strong>마이쇼핑(마이페이지) &gt; 쿠폰 &gt; 쿠폰인증번호 등록하기</strong></li>
+        <li>안내받은 시리얼 쿠폰 번호 등록 → 인증 후 마이 쿠폰 목록에 표시</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="할인코드 입력코드 최소주문 사용횟수 동일인 회원">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔑</div>
+    <div class="card-title-wrap">
+      <div class="card-title">할인코드</div>
+      <div class="card-sub">입력 코드 등록 · 사용 제한 설정</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 할인코드</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>할인코드 등록 절차</div>
+      <div class="flow">
+        <span class="flow-step">할인코드 등록</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">기본정보 필수항목 기재</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">사용기간/적용 범위 선택</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">제한 정보 설정</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">저장</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>제한 정보 설정 항목</div>
+      <table class="tbl">
+        <tr><th>제한 항목</th><th>설정 시 동작</th></tr>
+        <tr><td><strong>사용 가능 최소 주문 금액</strong></td><td>제한함 선택 시 최소 주문 금액 설정 가능</td></tr>
+        <tr><td><strong>최대 사용 가능 횟수</strong></td><td>제한함 선택 시 할인코드 사용 총 횟수 설정 가능</td></tr>
+        <tr><td><strong>사용 가능 대상</strong></td><td>회원만 사용하도록 설정 가능</td></tr>
+        <tr><td><strong>동일인 사용 가능 횟수</strong></td><td>제한함 선택 시 회원당 사용 횟수 설정 가능 (비회원 미적용)</td></tr>
+      </table>
+    </div>
+
+    <div class="note note-warn">
+      <span class="note-ic">📌</span>
+      <div>
+        • 입력 코드는 <strong>1~35자리 영문/숫자</strong>로만 등록 가능<br>
+        • A·B 상품에 할인코드 적용 시, 고객은 A·B 상품에 <strong>각각 적용</strong>하여 할인 받을 수 있음 — 비율 설정 시 유의<br>
+        • <strong>진행 전 코드</strong>는 모든 정보 수정 가능, <strong>진행중/종료 코드</strong>는 일부만 수정 가능
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>할인코드 조회</div>
+      <ul class="steps">
+        <li>기간·할인코드 이름·입력코드로 검색</li>
+        <li>사용 기간 시작 전: 잔여 횟수/총 횟수 → "<strong>진행 전</strong>" 표시</li>
+        <li>사용 기간 시작 후: 잔여/총 횟수 표시</li>
+        <li><strong>엑셀 다운</strong>으로 사용 내역 다운로드, <strong>복사</strong>로 동일 설정 코드 생성, <strong>삭제</strong> 가능</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- ============ 이벤트 ============ -->
+<div class="cat-group" data-cat="event">
+<div class="cat-title">이벤트</div>
+
+<div class="card" data-keywords="출석체크 적립금 쿠폰 디자인 배너">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📆</div>
+    <div class="card-title-wrap">
+      <div class="card-title">출석 체크 이벤트</div>
+      <div class="card-sub">출석 보상 · 적립금/쿠폰 지급</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 출석체크 이벤트</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>이벤트 생성</div>
+      <div class="flow">
+        <span class="flow-step">출석체크 만들기</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">설정사항 입력</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">저장</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>혜택 설정</div>
+      <ul class="steps">
+        <li>혜택으로 <strong>적립금 또는 쿠폰</strong> 지급 가능</li>
+        <li>쿠폰 혜택 지급 시 <strong>쿠폰 사전 생성 필수</strong> (이벤트 설정 시 불러오기 위함)</li>
+      </ul>
+    </div>
+
+    <div class="note note-danger">
+      <span class="note-ic">🚫</span>
+      <div><strong>이벤트 진행중 상태에서는 수정 불가</strong>. 진행 전 신중하게 검토 필요.</div>
+    </div>
+
+    <div class="note note-warn">
+      <span class="note-ic">🎨</span>
+      <div>이벤트를 쇼핑몰에 노출하려면 <strong>디자인 수정 필요</strong>. 출석체크 배너 노출 방법은 가이드 참고.</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="회원정보 수정 비밀번호 평생회원 휴면">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📝</div>
+    <div class="card-title-wrap">
+      <div class="card-title">회원 정보 이벤트</div>
+      <div class="card-sub">정보 수정 · 비밀번호 변경 · 평생회원 전환</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 회원정보 이벤트</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>회원 정보 수정 이벤트</div>
+      <ul class="steps">
+        <li>회원 정보를 최신으로 업데이트하도록 유도하는 이벤트 (SMS·이메일 수신 동의 유도 가능)</li>
+        <li>이벤트 기간 중 회원 로그인 시 <strong>이벤트 진행 알림 팝업 노출</strong></li>
+        <li>기간 내 정보 수정한 회원에게 혜택 지급</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>비밀번호 변경 이벤트</div>
+      <ul class="steps">
+        <li>회원 개인정보 보호 · 도용 피해 예방 목적</li>
+        <li>로그인 시 최근 비밀번호 변경일이 설정 기간을 지났다면 <strong>비밀번호 변경 화면으로 자동 연결</strong></li>
+        <li>변경한 회원에게 자동 혜택 지급</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>평생회원 전환 이벤트</div>
+      <table class="tbl">
+        <tr><th>구분</th><th>특징</th></tr>
+        <tr><td><strong>평생회원</strong></td><td>탈퇴 시까지 휴면 처리되지 않음 (휴면 기능 사용 중이라도 미전환)</td></tr>
+        <tr><td><strong>일반회원</strong></td><td>마지막 로그인 1년 경과 시 휴면 회원으로 자동 전환</td></tr>
+      </table>
+      <ul class="steps">
+        <li>이벤트 기간 내 평생회원 가입한 신규/기존 회원에게 <strong>쿠폰 혜택 지급</strong> 가능</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="리워드 추천인 피추천인 적립금 본인인증 악용">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🤝</div>
+    <div class="card-title-wrap">
+      <div class="card-title">리워드 프로그램 (추천인)</div>
+      <div class="card-sub">추천인/피추천인 적립금 · 악용 방지</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[쇼핑몰 설정] 프로모션 설정 &gt; 리워드 프로그램 설정</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>용어 정리</div>
+      <table class="tbl">
+        <tr><th>구분</th><th>설명</th></tr>
+        <tr><td><strong>추천인</strong></td><td>기존 가입자로서 쇼핑몰 가입·구매를 홍보해 회원 유치에 도움을 주는 회원</td></tr>
+        <tr><td><strong>피추천인</strong></td><td>추천인의 추천을 받아 신규로 회원 가입·구매를 하는 회원</td></tr>
+      </table>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>설정 사전 작업</div>
+      <ul class="steps">
+        <li>[쇼핑몰 설정] 고객 설정 &gt; 회원 가입 항목 설정에서 <strong>추천인 아이디 항목 사용 설정</strong></li>
+        <li>[쇼핑몰 설정] 프로모션 설정 &gt; 리워드 프로그램 설정에서 <strong>추천인 적립금 사용설정 사용함</strong></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>홍보 URL</div>
+      <ul class="steps">
+        <li>PC/모바일 마이페이지에 <strong>회원 ID 포함 홍보 URL</strong>, 주소 복사 버튼 표시 가능</li>
+        <li>URL 형식: <code style="background:var(--bg);padding:2px 6px;border-radius:3px;font-size:11px">http://쇼핑몰도메인/?reco_id=추천인아이디</code></li>
+        <li>표시 여부와 관계없이 URL 자체는 사용 가능</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">4</span>피추천인 수 제한</div>
+      <ul class="steps">
+        <li>추천인 수 제한은 <strong>추천 등록 수가 아닌 적립금 지급 혜택을 받은 횟수</strong> 기준</li>
+        <li>피추천인이 탈퇴해도 추천 가능 명수에서 <strong>제외되지 않음</strong></li>
+      </ul>
+      <div class="note note-tip">
+        <span class="note-ic">📌</span>
+        <div>1인당 추천 회원수를 3인으로 설정하고 3명 모두 가입된 상태에서 1명이 탈퇴해도 <strong>추가 추천 불가</strong>.</div>
+      </div>
+    </div>
+
+    <div class="note note-danger">
+      <span class="note-ic">⚠️</span>
+      <div>
+        <strong>악용 사례 방지</strong><br>
+        "피추천인 회원 가입 시 즉시 지급" 설정은 <strong>중복 가입 등의 악용 사례</strong>가 발생할 수 있음. 반드시 <strong>본인인증 서비스를 적용</strong>하여 중복 가입 제한 필요.
+      </div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- ============ 기타 ============ -->
+<div class="cat-group" data-cat="etc">
+<div class="cat-title">기타 프로모션 기능</div>
+
+<div class="card" data-keywords="공통이벤트 명절 배송공지 상품상세 PC 모바일">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📢</div>
+    <div class="card-title-wrap">
+      <div class="card-title">공통 이벤트 관리</div>
+      <div class="card-sub">상품 상세에 공통 안내문 표시</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 공통 이벤트 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>공통 이벤트란?</div>
+      <ul class="steps">
+        <li>쇼핑몰 진행 이벤트, 명절 배송 공지 등 <strong>상품 상세 페이지마다 공통 표시</strong> 가능</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>설정 방법</div>
+      <div class="flow">
+        <span class="flow-step">공통 이벤트 등록</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">제목/내용 입력</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">표시할 상품 대분류 선택</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">표시 위치 설정</span>
+        <span class="flow-arr">→</span>
+        <span class="flow-step">등록</span>
+      </div>
+    </div>
+
+    <div class="note note-warn">
+      <span class="note-ic">📌</span>
+      <div>공통 이벤트 관리 설정은 <strong>PC 화면에만 적용</strong>. 모바일 적용 필요 시 <strong>디자인 수정 필요</strong>.</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="무이자할부 카드 쇼핑몰부담 우선순위">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">💳</div>
+    <div class="card-title-wrap">
+      <div class="card-title">무이자 할부 관리</div>
+      <div class="card-sub">서비스 등록 · 상품 설정 · 우선순위</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 무이자할부 관리</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>무이자 할부 서비스</div>
+      <ul class="steps">
+        <li>고객 무이자 할부 거래 시 <strong>할부 수수료를 쇼핑몰에서 직접 부담</strong>하는 서비스</li>
+        <li>무이자 할부 서비스는 <strong>1개만 진행 가능</strong> (중복 진행 불가)</li>
+        <li>서비스 연장/변경 메뉴에서 <strong>무이자 재설정</strong> 버튼으로 설정</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>무이자 상품 설정</div>
+      <ul class="steps">
+        <li>전체 또는 <strong>특정 상품</strong>을 무이자 대상으로 지정 가능</li>
+        <li>무이자할부 상품 설정 메뉴에서 설정</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>카드사 할인 중복 시 우선순위</div>
+      <table class="tbl">
+        <tr><th>순위</th><th>적용 방식</th></tr>
+        <tr><td><strong>1순위</strong></td><td>카드사에서 진행하는 무이자 이벤트</td></tr>
+        <tr><td><strong>2순위</strong></td><td>쇼핑몰 관리자가 설정한 상점 부담 무이자</td></tr>
+        <tr><td><strong>3순위</strong></td><td>카드사에서 진행하는 부분 무이자 이벤트</td></tr>
+      </table>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="리마인드 SMS 메일 알림 통계 충전">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🔔</div>
+    <div class="card-title-wrap">
+      <div class="card-title">리마인드 Me</div>
+      <div class="card-sub">알림 등록 · 관리 · 통계</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="path">[관리자] 프로모션 &gt; 리마인드 Me</div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>리마인드 Me 충전</div>
+      <ul class="steps">
+        <li>서비스 현황 → SMS/메일 잔여 건수 → <strong>충전</strong> 버튼 클릭</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>리마인드 알림 등록</div>
+      <ul class="steps">
+        <li>고객에게 발송할 <strong>알림 유형, 알림 방식, 수신 대상</strong> 등 설정하여 등록</li>
+        <li>등록한 알림은 관리 메뉴에서 수정 또는 복사 사용 가능</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>리마인드 알림 관리/통계</div>
+      <ul class="steps">
+        <li><strong>알림 관리</strong>: 등록된 정보 확인, 수정, 복사 기능 제공</li>
+        <li><strong>알림 통계</strong>: 특정 기간 동안의 <strong>리마인드 알림 유입 → 구매 내역</strong> 확인</li>
+        <li>통계 목록은 엑셀 파일로 다운로드 가능</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="레시피 매크로 자동화 알림 적립금">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🧑‍🍳</div>
+    <div class="card-title-wrap">
+      <div class="card-title">레시피 (자동화 매크로)</div>
+      <div class="card-sub">조건 발생 시 정해진 동작 자동 실행</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>레시피란?</div>
+      <ul class="steps">
+        <li>쇼핑몰 업무 자동화에 필요한 레시피들을 공유하는 <strong>매크로 서비스</strong></li>
+        <li>특정 조건이 발생되면 <strong>정해진 일을 실행</strong>하는 지시문 형식의 프로그램</li>
+        <li>접속 경로: <strong>https://recipe.cafe24.com/</strong></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>활용 예시</div>
+      <ul class="steps">
+        <li><strong>긴급문의 접수</strong> 시 알림 메시지 발송</li>
+        <li><strong>리뷰 작성</strong> 시 적립금 지급</li>
+        <li><strong>상품 등록</strong> 시 해시태그 자동 설정</li>
+        <li><strong>신규 회원 가입</strong> 시 적립금 지급</li>
+      </ul>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- ============ 자주 묻는 CS ============ -->
+<div class="cat-group" data-cat="faq">
+<div class="cat-title">자주 묻는 CS</div>
+
+<div class="card" data-keywords="기간할인 재구매 대량구매 회원등급 배송비 무료">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🏷️</div>
+    <div class="card-title-wrap">
+      <div class="card-title">할인 혜택 관련</div>
+      <div class="card-sub">기간/재구매/대량/회원등급/배송비 할인</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="faq-q">기간 할인 혜택은 어떻게 등록하나요?</div>
+    <div class="faq-a"><strong>[관리자] 프로모션 &gt; 고객 혜택 관리 &gt; 혜택 등록</strong>에서 <strong>할인 → 기간 할인</strong> 선택. 기간/사용 범위(PC·모바일·앱)/참여 대상(회원·비회원, 회원 시 등급별)을 설정.</div>
+
+    <div class="faq-q">재구매 혹은 대량구매 회원에게 할인 혜택을 주고 싶어요</div>
+    <div class="faq-a">혜택 등록에서 <strong>재구매 할인</strong>(동일 상품 N회 이상 구매) 또는 <strong>대량 구매 할인</strong>(동일 상품 N개 이상 구매) 선택. 재구매 할인은 <strong>회원에게만 설정 가능</strong>. 상품 범위와 구매 횟수/수량을 조건으로 설정.</div>
+
+    <div class="faq-q">회원 등급별 할인 혜택을 제공할 수 있나요?</div>
+    <div class="faq-a">대부분의 할인 혜택(기간/대량구매/배송비/사은품 등)에서 참여 대상을 <strong>회원으로 선택 시 등급별 적용</strong> 가능. 등급별로 다른 할인율 적용하려면 등급 수만큼 별도 혜택 등록 필요.</div>
+
+    <div class="faq-q">배송비 무료 이벤트를 진행하려면 어떻게 해야 하나요?</div>
+    <div class="faq-a">혜택 등록 → <strong>할인 → 배송비 할인</strong> 선택. 기본/공급사/개별 배송비 무료 처리 가능, 지역별 배송비 포함 여부 설정 가능. <strong>해외배송·네이버페이·마켓 주문</strong>에는 적용되지 않음.</div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="사은품 1+1 증정 지급안됨 재고 품절">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🎁</div>
+    <div class="card-title-wrap">
+      <div class="card-title">증정 혜택 관련</div>
+      <div class="card-sub">사은품 미지급 · 1+1 이벤트 설정</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="faq-q">사은품 증정 혜택 진행 중인데 사은품 지급이 안 되었다고 해요</div>
+    <div class="faq-a">
+      체크 포인트:<br>
+      • <strong>[쇼핑몰 설정] 프로모션 설정 &gt; 고객혜택 설정</strong>에서 사은품 기능 사용함 설정 여부<br>
+      • 사은품 <strong>재고 품절</strong> 여부 (자동지급형은 품절 시 미지급)<br>
+      • 구매 가격 범위 충족 여부<br>
+      • 첫구매 한정 설정 시 <strong>회원 여부</strong> (비회원에는 미적용)<br>
+      • 혜택 환경 설정의 <strong>사은품 제공 계산 범위/방식</strong> 일치 여부
+    </div>
+
+    <div class="faq-q">1+1 이벤트 및 사은품 증정 설정은 어떻게 하나요?</div>
+    <div class="faq-a">혜택 등록에서 <strong>증정 → 사은품 증정</strong> 또는 <strong>1+N 이벤트</strong> 선택. 1+N 이벤트는 <strong>기본 상품만</strong> 추가 가능 (세트·추가 구성·관련 상품 제외), 옵션별 추가 금액 있는 상품 불가. 두 혜택 모두 <strong>네이버페이 버튼이 노출되지 않음</strong>에 유의.</div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="회원가입쿠폰 생일쿠폰 다운로드쿠폰 발급 회수 시리얼 적용대상">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">🎟️</div>
+    <div class="card-title-wrap">
+      <div class="card-title">쿠폰 관련</div>
+      <div class="card-sub">회원가입/생일/다운로드 쿠폰 · 삭제 회수</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="faq-q">회원가입 쿠폰은 어떻게 발행하나요?</div>
+    <div class="faq-a">[관리자] 프로모션 &gt; 쿠폰 관리에서 쿠폰 생성 후 <strong>발급 조건을 회원가입</strong>으로 설정. 회원가입과 동시에 자동 발급되도록 구성 가능.</div>
+
+    <div class="faq-q">기념일(생일) 쿠폰은 어떻게 발급하나요?</div>
+    <div class="faq-a">쿠폰 만들기에서 발급 조건을 <strong>기념일/생일</strong>로 설정. 회원의 생일 정보를 사전 수집해야 정상 발급되며, [쇼핑몰 설정] 회원 가입 항목 설정에서 <strong>생년월일 항목 사용</strong> 필요.</div>
+
+    <div class="faq-q">고객이 할인쿠폰을 직접 다운로드 할 수 있게 설정할 수 있나요?</div>
+    <div class="faq-a">쿠폰 만들기에서 <strong>고객 다운로드 쿠폰</strong>으로 설정. 발급된 쿠폰의 <strong>경로 복사 버튼</strong>으로 다운로드 URL을 받아 쇼핑몰 배너 등에 연결 가능.</div>
+
+    <div class="faq-q">이미 발급된 쿠폰/시리얼쿠폰의 적용 대상 상품이나 분류를 변경할 수 있나요?</div>
+    <div class="faq-a"><strong>발행 후 시리얼쿠폰</strong>은 쿠폰명, 쿠폰적용 상품 선택, 쿠폰적용 분류 선택만 수정 가능. 일반 쿠폰의 적용 대상 변경도 발급 후에는 제한적이므로 발급 전 신중히 검토 필요.</div>
+
+    <div class="faq-q">쿠폰 삭제, 회수, 발급 중단은 어떻게 하나요?</div>
+    <div class="faq-a">
+      • <strong>삭제</strong>: 이미 발급된 쿠폰은 회수되지 않고 고객이 사용 가능<br>
+      • <strong>완전 삭제</strong>: 발급된 쿠폰까지 회수됨 (주의 필요)<br>
+      • <strong>발급 중단</strong>: 일괄 관리 버튼으로 회수 처리 가능<br>
+      ⚖️ 발급된 쿠폰은 <strong>회원 자산</strong>으로 법적 보호 대상이라 약관에 회수 조항 없으면 사전 고지 필수.
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="플러스앱 카카오 친구 출석체크 SMS 이메일 수신동의 추천인">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📱</div>
+    <div class="card-title-wrap">
+      <div class="card-title">이벤트/리워드 관련</div>
+      <div class="card-sub">출석체크 · 수신동의 · 추천인</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="faq-q">플러스앱 설치 또는 카카오톡 친구 추가 시 적립금을 지급할 수 있나요?</div>
+    <div class="faq-a">레시피(자동화 매크로) 서비스를 활용하면 가능. <strong>https://recipe.cafe24.com/</strong>에서 관련 레시피 검색·적용. 직접 어드민 기능으로는 제공되지 않으며 레시피 또는 별도 앱 활용 필요.</div>
+
+    <div class="faq-q">출석체크 이벤트를 진행하고 싶어요</div>
+    <div class="faq-a"><strong>[관리자] 프로모션 &gt; 출석체크 이벤트 &gt; 출석체크 만들기</strong>에서 설정. 혜택은 <strong>적립금 또는 쿠폰</strong> 지급 가능. 쿠폰 지급 시 사전에 쿠폰 생성 필수, 진행 중 상태에서는 수정 불가, 쇼핑몰 노출은 디자인 수정 필요.</div>
+
+    <div class="faq-q">기존 회원들에게 SMS 및 이메일 수신 동의를 받으려면 어떻게 해야 하나요?</div>
+    <div class="faq-a"><strong>회원 정보 수정 이벤트</strong>를 활용. 이벤트 기간 중 회원 로그인 시 알림 팝업이 노출되며, 정보 수정한 회원에게 혜택 지급 가능. 수신 동의 항목을 정보 수정 시 함께 받도록 유도.</div>
+
+    <div class="faq-q">회원가입 시 추천인 기능은 어떻게 적용할 수 있나요?</div>
+    <div class="faq-a">
+      ① <strong>[쇼핑몰 설정] 고객 설정 &gt; 회원 가입 항목 설정</strong>에서 추천인 아이디 항목 사용<br>
+      ② <strong>[쇼핑몰 설정] 프로모션 설정 &gt; 리워드 프로그램 설정</strong>에서 추천인 적립금 사용함<br>
+      ③ 악용 방지를 위해 <strong>본인인증 서비스 적용 권장</strong>
+    </div>
+  </div></div>
+</div>
+
+<div class="card" data-keywords="공통이벤트 배송공지 리마인드 장바구니">
+  <div class="card-head" onclick="toggle(this)">
+    <div class="card-ic">📢</div>
+    <div class="card-title-wrap">
+      <div class="card-title">공통 이벤트 / 리마인드 관련</div>
+      <div class="card-sub">상품 상세 공지 · 장바구니 알림</div>
+    </div>
+    <div class="card-arrow">▼</div>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="faq-q">이벤트나 특정기간의 배송공지를 상품 상세페이지마다 표시하고 싶어요</div>
+    <div class="faq-a"><strong>[관리자] 프로모션 &gt; 공통 이벤트 관리 &gt; 공통 이벤트 등록</strong>으로 설정. 제목·내용·표시할 상품 대분류·표시 위치 입력. <strong>PC 화면에만 적용</strong>되며 모바일은 디자인 수정 필요.</div>
+
+    <div class="faq-q">회원들에게 현재 장바구니에 담긴 상품을 알려주고 구매를 유도하고 싶어요</div>
+    <div class="faq-a"><strong>[관리자] 프로모션 &gt; 리마인드 Me</strong>에서 알림 등록. SMS/메일 잔여 건수 충전 후 알림 유형·방식·수신 대상 설정. 알림 통계로 알림 유입을 통한 구매 내역 확인 가능.</div>
+  </div></div>
+</div>
+
+</div>
+
+<div id="empty" class="empty hidden">
+  <div class="empty-ic">🔍</div>
+  검색 결과가 없습니다
+</div>
+
+</div>
+
+<script>
+function toggle(el){
+  el.parentElement.classList.toggle('open');
+}
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const cat = t.dataset.cat;
+    document.querySelectorAll('.cat-group').forEach(g=>{
+      g.style.display = (cat==='all' || g.dataset.cat===cat) ? '' : 'none';
+    });
+    document.getElementById('q').value='';
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('hidden'));
+    document.getElementById('empty').classList.add('hidden');
+  });
+});
+
+function search(kw){
+  const k = kw.trim().toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  let hits = 0;
+
+  if(!k){
+    cards.forEach(c=>c.classList.remove('hidden'));
+    document.querySelectorAll('.cat-group').forEach(g=>g.classList.remove('empty-cat'));
+    const activeCat = document.querySelector('.tab.active').dataset.cat;
+    document.querySelectorAll('.cat-group').forEach(g=>{
+      g.style.display = (activeCat==='all' || g.dataset.cat===activeCat) ? '' : 'none';
+    });
+    document.getElementById('empty').classList.add('hidden');
+    return;
+  }
+
+  document.querySelectorAll('.cat-group').forEach(g=>g.style.display='');
+
+  cards.forEach(c=>{
+    const txt = (c.textContent + ' ' + (c.dataset.keywords||'')).toLowerCase();
+    if(txt.includes(k)){
+      c.classList.remove('hidden');
+      hits++;
+    } else {
+      c.classList.add('hidden');
+    }
+  });
+
+  document.querySelectorAll('.cat-group').forEach(g=>{
+    const visible = g.querySelectorAll('.card:not(.hidden)').length;
+    g.classList.toggle('empty-cat', visible===0);
+  });
+
+  document.getElementById('empty').classList.toggle('hidden', hits>0);
+}
+</script>
+
+</body>
+</html>
