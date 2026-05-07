@@ -276,6 +276,61 @@
           }
         }
       ]
+    },
+    {
+      "id": "customer",
+      "title": "고객관리",
+      "subtitle": "회원 조회·관리·혜택·오디언스 타겟팅",
+      "icon": "👥",
+      "order": 6,
+      "unlock_condition": null,
+      "stages": [
+        {
+          "id": "beginner",
+          "title": "초급",
+          "subtitle": "회원 조회·관리·등급 기본",
+          "icon": "🌱",
+          "order": 1,
+          "xp_per_question": 10,
+          "pass_score": 70,
+          "sample_size": 13,
+          "shuffle": true,
+          "shuffle_choices": true,
+          "unlock_condition": null
+        },
+        {
+          "id": "intermediate",
+          "title": "중급",
+          "subtitle": "혜택·오디언스·타겟팅",
+          "icon": "🌿",
+          "order": 2,
+          "xp_per_question": 20,
+          "pass_score": 70,
+          "sample_size": 14,
+          "shuffle": true,
+          "shuffle_choices": true,
+          "unlock_condition": {
+            "type": "stage_clear",
+            "stage_id": "beginner"
+          }
+        },
+        {
+          "id": "advanced",
+          "title": "고급",
+          "subtitle": "실전 CS·트러블슈팅",
+          "icon": "🌳",
+          "order": 3,
+          "xp_per_question": 35,
+          "pass_score": 70,
+          "sample_size": 13,
+          "shuffle": true,
+          "shuffle_choices": true,
+          "unlock_condition": {
+            "type": "stage_clear",
+            "stage_id": "intermediate"
+          }
+        }
+      ]
     }
   ],
   "level_thresholds": [
@@ -459,6 +514,30 @@
       "name": "프로모션 완벽",
       "icon": "💎",
       "desc": "프로모션&모니터링 전 스테이지 만점"
+    },
+    {
+      "id": "customer_beginner",
+      "name": "고객 새싹",
+      "icon": "👥",
+      "desc": "고객관리 초급 클리어"
+    },
+    {
+      "id": "customer_intermediate",
+      "name": "고객 성장",
+      "icon": "🤝",
+      "desc": "고객관리 중급 클리어"
+    },
+    {
+      "id": "customer_advanced",
+      "name": "고객 마스터",
+      "icon": "👑",
+      "desc": "고객관리 고급 클리어"
+    },
+    {
+      "id": "customer_perfect",
+      "name": "고객 완벽",
+      "icon": "💎",
+      "desc": "고객관리 전 스테이지 만점"
     }
   ]
 }
