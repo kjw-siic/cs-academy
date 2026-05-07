@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CS Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<style>
+:root{--pri:#4F46E5;--pri-d:#4338CA;--pri-l:#E0E7FF;--acc:#F59E0B;--acc-l:#FEF3C7;--ok:#10B981;--ok-l:#D1FAE5;--ng:#EF4444;--ng-l:#FEE2E2;--bg:#F3F4F6;--sf:#FFF;--sf2:#F9FAFB;--bd:#E5E7EB;--tx:#111827;--tx2:#6B778C;--tx3:#9CA3AF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6;min-height:100vh}
+a{color:var(--pri);text-decoration:none;cursor:pointer}
+button{font-family:inherit;cursor:pointer}
+
+.loading{text-align:center;padding:40px;color:var(--tx2);font-size:14px}
+
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#667EEA,#764BA2);padding:24px}
+.login-card{background:#fff;padding:48px 40px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.12);width:100%;max-width:420px;text-align:center}
+.login-card h1{font-size:28px;font-weight:900;margin:12px 0 4px}
+.login-card .sub{color:var(--tx2);font-size:14px;margin-bottom:28px}
+.login-card label{display:block;text-align:left;font-weight:600;font-size:13px;color:var(--tx2);margin-bottom:6px}
+.login-card input{width:100%;padding:12px 16px;font-size:15px;border:2px solid var(--bd);border-radius:8px;outline:none;font-family:inherit}
+.login-card input:focus{border-color:var(--pri)}
+.login-card button{width:100%;margin-top:14px;padding:14px;font-size:16px;font-weight:700;color:#fff;background:var(--pri);border:none;border-radius:8px}
+.login-card button:hover{background:var(--pri-d)}
+.login-card .hint{margin-top:16px;font-size:12px;color:var(--tx3)}
+
+.nav{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{font-weight:800;font-size:16px;color:var(--pri)}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{padding:6px 14px;border-radius:16px;font-size:13px;font-weight:500;color:var(--tx2)}
+.nav-links a:hover,.nav-links a.active{background:var(--pri-l);color:var(--pri);font-weight:700}
+.nav-logout{color:var(--tx3)!important}
+.nav-badge{background:var(--ng);color:#fff;font-size:10px;font-weight:800;padding:1px 6px;border-radius:10px;margin-left:4px}
+
+.page{max-width:100%;margin:0 auto;padding:24px 24px 80px}
+
+.uc{background:linear-gradient(135deg,#667EEA,#764BA2);border-radius:16px;padding:24px;color:#fff;display:flex;gap:20px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.uc-left{display:flex;align-items:center;gap:16px;flex:1;min-width:200px}
+.uc-avatar{width:60px;height:60px;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative}
+.uc-lvl{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:var(--acc);padding:1px 8px;border-radius:10px;font-size:10px;font-weight:800;white-space:nowrap}
+.uc-name{font-size:20px;font-weight:800}
+.uc-title{font-size:12px;opacity:.85}
+.xp-bar{width:100%;height:8px;background:rgba(0,0,0,.2);border-radius:4px;overflow:hidden;margin-top:8px}
+.xp-fill{height:100%;background:linear-gradient(90deg,#FBBF24,#F59E0B);border-radius:4px;transition:width .5s}
+.xp-txt{font-size:11px;opacity:.8;margin-top:4px}
+.uc-stats{display:flex;gap:12px}
+.uc-stat{text-align:center;padding:8px 14px;background:rgba(255,255,255,.15);border-radius:8px;min-width:64px}
+.uc-stat-n{font-size:18px;font-weight:800}
+.uc-stat-l{font-size:10px;opacity:.8}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.bdg{background:var(--sf);border:1px solid var(--bd);padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600}
+
+.wb{background:var(--acc-l);border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;font-weight:600;color:#92400E}
+.wb a{color:#D97706;font-weight:700}
+.wb-r{background:var(--ng-l);border-color:#FECACA;color:#991B1B}
+.wb-r a{color:var(--ng)}
+
+.world{background:var(--sf);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.world-hdr{display:flex;align-items:center;gap:14px;padding-bottom:16px;margin-bottom:16px;border-bottom:2px solid var(--bd)}
+.world-icon{font-size:36px;background:var(--pri-l);width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.world-t{font-size:18px;font-weight:800}
+.world-s{font-size:12px;color:var(--tx2);margin-top:2px}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.stg{background:var(--sf2);border:2px solid var(--bd);border-radius:10px;padding:16px;position:relative;transition:all .2s}
+.stg:hover:not(.locked){border-color:var(--pri);transform:translateY(-2px)}
+.stg.locked{opacity:.55}
+.stg.cleared{border-color:var(--ok);background:var(--ok-l)}
+.stg-icon{font-size:32px;margin-bottom:6px}
+.stg-t{font-size:15px;font-weight:800;margin-bottom:2px}
+.stg-s{font-size:11px;color:var(--tx2);margin-bottom:10px}
+.stg-meta{background:var(--sf);padding:8px 10px;border-radius:6px;margin-bottom:10px;font-size:11px}
+.stg-meta div{display:flex;justify-content:space-between;padding:1px 0}
+.stg-meta span{color:var(--tx2)}
+.stg-meta strong{color:var(--tx)}
+.stg-btn{display:block;text-align:center;padding:9px;background:var(--pri);color:#fff;border-radius:6px;font-weight:700;font-size:13px;border:none;width:100%}
+.stg-btn:hover{background:var(--pri-d);color:#fff}
+.stg-btn:disabled{background:var(--bd);color:var(--tx3);cursor:not-allowed}
+.cleared-mk{position:absolute;top:10px;right:10px;background:var(--ok);color:#fff;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700}
+
+.quiz-hdr{background:var(--sf);border-radius:14px;padding:24px;margin-bottom:20px}
+.quiz-hdr h2{font-size:20px;font-weight:800;margin-bottom:4px}
+.quiz-hdr .desc{color:var(--tx2);font-size:12px;margin-bottom:12px}
+.quiz-meta{display:flex;gap:10px;font-size:11px;color:var(--tx2);flex-wrap:wrap}
+.quiz-meta span{padding:3px 8px;background:var(--sf2);border-radius:10px}
+.qc{background:var(--sf);border-radius:10px;padding:20px;margin-bottom:12px;border-left:4px solid var(--pri)}
+.qn{font-size:11px;font-weight:700;color:var(--pri);margin-bottom:6px}
+.qt{font-size:14px;font-weight:500;line-height:1.7;margin-bottom:14px;white-space:pre-wrap}
+.ans-g{display:flex;flex-direction:column;gap:6px}
+.ans-g.ox{flex-direction:row;gap:10px}
+.ans-o{display:flex;align-items:flex-start;gap:8px;padding:10px 14px;border:2px solid var(--bd);border-radius:8px;cursor:pointer;background:var(--sf2);transition:all .12s;font-size:14px}
+.ans-o:hover{border-color:var(--pri);background:var(--pri-l)}
+.ans-o.selected{border-color:var(--pri);background:var(--pri-l);font-weight:700;color:var(--pri)}
+.ans-g.ox .ans-o{flex:1;justify-content:center;padding:16px;font-size:24px;font-weight:900}
+.ans-o.ox-yes.selected{color:var(--ok)}
+.ans-o.ox-no.selected{color:var(--ng)}
+.blank-in{width:100%;padding:10px 14px;font-size:14px;border:2px solid var(--bd);border-radius:8px;outline:none;font-family:inherit}
+.blank-in:focus{border-color:var(--pri)}
+.submit-bar{position:sticky;bottom:12px;background:var(--sf);border:2px solid var(--pri);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:20px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.prog{font-size:12px;font-weight:600;color:var(--tx2)}
+.prog b{color:var(--pri)}
+.submit-btn{padding:10px 24px;background:var(--tx3);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:14px;transition:all .15s}
+.submit-btn.ready{background:var(--pri)}
+.submit-btn.ready:hover{background:var(--pri-d)}
+
+.res-hero{border-radius:16px;padding:40px 32px;text-align:center;margin-bottom:20px;color:#fff}
+.res-hero.passed{background:linear-gradient(135deg,#10B981,#059669)}
+.res-hero.failed{background:linear-gradient(135deg,#F59E0B,#D97706)}
+.res-hero h1{font-size:24px;font-weight:900;margin:12px 0 20px}
+.res-summary{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.rs-c{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:14px 20px;border-radius:10px;min-width:90px;text-align:center}
+.rs-c .l{font-size:11px;opacity:.85;font-weight:600}
+.rs-c .v{font-size:28px;font-weight:900;line-height:1.1;margin-top:4px}
+.rs-c.sc{background:rgba(255,255,255,.95);color:var(--tx)}
+.rs-c.sc .l{color:var(--tx2)}
+.res-sub{font-size:13px;opacity:.9;margin-bottom:16px}
+.gain{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.gain-c{background:rgba(255,255,255,.2);padding:8px 16px;border-radius:20px;font-weight:700;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.3);font-size:13px}
+.gain-c.lvl{background:rgba(255,255,255,.95);color:var(--acc);animation:pulse 1.2s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.03)}}
+.nb-area{margin-top:20px}
+.nb-title{font-size:13px;font-weight:700;margin-bottom:10px;opacity:.9}
+.nb-list{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.nb-card{background:rgba(255,255,255,.95);color:var(--tx);padding:14px 18px;border-radius:10px;min-width:120px;text-align:center}
+.nb-card .i{font-size:28px}
+.nb-card .n{font-weight:800;font-size:13px;margin-top:4px}
+.nb-card .d{font-size:10px;color:var(--tx2);margin-top:2px}
+
+.sec-t{font-size:16px;font-weight:800;margin:20px 0 12px}
+.sec-t.ok-t{color:var(--ok)}
+
+.rv{background:var(--sf);border-radius:10px;padding:16px 20px;margin-bottom:10px;border-left:4px solid var(--bd)}
+.rv.wrong{border-left-color:var(--ng)}
+.rv.correct{border-left-color:var(--ok)}
+.rv.correct.collapsed .rv-body{display:none}
+.rv.correct.collapsed{cursor:pointer;padding:12px 20px}
+.rv.correct.collapsed:hover{background:var(--sf2)}
+.rv.correct.collapsed .rv-h{margin-bottom:0}
+.rv-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.rv-num{font-size:12px;font-weight:600;color:var(--tx2)}
+.rv-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px}
+.rv-tag.wrong{background:var(--ng-l);color:var(--ng)}
+.rv-tag.correct{background:var(--ok-l);color:var(--ok)}
+.rv-q{font-size:13px;font-weight:500;margin-bottom:10px;line-height:1.7;white-space:pre-wrap}
+.rv-body{}
+.rv-ar{font-size:12px;margin-bottom:4px;display:flex;gap:8px}
+.rv-ar .lbl{color:var(--tx2);font-weight:600;min-width:50px}
+.rv-ar .val{color:var(--tx)}
+.rv-ar .val.wt{color:var(--ng);font-weight:700;text-decoration:line-through}
+.rv-ar .val.ct{color:var(--ok);font-weight:700}
+.rv-choices{margin-top:8px}
+.rv-ch{padding:6px 10px;margin-bottom:3px;font-size:12px;background:var(--sf2);border-radius:6px;border:1px solid var(--bd)}
+.rv-ch.cc{background:var(--ok-l);border-color:var(--ok);color:#065F46;font-weight:700}
+.rv-ch.wc{background:var(--ng-l);border-color:var(--ng);color:var(--ng);text-decoration:line-through}
+.rv-exp{margin-top:10px;padding:10px 12px;background:var(--acc-l);border-left:3px solid var(--acc);border-radius:6px}
+.rv-exp .el{font-size:11px;font-weight:700;color:#D97706;margin-bottom:3px}
+.rv-exp .et{font-size:12px;line-height:1.7}
+.rv-exp .er{font-size:10px;color:var(--tx2);font-style:italic;margin-top:4px}
+
+.actions{display:flex;gap:10px;margin-top:24px;justify-content:center;flex-wrap:wrap}
+.btn-p,.btn-s{padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;border:none}
+.btn-p{background:var(--pri);color:#fff}
+.btn-p:hover{background:var(--pri-d)}
+.btn-s{background:var(--sf);color:var(--pri);border:2px solid var(--pri)}
+.btn-s:hover{background:var(--pri-l)}
+
+.wn-bar{font-size:12px;font-weight:700;color:var(--tx2);margin-bottom:14px;padding:8px 14px;background:var(--sf);border-radius:6px;border:1px solid var(--bd)}
+.wn{background:var(--sf);border-radius:10px;margin-bottom:8px;border:1px solid var(--bd);border-left:4px solid var(--ng);overflow:hidden}
+.wn-h{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.wn-h:hover{background:var(--sf2)}
+.wn-stg{font-size:9px;font-weight:700;color:var(--tx3);background:var(--sf2);padding:2px 6px;border-radius:3px;text-transform:uppercase;flex-shrink:0}
+.wn-prev{font-size:12px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wn-arr{font-size:10px;color:var(--tx3);transition:transform .2s}
+.wn.open .wn-arr{transform:rotate(180deg)}
+.wn-body{display:none;padding:0 16px 16px;border-top:1px solid var(--bd)}
+.wn.open .wn-body{display:block;padding-top:12px}
+.wn-q{font-size:13px;line-height:1.7;margin-bottom:10px;white-space:pre-wrap}
+.wn-ans{font-size:13px;font-weight:700;color:var(--ok);margin-bottom:10px;padding:6px 10px;background:var(--ok-l);border-radius:6px}
+.wn-actions{display:flex;gap:8px;margin-top:8px}
+.wn-dismiss{padding:5px 12px;font-size:11px;font-weight:600;background:var(--ok-l);color:var(--ok);border:1px solid var(--ok);border-radius:6px;cursor:pointer}
+.wn-dismiss:hover{background:var(--ok);color:#fff}
+.wn-clear-all{padding:8px 16px;font-size:12px;font-weight:700;background:var(--ng-l);color:var(--ng);border:1px solid var(--ng);border-radius:8px;cursor:pointer;margin-bottom:16px}
+.wn-clear-all:hover{background:var(--ng);color:#fff}
+
+.empty{text-align:center;padding:60px 20px}
+.empty .ei{font-size:56px;margin-bottom:12px}
+.empty .et{font-size:15px;font-weight:600;color:var(--tx2);margin-bottom:20px}
+
+.dash-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.dc{background:var(--sf);border-radius:10px;padding:16px 20px}
+.dc-l{font-size:11px;color:var(--tx2);font-weight:600}
+.dc-v{font-size:28px;font-weight:900;color:var(--pri);line-height:1.1;margin:4px 0}
+.dc-s{font-size:11px;color:var(--tx2)}
+.dash-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
+.dash-tbl th,.dash-tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd)}
+.dash-tbl th{background:var(--sf2);font-weight:700;font-size:10px;text-transform:uppercase;color:var(--tx2)}
+
+.guide-section{background:var(--sf);border-radius:10px;padding:20px;margin-bottom:16px}
+.guide-heading{font-size:15px;font-weight:800;color:var(--pri);margin:16px 0 6px;padding-top:8px;border-top:1px solid var(--bd)}
+.guide-heading:first-child{border-top:none;padding-top:0}
+.guide-text{font-size:13px;margin:4px 0;line-height:1.7}
+.guide-path{font-size:12px;color:var(--pri);background:var(--pri-l);padding:6px 10px;border-radius:6px;margin:8px 0;font-weight:600}
+.guide-warn{font-size:12px;color:#B45309;background:var(--acc-l);padding:6px 10px;border-radius:6px;margin:6px 0;border-left:3px solid var(--acc)}
+.guide-link{font-size:11px;color:var(--tx3);font-style:italic;margin:4px 0}
+.guide-item{font-size:13px;margin:3px 0;padding-left:12px;border-left:2px solid var(--bd);line-height:1.6}
+.guide-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.guide-tab{padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--bd);background:var(--sf);color:var(--tx2)}
+.guide-tab.active{border-color:var(--pri);background:var(--pri-l);color:var(--pri)}
+.guide-search{width:100%;padding:10px 14px;border:2px solid var(--bd);border-radius:8px;font-size:13px;margin-bottom:16px;outline:none;font-family:inherit}
+.guide-search:focus{border-color:var(--pri)}
+
+@media(max-width:640px){.uc{flex-direction:column;text-align:center}.uc-stats{justify-content:center}.stages{grid-template-columns:1fr}.res-summary{flex-direction:column;align-items:center}.nav-links{gap:2px}.nav-links a{padding:4px 8px;font-size:11px}}
+
+.admin-section{background:var(--sf);border-radius:10px;padding:20px;margin-bottom:16px}
+.admin-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+.admin-table th,.admin-table td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd)}
+.admin-table th{background:var(--sf2);font-weight:700;font-size:10px;text-transform:uppercase;color:var(--tx2);position:sticky;top:0}
+.admin-table tr:hover td{background:var(--pri-l)}
+.admin-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.admin-tab{padding:6px 14px;border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;border:2px solid var(--bd);background:var(--sf);color:var(--tx2)}
+.admin-tab.active{border-color:var(--pri);background:var(--pri-l);color:var(--pri)}
+.stat-bar{height:16px;background:var(--bd);border-radius:4px;overflow:hidden;min-width:60px;display:inline-block}
+.stat-fill{height:100%;border-radius:4px;display:block}
+.stat-fill.good{background:var(--ok)}
+.stat-fill.mid{background:var(--acc)}
+.stat-fill.bad{background:var(--ng)}
+.google-btn{width:100%;padding:14px;font-size:15px;font-weight:700;color:var(--tx);background:var(--sf);border:2px solid var(--bd);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;transition:all .15s}
+.google-btn:hover{border-color:var(--pri);background:var(--pri-l)}
+.login-error{background:var(--ng-l);color:var(--ng);padding:10px 14px;border-radius:8px;font-size:12px;margin-top:12px;display:none}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyCLO2xoWU6TS0PJqfqpDfwW81wjr_VecW0",authDomain:"cs-academy-b31a5.firebaseapp.com",projectId:"cs-academy-b31a5",storageBucket:"cs-academy-b31a5.firebasestorage.app",messagingSenderId:"962435394629",appId:"1:962435394629:web:0c0c9bb2934a26c10c872c"});
+const fireDb=firebase.firestore();
+
+// Quiz data loaded via fetch (separated from index.html)
+const QUIZ_WORLD_FILES = ["youtube","order","product","shopmall","promo"];
+let MANIFEST = null;
+let QUIZZES = {};
+const GUIDES_FILES={youtube:"guide_youtube.html",order:"guide_order.html",product:"guide_product.html",shopmall:"guide_shopmall.html",promo:"guide_promotion.html",event_monitor:"guide_event_preregistration.html"};
+
+const ADMINS=["ecmsjwkang001@in.cd24.kr","ecmsshseo@in.cd24.kr"];
+const ALLOWED_DOMAIN="@in.cd24.kr";
+const fireAuth=firebase.auth();
+const googleProvider=new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({hd:'in.cd24.kr'});
+
+let state={page:'login',userEmail:'',userName:'',userData:null,currentQuiz:null,lastResult:null,guideWorld:'youtube',adminTab:'users',isAdmin:false,adminDetailEmail:'',adminDetailName:''};
+
+function userRef(email){return fireDb.collection('users').doc(email)}
+async function loadUser(email,name){const d=await userRef(email).get();if(d.exists){const data=d.data();if(name&&name!==data.name){data.name=name;await userRef(email).set(data,{merge:true})}return data}const u={name:name||email,email,total_xp:0,level:1,created_at:new Date().toISOString(),progress:{},badges:[],dismissed_wrong:[]};await userRef(email).set(u);return u}
+async function saveUser(email,data){await userRef(email).set(data,{merge:true})}
+async function logQuiz(email,name,w,s,q,c,a){await fireDb.collection('quiz_logs').add({user_email:email,user_name:name,world_id:w,stage_id:s,quiz_id:q,is_correct:c,user_answer:a,answered_at:new Date().toISOString()})}
+async function getWrongQuizIds(email){const logs=await fireDb.collection('quiz_logs').where('user_email','==',email).get();const w=new Set(),c=new Set();logs.forEach(d=>{const x=d.data(),k=`${x.world_id}|${x.stage_id}|${x.quiz_id}`;if(x.is_correct)c.add(k);else w.add(k)});const dismissed=state.userData?.dismissed_wrong||[];return[...w].filter(k=>!c.has(k)&&!dismissed.includes(k)).map(k=>{const[wid,sid,qid]=k.split('|');return{wid,sid,qid}})}
+function getLevelInfo(xp){const t=MANIFEST.level_thresholds;let cur=t[0],nxt=null;for(let i=0;i<t.length;i++){if(xp>=t[i].xp_required){cur=t[i];nxt=t[i+1]||null}}return{level:cur.level,title:cur.title,xp,nextXp:nxt?nxt.xp_required:null,nextTitle:nxt?nxt.title:null,progress:nxt?Math.round((xp-cur.xp_required)/(nxt.xp_required-cur.xp_required)*100):100}}
+function shuffleArray(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function sampleQuiz(wid,sid){const sc=MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);const pool=JSON.parse(JSON.stringify(QUIZZES[wid][sid].questions));const sz=sc.sample_size||pool.length;let qs=shuffleArray(pool).slice(0,sz);if(sc.shuffle_choices)qs.forEach(q=>{if(q.type==='multiple_choice'&&q.choices){const ct=q.choices[q.answer];q.choices=shuffleArray(q.choices);q.answer=q.choices.indexOf(ct)}});return qs}
+function checkAnswer(q,a){if(q.type==='ox')return q.answer?(a==='true'):(a==='false');if(q.type==='multiple_choice')return parseInt(a)===q.answer;if(q.type==='fill_blank'){const n=(a||'').replace(/\s/g,'').toLowerCase();return[q.answer,...(q.acceptable_answers||[])].some(x=>x.replace(/\s/g,'').toLowerCase()===n)}return false}
+function isUnlocked(u,wid,sid){const s=MANIFEST.worlds.find(w=>w.id===wid)?.stages.find(s=>s.id===sid);if(!s?.unlock_condition)return true;const uc=s.unlock_condition;if(uc.type==='stage_clear'){const k=`${wid}_${uc.stage_id}`;return u.progress?.[k]?.status==='cleared'}return true}
+
+const $=document.getElementById('app');
+function render(){switch(state.page){case'login':return rLogin();case'map':return rMap();case'quiz':return rQuiz();case'result':return rResult();case'wrongnotes':return rWrong();case'dashboard':return rDash();case'guide':return rGuide();case'admin':return rAdmin()}}
+
+function rLogin(){$.innerHTML=`<div class="login-wrap"><div class="login-card"><div style="font-size:56px">🎓</div><h1>CS Academy</h1><p class="sub">Cafe24 CS 상담사 온보딩 트레이닝</p><div style="margin:24px 0 12px;color:var(--tx3);font-size:12px">회사 Google 계정으로 로그인</div><button class="google-btn" onclick="doGoogleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" style="width:20px;height:20px">Google 계정으로 로그인</button><div id="login-error" class="login-error"></div><p class="hint" style="margin-top:16px">@in.cd24.kr 계정만 접속 가능합니다.</p></div></div>`}
+
+async function doGoogleLogin(){const errEl=document.getElementById('login-error');if(errEl)errEl.style.display='none';try{const result=await fireAuth.signInWithPopup(googleProvider);const user=result.user;const email=user.email;if(!email.endsWith(ALLOWED_DOMAIN)){await fireAuth.signOut();if(errEl){errEl.textContent=email+' 은(는) 허용되지 않는 계정입니다. @in.cd24.kr 계정으로 로그인해주세요.';errEl.style.display='block'}return}state.userEmail=email;state.userName=user.displayName||email.split('@')[0];state.isAdmin=ADMINS.includes(email);$.innerHTML='<div class="loading">Loading...</div>';state.userData=await loadUser(email,state.userName);state.page='map';await rMap()}catch(e){console.error(e);if(errEl){errEl.textContent='로그인에 실패했습니다. 다시 시도해주세요.';errEl.style.display='block'}}}
+
+function doLogout(){fireAuth.signOut();state.userEmail='';state.userName='';state.userData=null;state.isAdmin=false;state.page='login';render()}
+
+function nav(wc){let h=`<nav class="nav"><div class="nav-brand">🎓 CS Academy</div><div class="nav-links"><a onclick="goMap()" class="${state.page==='map'?'active':''}">맵</a><a onclick="goGuide()" class="${state.page==='guide'?'active':''}">학습 가이드</a><a onclick="goWrong()" class="${state.page==='wrongnotes'?'active':''}">오답노트${wc>0?`<span class="nav-badge">${wc}</span>`:''}</a><a onclick="goDash()" class="${state.page==='dashboard'?'active':''}">대시보드</a>`;if(state.isAdmin)h+=`<a onclick="goAdmin()" class="${state.page==='admin'?'active':''}" style="color:var(--acc)">👑 관리자</a>`;h+=`<a onclick="doLogout()" class="nav-logout">로그아웃</a></div></nav>`;return h}
+
+async function rMap(){const u=state.userData,l=getLevelInfo(u.total_xp),w=await getWrongQuizIds(state.userEmail),wc=w.length;const logs=await fireDb.collection('quiz_logs').where('user_email','==',state.userEmail).get();let tt=0,cc=0;logs.forEach(d=>{tt++;if(d.data().is_correct)cc++});const ac=tt?Math.round(cc/tt*100):0;const bg=(u.badges||[]);
+let h=nav(wc)+`<div class="page"><div class="uc"><div class="uc-left"><div class="uc-avatar">👤<div class="uc-lvl">Lv.${l.level}</div></div><div><div class="uc-name">${u.name}</div><div class="uc-title">${l.title}</div><div class="xp-bar"><div class="xp-fill" style="width:${l.progress}%"></div></div><div class="xp-txt">${l.xp}${l.nextXp?' / '+l.nextXp+' XP → '+l.nextTitle:' XP (MAX)'}</div></div></div><div class="uc-stats"><div class="uc-stat"><div class="uc-stat-n">${tt}</div><div class="uc-stat-l">푼 문제</div></div><div class="uc-stat"><div class="uc-stat-n">${ac}%</div><div class="uc-stat-l">정답률</div></div><div class="uc-stat"><div class="uc-stat-n">${bg.length}</div><div class="uc-stat-l">배지</div></div></div></div>`;
+if(bg.length)h+=`<div class="badges">${bg.map(id=>{const b=MANIFEST.badges.find(x=>x.id===id);return b?`<div class="bdg">${b.icon} ${b.name}</div>`:''}).join('')}</div>`;
+if(wc>0)h+=`<div class="wb"><span>📝 오답노트에 ${wc}문제가 있어요!</span><a onclick="goWrong()">복습하러 가기 →</a></div>`;
+for(const world of MANIFEST.worlds){h+=`<div class="world"><div class="world-hdr"><div class="world-icon">${world.icon}</div><div><div class="world-t">${world.title}</div><div class="world-s">${world.subtitle}</div></div></div><div class="stages">`;for(const s of world.stages){const ul=isUnlocked(u,world.id,s.id),pk=`${world.id}_${s.id}`,p=(u.progress||{})[pk]||{},cl=p.status==='cleared',ps=QUIZZES[world.id][s.id].questions.length,cls=!ul?'locked':(cl?'cleared':'');h+=`<div class="stg ${cls}"><div class="stg-icon">${ul?s.icon:'🔒'}</div><div class="stg-t">${s.title}</div><div class="stg-s">${s.subtitle}</div>`;if(!ul)h+=`<div style="font-size:11px;color:var(--tx3);margin-bottom:8px;font-style:italic">이전 스테이지 클리어 필요</div><button class="stg-btn" disabled>잠김</button>`;else{h+=`<div class="stg-meta"><div><span>최고점수</span><strong>${p.best_score||0}점</strong></div><div><span>도전</span><strong>${p.attempts||0}회</strong></div><div><span>통과기준</span><strong>${s.pass_score}점</strong></div><div><span>문항풀</span><strong>${ps}개 중 ${s.sample_size}개</strong></div></div><button class="stg-btn" onclick="startQuiz('${world.id}','${s.id}')">${cl?'재도전':(p.attempts>0?'이어하기':'시작하기')}</button>`;if(cl)h+=`<div class="cleared-mk">✓ 클리어</div>`}h+=`</div>`}h+=`</div></div>`}h+=`</div>`;$.innerHTML=h}
+
+function startQuiz(w,s){state.currentQuiz={wid:w,sid:s,questions:sampleQuiz(w,s),answers:{}};state.page='quiz';render()}
+function rQuiz(){const{wid,sid,questions,answers}=state.currentQuiz;const world=MANIFEST.worlds.find(w=>w.id===wid),stage=world.stages.find(s=>s.id===sid),ps=QUIZZES[wid][sid].questions.length,ac=Object.keys(answers).filter(k=>answers[k]!==undefined&&answers[k]!=='').length;let h=`<nav class="nav"><div class="nav-brand">🎓 CS Academy</div><div class="nav-links"><a onclick="goMap()">← 맵으로</a></div></nav><div class="page"><div class="quiz-hdr"><div style="font-size:11px;color:var(--tx2)">${world.title} › ${stage.title}</div><h2>${stage.title} ${stage.icon}</h2><div class="desc">${questions.length}문항 (풀 ${ps}개 중 랜덤 출제)</div><div class="quiz-meta"><span>⭐ ${stage.xp_per_question} XP/문항</span><span>🎯 통과 ${stage.pass_score}점</span></div></div>`;questions.forEach((q,i)=>{h+=`<div class="qc"><div class="qn">문제 ${i+1} / ${questions.length}</div><div class="qt">${q.question.replace(/\n/g,'<br>')}</div>`;if(q.type==='ox')h+=`<div class="ans-g ox"><div class="ans-o ox-yes ${answers[q.id]==='true'?'selected':''}" onclick="selAns('${q.id}','true')">O</div><div class="ans-o ox-no ${answers[q.id]==='false'?'selected':''}" onclick="selAns('${q.id}','false')">X</div></div>`;else if(q.type==='multiple_choice')h+=`<div class="ans-g">${q.choices.map((c,ci)=>`<div class="ans-o ${answers[q.id]===''+ci?'selected':''}" onclick="selAns('${q.id}','${ci}')">${c}</div>`).join('')}</div>`;else h+=`<div class="ans-g"><input class="blank-in" placeholder="답을 입력하세요" value="${answers[q.id]||''}" oninput="selAns('${q.id}',this.value)"></div>`;h+=`</div>`});h+=`<div class="submit-bar"><div class="prog"><b>${ac}</b> / ${questions.length} 답변 완료</div><button class="submit-btn ${ac===questions.length?'ready':''}" onclick="submitQuiz()">제출하고 결과 보기</button></div></div>`;$.innerHTML=h}
+function selAns(qid,val){state.currentQuiz.answers[qid]=val;const ac=Object.keys(state.currentQuiz.answers).filter(k=>{const v=state.currentQuiz.answers[k];return v!==undefined&&v!==''}).length;const t=state.currentQuiz.questions.length;const p=document.querySelector('.prog');if(p)p.innerHTML=`<b>${ac}</b> / ${t} 답변 완료`;const b=document.querySelector('.submit-btn');if(b)b.classList.toggle('ready',ac===t);document.querySelectorAll('.qc').forEach(card=>{card.querySelectorAll('.ans-o').forEach(o=>{const oc=o.getAttribute('onclick');if(oc&&oc.includes(`'${qid}'`))o.classList.toggle('selected',oc.includes(`'${val}'`))})})}
+
+async function submitQuiz(){const{wid,sid,questions,answers}=state.currentQuiz;const stage=MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);const u=state.userData;const un=questions.filter(q=>!answers[q.id]&&answers[q.id]!=='0');if(un.length>0&&!confirm(`${un.length}문제가 남아있어요. 제출할까요?`))return;$.innerHTML='<div class="loading">채점 중...</div>';let cc=0;const results=[];for(const q of questions){const ua=answers[q.id]||'';const ok=checkAnswer(q,ua);if(ok)cc++;let uc,crc;if(q.type==='multiple_choice'){uc=ua!==''?(q.choices[parseInt(ua)]||'(미응답)'):'(미응답)';crc=q.choices[q.answer]}else if(q.type==='ox'){uc=ua==='true'?'O':ua==='false'?'X':'(미응답)';crc=q.answer?'O':'X'}else{uc=ua||'(미응답)';crc=q.answer}results.push({...q,userAnswer:ua,userChoice:uc,correctChoice:crc,isCorrect:ok});await logQuiz(state.userEmail,state.userName,wid,sid,q.id,ok,ua)}const tt=questions.length,sc=Math.round(cc/tt*100),wc=tt-cc,passed=sc>=stage.pass_score,xp=cc*stage.xp_per_question;const ol=u.level;u.total_xp+=xp;const lv=getLevelInfo(u.total_xp);u.level=lv.level;if(!u.progress)u.progress={};const pk=`${wid}_${sid}`,pv=u.progress[pk]||{status:'',best_score:0,attempts:0};u.progress[pk]={status:passed?'cleared':(pv.status==='cleared'?'cleared':'in_progress'),best_score:Math.max(pv.best_score||0,sc),attempts:(pv.attempts||0)+1};if(!u.badges)u.badges=[];const nb=[];function tb(id){if(!u.badges.includes(id)){u.badges.push(id);const b=MANIFEST.badges.find(x=>x.id===id);if(b)nb.push(b)}}tb('first_step');if(passed)tb(`${wid}_${sid}`);if(passed&&sc===100){const wd=MANIFEST.worlds.find(w=>w.id===wid);if(wd.stages.every(s=>(u.progress[`${wid}_${s.id}`]||{}).best_score===100))tb(`${wid}_perfect`)}const allW=MANIFEST.worlds.every(wd=>wd.stages.every(s=>(u.progress[`${wd.id}_${s.id}`]||{}).status==='cleared'));if(allW)tb('all_clear');await saveUser(state.userEmail,u);state.userData=u;state.lastResult={wid,sid,results,score:sc,correctCount:cc,wrongCount:wc,total:tt,passed,passScore:stage.pass_score,earnedXp:xp,newLevel:lv.level,newLevelTitle:lv.title,leveledUp:lv.level>ol,newBadges:nb};state.page='result';render()}
+
+function rResult(){const r=state.lastResult;let h=`<nav class="nav"><div class="nav-brand">🎓 CS Academy</div><div class="nav-links"><a onclick="goMap()">← 맵으로</a></div></nav><div class="page"><div class="res-hero ${r.passed?'passed':'failed'}"><div style="font-size:56px">${r.passed?'🎉':'💪'}</div><h1>${r.passed?'고생하셨습니다! 통과!':'아쉽지만 다시 도전해봐요!'}</h1><div class="res-summary"><div class="rs-c"><div class="l">총 문제</div><div class="v">${r.total}</div></div><div class="rs-c"><div class="l">정답</div><div class="v">${r.correctCount}</div></div><div class="rs-c"><div class="l">오답</div><div class="v">${r.wrongCount}</div></div><div class="rs-c sc"><div class="l">점수</div><div class="v">${r.score}점</div></div></div><div class="res-sub">통과 기준 ${r.passScore}점</div><div class="gain"><div class="gain-c"><span>⭐</span>+${r.earnedXp} XP</div>${r.leveledUp?`<div class="gain-c lvl"><span>🎊</span>레벨업! → ${r.newLevelTitle} (Lv.${r.newLevel})</div>`:''}</div>${r.newBadges.length?`<div class="nb-area"><div class="nb-title">🏆 새 배지 획득</div><div class="nb-list">${r.newBadges.map(b=>`<div class="nb-card"><div class="i">${b.icon}</div><div class="n">${b.name}</div><div class="d">${b.desc}</div></div>`).join('')}</div></div>`:''}</div>`;if(r.wrongCount>0)h+=`<div class="wb wb-r"><span>📝 ${r.wrongCount}문제를 틀렸어요!</span><a onclick="goWrong()">오답노트 바로가기 →</a></div>`;const ws=r.results.filter(x=>!x.isCorrect),cs=r.results.filter(x=>x.isCorrect);if(ws.length){h+=`<h2 class="sec-t">✗ 오답 문항</h2>`;ws.forEach((v,i)=>h+=rvCard(v,i+1,false))}if(cs.length){h+=`<h2 class="sec-t ok-t">✓ 정답 문항 (클릭하여 펼치기)</h2>`;cs.forEach((v,i)=>h+=rvCard(v,i+1,true))}h+=`<div class="actions"><button class="btn-p" onclick="goMap()">맵으로</button><button class="btn-s" onclick="startQuiz('${r.wid}','${r.sid}')">한 번 더 도전 (다른 문제!)</button></div></div>`;$.innerHTML=h}
+function rvCard(v,i,ok){let h=`<div class="rv ${ok?'correct collapsed':'wrong'}" ${ok?'onclick="this.classList.toggle(\'collapsed\')"':''}>`;h+=`<div class="rv-h"><div class="rv-num">${ok?v.question.substring(0,40)+(v.question.length>40?'...':''):'문제 '+i}</div><div class="rv-tag ${ok?'correct':'wrong'}">${ok?'✓ 정답':'✗ 오답'}</div></div><div class="rv-body"><div class="rv-q">${v.question.replace(/\n/g,'<br>')}</div>`;if(!ok){h+=`<div class="rv-ar"><span class="lbl">내 답변:</span><span class="val wt">${v.userChoice}</span></div><div class="rv-ar"><span class="lbl">정답:</span><span class="val ct">${v.correctChoice}</span></div>`;if(v.type==='multiple_choice'&&v.choices)h+=`<div class="rv-choices">${v.choices.map((c,ci)=>{let cls='';if(ci===v.answer)cls='cc';else if(''+ci===v.userAnswer&&ci!==v.answer)cls='wc';return`<div class="rv-ch ${cls}">${c}</div>`}).join('')}</div>`}if(v.explanation)h+=`<div class="rv-exp"><div class="el">💡 해설</div><div class="et">${v.explanation}</div>${v.guide_ref?`<div class="er">📖 ${v.guide_ref}</div>`:''}</div>`;h+=`</div></div>`;return h}
+
+async function rWrong(){const wi=await getWrongQuizIds(state.userEmail);let h=nav(wi.length)+`<div class="page"><h1 style="font-size:18px;font-weight:800;margin-bottom:4px">📝 오답노트</h1><p style="color:var(--tx2);font-size:12px;margin-bottom:16px">아직 한 번도 맞추지 못한 문제들이에요.</p>`;if(!wi.length)h+=`<div class="empty"><div class="ei">🎉</div><div class="et">오답이 없어요!</div><button class="btn-p" onclick="goMap()">맵으로</button></div>`;else{h+=`<button class="wn-clear-all" onclick="clearAllWrong()">🗑️ 오답노트 전체 초기화</button><div class="wn-bar">총 ${wi.length}개 문제</div>`;wi.forEach(item=>{const q=QUIZZES[item.wid]?.[item.sid]?.questions.find(x=>x.id===item.qid);if(!q)return;let ans;if(q.type==='multiple_choice')ans=`<div class="rv-choices" style="margin-bottom:10px">${q.choices.map((c,ci)=>`<div class="rv-ch ${ci===q.answer?'cc':''}">${c}${ci===q.answer?' ← 정답':''}</div>`).join('')}</div>`;else if(q.type==='ox')ans=`<div class="wn-ans">정답: ${q.answer?'O':'X'}</div>`;else ans=`<div class="wn-ans">정답: ${q.answer}</div>`;h+=`<div class="wn" onclick="event.target.closest('.wn-dismiss')?null:this.classList.toggle('open')"><div class="wn-h"><div class="wn-stg">${item.wid}/${item.sid}</div><div class="wn-prev">${q.question.substring(0,60)}${q.question.length>60?'...':''}</div><div class="wn-arr">▼</div></div><div class="wn-body"><div class="wn-q">${q.question.replace(/\n/g,'<br>')}</div>${ans}${q.explanation?`<div class="rv-exp"><div class="el">💡 해설</div><div class="et">${q.explanation}</div>${q.guide_ref?`<div class="er">📖 ${q.guide_ref}</div>`:''}</div>`:''}<div class="wn-actions"><button class="wn-dismiss" onclick="dismissWrong('${item.wid}|${item.sid}|${item.qid}')">✓ 이해했어요</button></div></div></div>`});h+=`<div class="actions"><button class="btn-p" onclick="goMap()">맵으로</button></div>`}h+=`</div>`;$.innerHTML=h}
+async function dismissWrong(key){const u=state.userData;if(!u.dismissed_wrong)u.dismissed_wrong=[];u.dismissed_wrong.push(key);await saveUser(state.userEmail,{dismissed_wrong:u.dismissed_wrong});state.userData=u;goWrong()}
+async function clearAllWrong(){if(!confirm('오답노트를 전부 초기화할까요?'))return;const wi=await getWrongQuizIds(state.userEmail);const u=state.userData;if(!u.dismissed_wrong)u.dismissed_wrong=[];wi.forEach(i=>u.dismissed_wrong.push(`${i.wid}|${i.sid}|${i.qid}`));await saveUser(state.userEmail,{dismissed_wrong:u.dismissed_wrong});state.userData=u;goWrong()}
+
+async function rGuide(){const wc=(await getWrongQuizIds(state.userEmail)).length;const gw=state.guideWorld;const guideLabels={"youtube":"🎬 유튜브 쇼핑 에볼루션","order":"📦 주문관리","product":"🏷️ 상품관리","shopmall":"⚙️ 쇼핑몰 설정","promo":"🎁 프로모션","event_monitor":"📢 이벤트 사전접수·서버부하"};let h=nav(wc)+`<div class="page"><h1 style="font-size:18px;font-weight:800;margin-bottom:4px">📖 학습 가이드</h1><p style="color:var(--tx2);font-size:12px;margin-bottom:10px">퀴즈를 풀기 전에 가이드를 먼저 읽어보세요!</p><div class="guide-tabs">`;Object.keys(GUIDES_FILES).forEach(k=>{h+=`<div class="guide-tab ${gw===k?'active':''}" onclick="state.guideWorld='${k}';rGuide()">${guideLabels[k]||k}</div>`});h+=`</div>`;const gf=GUIDES_FILES[gw];if(gf)h+=`<iframe src="${gf}" style="width:100%;height:calc(100vh - 120px);border:1px solid var(--bd);border-radius:12px;background:var(--sf)"></iframe>`;else h+=`<div class="guide-section"><p>가이드가 아직 준비되지 않았습니다.</p></div>`;h+=`<div class="actions" style="margin-top:8px"><button class="btn-p" onclick="goMap()">맵으로</button></div></div>`;$.innerHTML=h}
+
+async function rDash(){const u=state.userData,l=getLevelInfo(u.total_xp);const logs=await fireDb.collection('quiz_logs').where('user_email','==',state.userEmail).get();let tt=0,cc=0;logs.forEach(d=>{tt++;if(d.data().is_correct)cc++});const ac=tt?Math.round(cc/tt*100):0;const bg=(u.badges||[]).map(id=>MANIFEST.badges.find(b=>b.id===id)).filter(Boolean);let h=nav(0)+`<div class="page"><h1 style="font-size:18px;font-weight:800;margin-bottom:16px">📊 ${u.name} 학습 현황</h1><div class="dash-g"><div class="dc"><div class="dc-l">레벨</div><div class="dc-v">${l.level}</div><div class="dc-s">${l.title}</div></div><div class="dc"><div class="dc-l">총 XP</div><div class="dc-v">${l.xp}</div><div class="dc-s">${l.nextXp?'다음 '+(l.nextXp-l.xp)+' XP':''}</div></div><div class="dc"><div class="dc-l">정답률</div><div class="dc-v">${ac}%</div><div class="dc-s">${cc} / ${tt}</div></div><div class="dc"><div class="dc-l">배지</div><div class="dc-v">${bg.length}</div><div class="dc-s">개</div></div></div>`;for(const w of MANIFEST.worlds){h+=`<div style="background:var(--sf);padding:16px 20px;border-radius:10px;margin-bottom:14px"><h3 style="font-size:15px;font-weight:800;margin-bottom:10px">${w.icon} ${w.title}</h3><table class="dash-tbl"><thead><tr><th>스테이지</th><th>상태</th><th>최고점수</th><th>도전</th><th>문제풀</th></tr></thead><tbody>`;for(const s of w.stages){const p=(u.progress||{})[`${w.id}_${s.id}`]||{},ul=isUnlocked(u,w.id,s.id),ps=QUIZZES[w.id][s.id].questions.length;h+=`<tr><td><strong>${s.icon} ${s.title}</strong></td><td>${!ul?'🔒':p.status==='cleared'?'✅':p.attempts>0?'🏃':'⏸'}</td><td>${p.best_score||0}점</td><td>${p.attempts||0}회</td><td>${ps}개 중 ${s.sample_size}개</td></tr>`}h+=`</tbody></table></div>`}if(bg.length)h+=`<h2 class="sec-t">획득 배지</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">${bg.map(b=>`<div class="dc" style="text-align:center"><div style="font-size:32px">${b.icon}</div><div style="font-weight:800;font-size:13px;margin-top:4px">${b.name}</div><div style="font-size:10px;color:var(--tx2)">${b.desc}</div></div>`).join('')}</div>`;h+=`</div>`;$.innerHTML=h}
+
+async function rAdmin(){if(!state.isAdmin){goMap();return}$.innerHTML='<div class="loading">관리자 데이터 로딩 중...</div>';const allUsers=await fireDb.collection('users').get();const allLogs=await fireDb.collection('quiz_logs').get();const users=[];allUsers.forEach(d=>users.push({id:d.id,...d.data()}));const logs=[];allLogs.forEach(d=>logs.push(d.data()));const wc=(await getWrongQuizIds(state.userEmail)).length;let h=nav(wc)+`<div class="page"><h1 style="font-size:18px;font-weight:800;margin-bottom:4px">👑 관리자 대시보드</h1><p style="color:var(--tx2);font-size:12px;margin-bottom:16px">전체 사용자 학습 현황 및 문항별 통계</p><div class="admin-tabs"><div class="admin-tab ${state.adminTab==='users'?'active':''}" onclick="state.adminTab='users';rAdmin()">👥 사용자별 현황</div><div class="admin-tab ${state.adminTab==='questions'?'active':''}" onclick="state.adminTab='questions';rAdmin()">📊 문항별 정답률</div><div class="admin-tab ${state.adminTab==='category'?'active':''}" onclick="state.adminTab='category';rAdmin()">📁 카테고리별 통계</div></div>`;if(state.adminTab==='users')h+=adminUsers(users,logs);else if(state.adminTab==='questions')h+=adminQuestions(logs);else h+=adminCategory(users,logs);h+=`</div>`;$.innerHTML=h}
+
+function adminUsers(users,logs){const uLogs={};logs.forEach(l=>{const e=l.user_email||l.user_name;if(!uLogs[e])uLogs[e]={total:0,correct:0};uLogs[e].total++;if(l.is_correct)uLogs[e].correct++});let h=`<div class="admin-section"><h3 style="font-size:15px;font-weight:800;margin-bottom:12px">👥 전체 사용자 (${users.length}명)</h3><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>이름</th><th>이메일</th><th>레벨</th><th>XP</th><th>푼 문제</th><th>정답률</th><th>배지</th><th>진도</th></tr></thead><tbody>`;users.sort((a,b)=>(b.total_xp||0)-(a.total_xp||0));users.forEach(u=>{const email=u.email||u.id||'';const ul=uLogs[email]||{total:0,correct:0};const acc=ul.total?Math.round(ul.correct/ul.total*100):0;const lv=getLevelInfo(u.total_xp||0);const prog=u.progress||{};const cleared=Object.values(prog).filter(p=>p.status==='cleared').length;const totalStages=MANIFEST.worlds.reduce((a,w)=>a+w.stages.length,0);const accCls=acc>=80?'good':acc>=50?'mid':'bad';h+=`<tr><td><strong><a onclick="showUserDetail('${email}','${u.name||'-'}')" style="cursor:pointer;color:var(--pri)">${u.name||'-'}</a></strong></td><td style="font-size:11px;color:var(--tx3)">${email}</td><td>Lv.${lv.level} ${lv.title}</td><td>${u.total_xp||0}</td><td>${ul.total}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar"><div class="stat-fill ${accCls}" style="width:${acc}%"></div></div><span style="font-size:11px">${acc}%</span></div></td><td>${(u.badges||[]).length}개</td><td>${cleared}/${totalStages}</td></tr>`});h+=`</tbody></table></div></div>`;return h}
+
+function adminQuestions(logs){const qStats={};logs.forEach(l=>{const k=`${l.world_id}|${l.stage_id}|${l.quiz_id}`;if(!qStats[k])qStats[k]={total:0,correct:0,wid:l.world_id,sid:l.stage_id,qid:l.quiz_id};qStats[k].total++;if(l.is_correct)qStats[k].correct++});const sorted=Object.values(qStats).sort((a,b)=>(a.total?a.correct/a.total:0)-(b.total?b.correct/b.total:0));let h=`<div class="admin-section"><h3 style="font-size:15px;font-weight:800;margin-bottom:12px">📊 문항별 정답률 (정답률 낮은 순)</h3><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>월드</th><th>스테이지</th><th>문항ID</th><th>문제 (앞 50자)</th><th>응시</th><th>정답</th><th>정답률</th></tr></thead><tbody>`;sorted.forEach(s=>{const acc=s.total?Math.round(s.correct/s.total*100):0;const accCls=acc>=80?'good':acc>=50?'mid':'bad';const q=QUIZZES[s.wid]?.[s.sid]?.questions.find(x=>x.id===s.qid);const qText=q?q.question.substring(0,50).replace(/\n/g,' '):'(삭제된 문항)';h+=`<tr><td>${s.wid}</td><td>${s.sid}</td><td style="font-size:10px">${s.qid}</td><td style="font-size:11px">${qText}${q&&q.question.length>50?'...':''}</td><td>${s.total}</td><td>${s.correct}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar"><div class="stat-fill ${accCls}" style="width:${acc}%"></div></div><span style="font-size:11px;font-weight:700">${acc}%</span></div></td></tr>`});h+=`</tbody></table></div></div>`;return h}
+
+function adminCategory(users,logs){const catStats={};logs.forEach(l=>{const wk=l.world_id;const sk=`${l.world_id}/${l.stage_id}`;[wk,sk].forEach(k=>{if(!catStats[k])catStats[k]={total:0,correct:0};catStats[k].total++;if(l.is_correct)catStats[k].correct++})});let h=`<div class="admin-section"><h3 style="font-size:15px;font-weight:800;margin-bottom:12px">📁 카테고리별 통계</h3><h4 style="font-size:13px;font-weight:700;color:var(--pri);margin:16px 0 8px">월드별 정답률</h4><table class="admin-table"><thead><tr><th>월드</th><th>총 응시</th><th>정답</th><th>정답률</th></tr></thead><tbody>`;MANIFEST.worlds.forEach(w=>{const s=catStats[w.id]||{total:0,correct:0};const acc=s.total?Math.round(s.correct/s.total*100):0;const accCls=acc>=80?'good':acc>=50?'mid':'bad';h+=`<tr><td><strong>${w.icon} ${w.title}</strong></td><td>${s.total}</td><td>${s.correct}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar" style="min-width:100px"><div class="stat-fill ${accCls}" style="width:${acc}%"></div></div><span style="font-size:12px;font-weight:700">${acc}%</span></div></td></tr>`});h+=`</tbody></table><h4 style="font-size:13px;font-weight:700;color:var(--pri);margin:16px 0 8px">스테이지별 정답률</h4><table class="admin-table"><thead><tr><th>월드</th><th>스테이지</th><th>총 응시</th><th>정답</th><th>정답률</th></tr></thead><tbody>`;MANIFEST.worlds.forEach(w=>{w.stages.forEach(st=>{const k=`${w.id}/${st.id}`;const s=catStats[k]||{total:0,correct:0};const acc=s.total?Math.round(s.correct/s.total*100):0;const accCls=acc>=80?'good':acc>=50?'mid':'bad';h+=`<tr><td>${w.icon} ${w.title}</td><td>${st.icon} ${st.title}</td><td>${s.total}</td><td>${s.correct}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar" style="min-width:100px"><div class="stat-fill ${accCls}" style="width:${acc}%"></div></div><span style="font-size:12px;font-weight:700">${acc}%</span></div></td></tr>`})});h+=`</tbody></table><h4 style="font-size:13px;font-weight:700;color:var(--pri);margin:16px 0 8px">사용자별 클리어 현황</h4><table class="admin-table"><thead><tr><th>이름</th>`;MANIFEST.worlds.forEach(w=>w.stages.forEach(s=>{h+=`<th>${w.icon}${s.icon}</th>`}));h+=`</tr></thead><tbody>`;users.sort((a,b)=>(b.total_xp||0)-(a.total_xp||0));users.forEach(u=>{const email=u.email||u.id||'';h+=`<tr><td><strong><a onclick="showUserDetail('${email}','${u.name||'-'}')" style="cursor:pointer;color:var(--pri)">${u.name||'-'}</a></strong></td>`;MANIFEST.worlds.forEach(w=>w.stages.forEach(s=>{const p=(u.progress||{})[`${w.id}_${s.id}`]||{};h+=`<td style="text-align:center">${p.status==='cleared'?'✅'+p.best_score:p.attempts>0?'🏃'+(p.best_score||0):'➖'}</td>`}));h+=`</tr>`});h+=`</tbody></table></div>`;return h}
+
+
+async function showUserDetail(email,name){state.adminDetailEmail=email;state.adminDetailName=name;state.page='admin_detail';await rUserDetail()}
+
+async function rUserDetail(){const email=state.adminDetailEmail;const name=state.adminDetailName;$.innerHTML='<div class="loading">사용자 상세 이력 로딩 중...</div>';const logs=await fireDb.collection('quiz_logs').where('user_email','==',email).get();const items=[];logs.forEach(d=>items.push(d.data()));items.sort((a,b)=>(b.answered_at||'').localeCompare(a.answered_at||''));const userData=await fireDb.collection('users').doc(email).get();const ud=userData.exists?userData.data():{};const wc=(await getWrongQuizIds(state.userEmail)).length;
+let h=nav(wc)+`<div class="page"><div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><button class="btn-s" onclick="state.adminTab='users';goAdmin()" style="padding:6px 14px;font-size:12px">← 목록으로</button><h1 style="font-size:18px;font-weight:800">📋 ${name} 상세 이력</h1></div><p style="color:var(--tx2);font-size:12px;margin-bottom:16px">${email} | 총 ${items.length}건의 풀이 기록</p>`;
+
+// 월드/스테이지별 그룹핑
+const grouped={};items.forEach(l=>{const k=`${l.world_id}/${l.stage_id}`;if(!grouped[k])grouped[k]=[];grouped[k].push(l)});
+
+// 요약 카드
+const totalQ=items.length;const correctQ=items.filter(x=>x.is_correct).length;const acc=totalQ?Math.round(correctQ/totalQ*100):0;const lv=getLevelInfo(ud.total_xp||0);
+h+=`<div class="dash-g"><div class="dc"><div class="dc-l">레벨</div><div class="dc-v">${lv.level}</div><div class="dc-s">${lv.title}</div></div><div class="dc"><div class="dc-l">총 XP</div><div class="dc-v">${ud.total_xp||0}</div></div><div class="dc"><div class="dc-l">총 풀이</div><div class="dc-v">${totalQ}</div></div><div class="dc"><div class="dc-l">정답률</div><div class="dc-v">${acc}%</div><div class="dc-s">${correctQ} / ${totalQ}</div></div></div>`;
+
+// 카테고리별 상세
+for(const[catKey,catLogs] of Object.entries(grouped)){const[wid,sid]=catKey.split('/');const world=MANIFEST.worlds.find(w=>w.id===wid);const stage=world?.stages.find(s=>s.id===sid);const wIcon=world?world.icon:'';const sIcon=stage?stage.icon:'';const catCorrect=catLogs.filter(x=>x.is_correct).length;const catAcc=Math.round(catCorrect/catLogs.length*100);const accCls=catAcc>=80?'good':catAcc>=50?'mid':'bad';
+h+=`<div class="admin-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:14px;font-weight:800">${wIcon} ${world?world.title:wid} › ${sIcon} ${stage?stage.title:sid}</h3><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar" style="min-width:80px"><div class="stat-fill ${accCls}" style="width:${catAcc}%"></div></div><span style="font-size:12px;font-weight:700">${catAcc}% (${catCorrect}/${catLogs.length})</span></div></div>`;
+h+=`<table class="admin-table"><thead><tr><th style="width:40px">결과</th><th>문제</th><th>선택한 답</th><th>정답</th><th>응시일</th></tr></thead><tbody>`;
+catLogs.forEach(l=>{const q=QUIZZES[l.world_id]?.[l.stage_id]?.questions.find(x=>x.id===l.quiz_id);const qText=q?q.question.substring(0,60).replace(/\n/g,' '):'(삭제된 문항)';
+let userAns=l.user_answer||'(미응답)';let correctAns='';
+if(q){if(q.type==='multiple_choice'){try{userAns=q.choices[parseInt(l.user_answer)]||l.user_answer}catch(e){userAns=l.user_answer}correctAns=q.choices[q.answer]}else if(q.type==='ox'){userAns=l.user_answer==='true'?'O':'X';correctAns=q.answer?'O':'X'}else{correctAns=q.answer}}
+const dateStr=l.answered_at?new Date(l.answered_at).toLocaleDateString('ko-KR',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+h+=`<tr style="${l.is_correct?'':'background:var(--ng-l)'}"><td style="text-align:center;font-size:16px">${l.is_correct?'✅':'❌'}</td><td style="font-size:11px">${qText}${q&&q.question.length>60?'...':''}</td><td style="font-size:11px;${l.is_correct?'color:var(--ok)':'color:var(--ng);font-weight:700'}">${userAns}</td><td style="font-size:11px;color:var(--ok)">${correctAns}</td><td style="font-size:10px;color:var(--tx3)">${dateStr}</td></tr>`});
+h+=`</tbody></table></div>`}
+
+h+=`<div class="actions"><button class="btn-p" onclick="state.adminTab='users';goAdmin()">목록으로 돌아가기</button></div></div>`;$.innerHTML=h}
+
+async function goMap(){state.page='map';await rMap()}
+async function goWrong(){state.page='wrongnotes';await rWrong()}
+async function goDash(){state.page='dashboard';await rDash()}
+async function goGuide(){state.page='guide';await rGuide()}
+async function goAdmin(){if(!state.isAdmin)return;state.page='admin';await rAdmin()}
+
+async function loadQuizData(){
+try{
+const mRes=await fetch('./quizzes/_manifest.json');
+MANIFEST=await mRes.json();
+for(const wid of QUIZ_WORLD_FILES){
+const wRes=await fetch('./quizzes/'+wid+'.json');
+const wData=await wRes.json();
+QUIZZES[wid]=wData.stages;
+}
+console.log('Quiz data loaded:',Object.keys(QUIZZES).length,'worlds');
+}catch(e){console.error('Failed to load quiz data:',e);$.innerHTML='<div class="loading" style="color:var(--ng)">퀴즈 데이터를 불러오지 못했습니다. 페이지를 새로고침 해주세요.</div>'}}
+
+(async function(){await loadQuizData();if(!MANIFEST){return}fireAuth.onAuthStateChanged(async(user)=>{if(user&&user.email&&user.email.endsWith(ALLOWED_DOMAIN)){state.userEmail=user.email;state.userName=user.displayName||user.email.split('@')[0];state.isAdmin=ADMINS.includes(user.email);$.innerHTML='<div class="loading">Loading...</div>';try{state.userData=await loadUser(user.email,state.userName);state.page='map';await rMap()}catch(e){console.error(e);state.page='login';render()}}else{state.page='login';render()}})})();
+
+
+</script>
+</body>
+</html>
