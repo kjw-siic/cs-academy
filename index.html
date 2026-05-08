@@ -350,7 +350,7 @@ QUIZZES[wid]=wData.stages;
 console.log('Quiz data loaded:',Object.keys(QUIZZES).length,'worlds');
 }catch(e){console.error('Failed to load quiz data:',e);$.innerHTML='<div class="loading" style="color:var(--ng)">퀴즈 데이터를 불러오지 못했습니다. 페이지를 새로고침 해주세요.</div>'}}
 
-(async function(){await loadQuizData();if(!MANIFEST){return}fireAuth.onAuthStateChanged(async(user)=>{if(user&&user.email&&user.email.endsWith(ALLOWED_DOMAIN)){state.userEmail=user.email;state.userName=user.displayName||user.email.split('@')[0];state.isAdmin=ADMINS.includes(user.email);$.innerHTML='<div class="loading">Loading...</div>';try{state.userData=await loadUser(user.email,state.userName);state.page='map';await rMap()}catch(e){console.error(e);state.page='login';render()}}else{state.page='login';render()}})})();
+(async function(){fireAuth.onAuthStateChanged(async(user)=>{if(user&&user.email&&user.email.endsWith(ALLOWED_DOMAIN)){state.userEmail=user.email;state.userName=user.displayName||user.email.split('@')[0];state.isAdmin=ADMINS.includes(user.email);$.innerHTML='<div class="loading">Loading...</div>';try{await loadQuizData();if(!MANIFEST){return}state.userData=await loadUser(user.email,state.userName);state.page='map';await rMap()}catch(e){console.error(e);state.page='login';render()}}else{state.page='login';render()}})})();
 
 
 </script>
