@@ -346,24 +346,38 @@ html,body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--b
     <div class="card-ic">📋</div>
     <div class="card-title-wrap">
       <div class="card-title">전체 준비 절차 요약</div>
-      <div class="card-sub">계정 생성 → 채널 선택 → 결제 → 약관</div>
+      <div class="card-sub">판매자 센터 → 채널 선택 → 약관 · 이용 범위별 필수 조건</div>
     </div>
     <div class="card-arrow">▼</div>
   </div>
   <div class="card-body"><div class="card-body-inner">
-    <div class="flow">
-      <span class="flow-step">1. 계정 생성</span><span class="flow-arr">→</span>
-      <span class="flow-step">2. 채널 선택</span><span class="flow-arr">→</span>
-      <span class="flow-step">3. 결제 설정</span><span class="flow-arr">→</span>
-      <span class="flow-step">4. 약관 동의</span>
+    <div class="block">
+      <div class="block-title"><span class="n">1</span>공통 흐름 (유튜브 스토어 기준)</div>
+      <div class="flow">
+        <span class="flow-step">1. 판매자 센터 생성/연결</span><span class="flow-arr">→</span>
+        <span class="flow-step">2. 유튜브 채널 선택</span><span class="flow-arr">→</span>
+        <span class="flow-step">3. 약관 동의</span><span class="flow-arr">→</span>
+        <span class="flow-step">4. 유튜브 스토어 이용</span>
+      </div>
+      <ul class="steps">
+        <li><strong>판매자 센터 생성/연결</strong>: Google 로그인 후 신규 생성 또는 기존 판매자 센터 연결</li>
+        <li><strong>유튜브 채널 선택</strong>: YPP를 충족하는 채널 1개 선택 (선택 후 변경 어려움)</li>
+        <li><strong>약관 동의</strong>: 필수 약관 동의 후 '동의하고 완료' → 채널 연동 완료</li>
+      </ul>
     </div>
-    <ul class="steps">
-      <li><strong>계정 생성</strong>: Google 판매자 계정 생성(기존 회원은 Google 로그인 연동)</li>
-      <li><strong>채널 선택</strong>: 연동할 유튜브 채널 1개 선택 (선택 후 변경 어려움)</li>
-      <li><strong>결제 설정</strong>: 결제 프로필 등록</li>
-      <li><strong>약관 동의</strong>: 특별 약관 동의 후 '시작' → 대시보드 이동</li>
-    </ul>
-    <div class="note note-danger"><span class="note-ic">🚫</span><div>초기 설정 후 <strong>카페24페이먼츠(PG) 계약 완료</strong> + <strong>결제 프로필 정상 상태</strong> 유지해야 유튜브 쇼핑 이용 준비가 완료돼요.</div></div>
+    <div class="block">
+      <div class="block-title"><span class="n">2</span>이용 범위별 필수 조건</div>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>구분</th><th>유튜브 스토어만</th><th>제휴 프로그램까지</th></tr>
+        <tr><td>쇼핑몰 PG 연결</td><td>필수</td><td>필수</td></tr>
+        <tr><td>Google 판매자 센터</td><td>필수</td><td>필수</td></tr>
+        <tr><td>YPP 충족 채널</td><td>필수</td><td>필수</td></tr>
+        <tr><td>매출 70만원·브랜드 조건</td><td>불필요</td><td>필수 (미충족 시 구글 폼 신청)</td></tr>
+        <tr><td>Google 결제 프로필</td><td><strong>불필요</strong></td><td>필수 (수수료 정산용)</td></tr>
+      </table></div>
+    </div>
+    <div class="note note-danger"><span class="note-ic">🚫</span><div>쇼핑몰에 <strong>PG(결제)가 연결되어 있어야</strong> 유튜브 쇼핑을 이용할 수 있어요. 카페24페이먼츠가 아니어도 <strong>PG만 연결되어 있으면</strong> 돼요.</div></div>
+    <div class="note note-tip"><span class="note-ic">💡</span><div>결제 프로필은 <strong>제휴 프로그램 수수료 정산용</strong>이에요. 유튜브 스토어만 운영하는 경우 등록하지 않아도 돼요.</div></div>
   </div></div>
 </div>
 </div>
@@ -443,10 +457,20 @@ html,body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--b
       <ul class="steps">
         <li>공개일은 <strong>3일 이후 날짜부터</strong> 선택 가능, 최대 <strong>30일 후</strong>까지</li>
         <li>시간은 <strong>30분 단위</strong>로만 설정 가능</li>
-        <li>승인 상태가 <strong>승인 또는 대기</strong>인 상품만 설정 가능</li>
+        <li>승인 상태가 <strong>승인 또는 대기</strong>인 상품만 설정 가능 (태깅 조건은 아래 3번 참고)</li>
         <li>최대 <strong>100개</strong> 상품까지 설정 가능</li>
       </ul>
     </div>
+    <div class="block">
+      <div class="block-title"><span class="n">3</span>등록 가능 조건 vs 실제 사용 가능 조건</div>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>단계</th><th>필요 승인 상태</th></tr>
+        <tr><td>공개일 등록</td><td><span class="st st-ok">승인</span> 또는 <span class="st st-wait">대기</span></td></tr>
+        <tr><td>콘텐츠 태깅 · 실제 노출</td><td>유튜브 쇼핑 프로그램 <span class="st st-ok">승인</span></td></tr>
+      </table></div>
+    </div>
+    <div class="note note-warn"><span class="note-ic">⚠️</span><div><strong>대기</strong> 상품은 공개일 등록은 되지만, <strong>승인 전까지는 영상에 태깅할 수 없어요</strong>. 승인까지 보통 <strong>2~3일</strong> 걸리니 공개일은 여유 있게 잡고, 등록 전 <strong>상품 피드에서 유튜브 쇼핑 프로그램 승인 여부</strong>를 먼저 확인하세요.</div></div>
+    <div class="note note-tip"><span class="note-ic">💡</span><div>"공개일 등록은 됐는데 태깅이 안 돼요" 문의 → 상품 피드 &gt; 유튜브 쇼핑 프로그램 상세에서 해당 상품이 아직 <strong>대기</strong>인지 확인하세요.</div></div>
     <div class="note note-danger"><span class="note-ic">🚫</span><div>공개일 등록 상품은 자동으로 '판매안함'이 <strong>되지 않아요</strong>. 자사몰에 노출 중이라면 등록 후 <strong>'판매안함'·'진열안함'</strong> 처리하세요. 공개일시 도래 시 자동으로 '판매함'·'진열함'으로 변경돼요.</div></div>
     <div class="note note-warn"><span class="note-ic">⚠️</span><div>공개일 등록 후 <strong>유튜브 스튜디오</strong>로 이동해 콘텐츠에 제품을 태그해야 정상 공개돼요. Shorts·VOD는 공개일 이후 제품이 표시돼요. 공개일 지난 후 12시간이 지나면 공개일 정보는 자동 삭제돼요.</div></div>
   </div></div>
