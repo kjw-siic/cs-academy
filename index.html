@@ -230,6 +230,114 @@ button{font-family:inherit;cursor:pointer}
 .stat-fill.bad{background:var(--ng)}
 .google-btn{width:100%;padding:14px;font-size:15px;font-weight:700;color:var(--tx);background:var(--sf);border:2px solid var(--bd);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;transition:all .15s}
 .google-btn:hover{border-color:var(--pri);background:var(--pri-l)}
+.kpi-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--sf);border-radius:10px;padding:14px 16px;border:1px solid var(--bd)}
+.kpi-l{font-size:11px;font-weight:700;color:var(--tx2)}
+.kpi-v{font-size:26px;font-weight:900;color:var(--tx);margin-top:2px}
+.kpi-v span{font-size:13px;font-weight:700;color:var(--tx3);margin-left:2px}
+.kpi-s{font-size:11px;color:var(--tx3)}
+.ul-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.ul-search{flex:0 1 240px;padding:8px 12px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:inherit;outline:none}
+.ul-search:focus{border-color:var(--pri)}
+.ul-chips{display:flex;gap:6px;flex-wrap:wrap}
+.ul-chip{padding:5px 12px;border-radius:14px;border:1.5px solid var(--bd);background:var(--sf);font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;font-family:inherit}
+.ul-chip b{margin-left:2px;color:var(--tx3);font-weight:700}
+.ul-chip.on{border-color:var(--pri);background:var(--pri-l);color:var(--pri)}
+.ul-chip.on b{color:var(--pri)}
+.admin-table th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+.admin-table th.sorted{color:var(--pri)}
+.ul-table td{vertical-align:middle}
+.ul-row{cursor:pointer}
+.ul-user{display:flex;align-items:center;gap:10px}
+.ul-av{width:32px;height:32px;border-radius:50%;background:var(--pri-l);color:var(--pri);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.ul-name{font-weight:700;font-size:13px;color:var(--tx)}
+.ul-mail,.ul-sub{font-size:11px;color:var(--tx3)}
+.ul-num{font-size:12px;font-weight:600;color:var(--tx)}
+.lv-chip{display:inline-block;padding:1px 7px;border-radius:8px;background:var(--pri-l);color:var(--pri);font-size:11px;font-weight:800}
+.mini-bar{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.mini-bar .stat-bar{height:8px;min-width:70px;flex:1;max-width:110px}
+.mini-bar span{font-size:11px;font-weight:700;color:var(--tx2)}
+.mini-bar em{font-style:normal;font-weight:500;color:var(--tx3)}
+.stat-fill.prog{background:var(--pri)}
+.ul-st{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap}
+.ul-st.active{background:var(--ok-l);color:#047857}
+.ul-st.idle{background:var(--acc-l);color:#92400E}
+.ul-st.none{background:var(--sf2);color:var(--tx3);border:1px solid var(--bd)}
+.ud{max-width:1200px}
+.ud-head{background:linear-gradient(135deg,#667EEA,#764BA2);border-radius:14px;padding:20px 24px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:14px}
+.ud-prof{display:flex;align-items:center;gap:14px}
+.ud-av{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;position:relative;flex-shrink:0}
+.ud-av span{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);background:var(--acc);font-size:10px;font-weight:800;padding:1px 7px;border-radius:9px;white-space:nowrap}
+.ud-name{font-size:20px;font-weight:900}
+.ud-mail{font-size:12px;opacity:.8}
+.ud-title{font-size:12px;font-weight:700;opacity:.95;margin-top:2px}
+.ud-stats{display:flex;gap:8px;flex-wrap:wrap}
+.ud-stats div{background:rgba(255,255,255,.15);border-radius:9px;padding:8px 14px;text-align:center;min-width:72px}
+.ud-stats b{display:block;font-size:17px;font-weight:900}
+.ud-stats span{font-size:10px;opacity:.85}
+.ud-card{background:var(--sf);border-radius:12px;padding:16px 18px;margin-bottom:14px;border:1px solid var(--bd)}
+.ud-ct{font-size:14px;font-weight:800;margin-bottom:12px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ud-ct span{font-size:11px;font-weight:500;color:var(--tx3)}
+.ud-empty{font-size:12px;color:var(--tx3);padding:8px 0}
+.act-chart{display:flex;align-items:flex-end;gap:2px;height:110px;border-bottom:1px solid var(--bd)}
+.act-col{flex:1;height:100%;display:flex;align-items:flex-end;position:relative;cursor:default}
+.act-bar{width:100%;background:var(--pri);border-radius:4px 4px 0 0;min-height:0}
+.act-col:hover .act-bar{background:var(--pri-d)}
+.act-col:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--tx);color:#fff;font-size:11px;font-weight:600;padding:5px 8px;border-radius:6px;white-space:nowrap;z-index:5;pointer-events:none}
+.act-col:first-child:hover::after{left:0;transform:none}
+.act-col:last-child:hover::after{left:auto;right:0;transform:none}
+.act-axis{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);margin-top:4px}
+.wp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.wp{border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+.wp-h{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:8px}
+.wp-h b{color:var(--pri)}
+.wp-stages{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.wp-s{border-radius:8px;padding:7px 8px;background:var(--sf2);border:1px solid var(--bd)}
+.wp-s.cl{background:var(--ok-l);border-color:#A7F3D0}
+.wp-s.ip{background:var(--acc-l);border-color:#FDE68A}
+.wp-sn{font-size:11px;font-weight:700;color:var(--tx2)}
+.wp-sv{font-size:13px;font-weight:800;margin-top:2px}
+.wp-ss{font-size:10px;color:var(--tx3);margin-top:1px;min-height:12px}
+.weak-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.weak-g .ud-card{margin-bottom:14px}
+.weak-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed var(--bd)}
+.weak-row:last-child{border-bottom:none}
+.weak-n{font-size:12px;font-weight:600}
+.rep-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer}
+.rep-row:hover{background:var(--pri-l)}
+.rep-cnt{flex-shrink:0;font-size:11px;font-weight:800;color:var(--ng);background:var(--ng-l);padding:1px 7px;border-radius:8px}
+.rep-q{flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rep-tag{flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:var(--ng);padding:1px 7px;border-radius:8px;white-space:nowrap}
+.hg{border:1px solid var(--bd);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.hg-h{display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;background:var(--sf2);flex-wrap:wrap}
+.hg-h:hover{background:var(--pri-l)}
+.hg-t{font-size:13px;font-weight:800;flex:1;min-width:180px}
+.hg-m{font-size:11px;color:var(--tx3)}
+.hg-arr{font-size:10px;color:var(--tx3);transition:transform .2s}
+.hg.open .hg-arr{transform:rotate(180deg)}
+.hg-b{display:none;padding:10px}
+.hg.open .hg-b{display:block}
+.qcard.ok{border-left-color:var(--ok)}
+.qcard.ng{border-left-color:var(--acc)}
+.qcard.never{border-left-color:var(--ng)}
+.qcard.flash{box-shadow:0 0 0 3px var(--pri)}
+.qc-res{font-size:13px;flex-shrink:0}
+.qc-sum,.qc-date{font-size:11px;color:var(--tx3);white-space:nowrap;flex-shrink:0}
+.qc-tag{font-size:10px;padding:1px 6px;border-radius:6px;margin-left:4px}
+.qc-tag.ok{background:var(--ok);color:#fff}
+.qc-tag.ng{background:var(--ng);color:#fff}
+.rv-ch.qc-wrong{background:var(--ng-l);border-color:#FCA5A5}
+.tries{margin:10px 0;border:1px solid var(--bd);border-radius:8px;padding:8px 10px}
+.tries-t{font-size:11px;font-weight:800;color:var(--tx2);margin-bottom:4px}
+.tries-list{max-height:190px;overflow-y:auto;padding-right:4px}
+.try{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px}
+.try-r{flex-shrink:0}
+.try-a{flex:1;font-weight:600}
+.try.ok .try-a{color:#047857}
+.try.ng .try-a{color:var(--ng)}
+.try-a.unk{font-weight:500;color:var(--tx3)!important;font-style:italic}
+.try-d{font-size:11px;color:var(--tx3);white-space:nowrap}
+@media(max-width:640px){.qc-date{display:none}.ud-head{padding:16px}.wp-stages{grid-template-columns:1fr 1fr 1fr}}
 .login-divider{display:flex;align-items:center;gap:10px;margin:22px 0 14px;color:var(--tx3);font-size:12px}
 .login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
 .login-card button:disabled{opacity:.6;cursor:wait}
@@ -271,7 +379,7 @@ let MANIFEST = null;
 let QUIZZES = {};
 const GUIDES_FILES={youtube:"guide_youtube.html",order:"guide_order.html",product:"guide_product.html",shopmall:"guide_shopmall.html",promo:"guide_promotion.html",event_monitor:"guide_event_preregistration.html",customer:"guide_customer.html"};
 
-const ADMINS=["ecmsjwkang001@in.cd24.kr","ecmsshseo@in.cd24.kr", "ecmsjepark002@in.cd24.kr"];
+const ADMINS=["ecmsjwkang001@in.cd24.kr","ecmsshseo@in.cd24.kr","ecmsjepark002@in.cd24.kr"];
 const ALLOWED_DOMAIN="@in.cd24.kr";
 // ===== 임시 계정 설정 =====
 const TEMP_EMAIL_DOMAIN="@temp.in.cd24.kr";      // 임시 계정용 가상 도메인 (실제 메일 아님, ID 뒤에 자동으로 붙음)
@@ -283,17 +391,24 @@ const TEMP_PW_AUTO_LEN=10;                        // 자동 생성 비밀번호 
 const TEMP_PW_CHARS="abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // 헷갈리는 문자(0,O,1,l,I) 제외
 const MIGRATE_BATCH_SIZE=400;                     // 기록 이관 시 배치 단위 (Firestore 최대 500)
 const TEMP_CREATOR_APP_NAME="tempCreator";        // 계정 생성 전용 보조 앱 이름 (관리자 로그인 유지용)
+// ===== 관리자 화면 설정 =====
+const ADMIN_INACTIVE_DAYS=7;        // 이 기간 동안 풀이가 없으면 '미접속'
+const ADMIN_CHART_DAYS=30;          // 상세 화면 활동 차트 기간(일)
+const ADMIN_WEAK_STAGE_TOP=3;       // 취약 스테이지 표시 개수
+const ADMIN_WEAK_STAGE_MIN=5;       // 취약 스테이지로 판단할 최소 풀이 수
+const ADMIN_WRONG_Q_TOP=5;          // 반복 오답 문항 표시 개수
+const ADMIN_Q_PREVIEW_LEN=70;       // 문제 미리보기 글자 수
 // ===========================
 const fireAuth=firebase.auth();
 const googleProvider=new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({hd:'in.cd24.kr'});
 
-let state={page:'login',userEmail:'',userName:'',userData:null,currentQuiz:null,lastResult:null,guideWorld:'youtube',adminTab:'users',isAdmin:false,adminDetailEmail:'',adminDetailName:'',isTemp:false,tempExpires:null,loginError:'',tempCreated:null};
+let state={page:'login',userEmail:'',userName:'',userData:null,currentQuiz:null,lastResult:null,guideWorld:'youtube',adminTab:'users',isAdmin:false,adminDetailEmail:'',adminDetailName:'',isTemp:false,tempExpires:null,loginError:'',tempCreated:null,userFilter:'all',userSearch:'',userSort:{key:'xp',dir:-1},detailFilter:'all'};
 
 function userRef(email){return fireDb.collection('users').doc(email)}
 async function loadUser(email,name){const d=await userRef(email).get();if(d.exists){const data=d.data();if(name&&name!==data.name){data.name=name;await userRef(email).set(data,{merge:true})}return data}const u={name:name||email,email,total_xp:0,level:1,created_at:new Date().toISOString(),progress:{},badges:[],dismissed_wrong:[]};await userRef(email).set(u);return u}
 async function saveUser(email,data){await userRef(email).set(data,{merge:true})}
-async function logQuiz(email,name,w,s,q,c,a){await fireDb.collection('quiz_logs').add({user_email:email,user_name:name,world_id:w,stage_id:s,quiz_id:q,is_correct:c,user_answer:a,answered_at:new Date().toISOString()})}
+async function logQuiz(email,name,w,s,q,c,a,at){await fireDb.collection('quiz_logs').add({user_email:email,user_name:name,world_id:w,stage_id:s,quiz_id:q,is_correct:c,user_answer:a,user_answer_text:at??null,answered_at:new Date().toISOString()})}
 async function getWrongQuizIds(email){const logs=await fireDb.collection('quiz_logs').where('user_email','==',email).get();const w=new Set(),c=new Set();logs.forEach(d=>{const x=d.data(),k=`${x.world_id}|${x.stage_id}|${x.quiz_id}`;if(x.is_correct)c.add(k);else w.add(k)});const dismissed=state.userData?.dismissed_wrong||[];return[...w].filter(k=>!c.has(k)&&!dismissed.includes(k)).map(k=>{const[wid,sid,qid]=k.split('|');return{wid,sid,qid}})}
 function getLevelInfo(xp){const t=MANIFEST.level_thresholds;let cur=t[0],nxt=null;for(let i=0;i<t.length;i++){if(xp>=t[i].xp_required){cur=t[i];nxt=t[i+1]||null}}return{level:cur.level,title:cur.title,xp,nextXp:nxt?nxt.xp_required:null,nextTitle:nxt?nxt.title:null,progress:nxt?Math.round((xp-cur.xp_required)/(nxt.xp_required-cur.xp_required)*100):100}}
 function shuffleArray(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
@@ -328,7 +443,7 @@ function startQuiz(w,s){state.currentQuiz={wid:w,sid:s,questions:sampleQuiz(w,s)
 function rQuiz(){const{wid,sid,questions,answers}=state.currentQuiz;const world=MANIFEST.worlds.find(w=>w.id===wid),stage=world.stages.find(s=>s.id===sid),ps=QUIZZES[wid][sid].questions.length,ac=Object.keys(answers).filter(k=>answers[k]!==undefined&&answers[k]!=='').length;let h=`<nav class="nav"><div class="nav-brand">🎓 CS Academy${state.isTemp?`<span class="temp-badge">임시 계정 · ${fmtDate(state.tempExpires)}까지</span>`:''}</div><div class="nav-links"><a onclick="goMap()">← 맵으로</a></div></nav><div class="page"><div class="quiz-hdr"><div style="font-size:11px;color:var(--tx2)">${world.title} › ${stage.title}</div><h2>${stage.title} ${stage.icon}</h2><div class="desc">${questions.length}문항 (풀 ${ps}개 중 랜덤 출제)</div><div class="quiz-meta"><span>⭐ ${stage.xp_per_question} XP/문항</span><span>🎯 통과 ${stage.pass_score}점</span></div></div>`;questions.forEach((q,i)=>{h+=`<div class="qc"><div class="qn">문제 ${i+1} / ${questions.length}</div><div class="qt">${q.question.replace(/\n/g,'<br>')}</div>`;if(q.type==='ox')h+=`<div class="ans-g ox"><div class="ans-o ox-yes ${answers[q.id]==='true'?'selected':''}" onclick="selAns('${q.id}','true')">O</div><div class="ans-o ox-no ${answers[q.id]==='false'?'selected':''}" onclick="selAns('${q.id}','false')">X</div></div>`;else if(q.type==='multiple_choice')h+=`<div class="ans-g">${q.choices.map((c,ci)=>`<div class="ans-o ${answers[q.id]===''+ci?'selected':''}" onclick="selAns('${q.id}','${ci}')">${c}</div>`).join('')}</div>`;else h+=`<div class="ans-g"><input class="blank-in" placeholder="답을 입력하세요" value="${answers[q.id]||''}" oninput="selAns('${q.id}',this.value)"></div>`;h+=`</div>`});h+=`<div class="submit-bar"><div class="prog"><b>${ac}</b> / ${questions.length} 답변 완료</div><button class="submit-btn ${ac===questions.length?'ready':''}" onclick="submitQuiz()">제출하고 결과 보기</button></div></div>`;$.innerHTML=h}
 function selAns(qid,val){state.currentQuiz.answers[qid]=val;const ac=Object.keys(state.currentQuiz.answers).filter(k=>{const v=state.currentQuiz.answers[k];return v!==undefined&&v!==''}).length;const t=state.currentQuiz.questions.length;const p=document.querySelector('.prog');if(p)p.innerHTML=`<b>${ac}</b> / ${t} 답변 완료`;const b=document.querySelector('.submit-btn');if(b)b.classList.toggle('ready',ac===t);document.querySelectorAll('.qc').forEach(card=>{card.querySelectorAll('.ans-o').forEach(o=>{const oc=o.getAttribute('onclick');if(oc&&oc.includes(`'${qid}'`))o.classList.toggle('selected',oc.includes(`'${val}'`))})})}
 
-async function submitQuiz(){const{wid,sid,questions,answers}=state.currentQuiz;const stage=MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);const u=state.userData;const un=questions.filter(q=>!answers[q.id]&&answers[q.id]!=='0');if(un.length>0&&!confirm(`${un.length}문제가 남아있어요. 제출할까요?`))return;$.innerHTML='<div class="loading">채점 중...</div>';let cc=0;const results=[];for(const q of questions){const ua=answers[q.id]||'';const ok=checkAnswer(q,ua);if(ok)cc++;let uc,crc;if(q.type==='multiple_choice'){uc=ua!==''?(q.choices[parseInt(ua)]||'(미응답)'):'(미응답)';crc=q.choices[q.answer]}else if(q.type==='ox'){uc=ua==='true'?'O':ua==='false'?'X':'(미응답)';crc=q.answer?'O':'X'}else{uc=ua||'(미응답)';crc=q.answer}results.push({...q,userAnswer:ua,userChoice:uc,correctChoice:crc,isCorrect:ok});await logQuiz(state.userEmail,state.userName,wid,sid,q.id,ok,ua)}const tt=questions.length,sc=Math.round(cc/tt*100),wc=tt-cc,passed=sc>=stage.pass_score,xp=cc*stage.xp_per_question;const ol=u.level;u.total_xp+=xp;const lv=getLevelInfo(u.total_xp);u.level=lv.level;if(!u.progress)u.progress={};const pk=`${wid}_${sid}`,pv=u.progress[pk]||{status:'',best_score:0,attempts:0};u.progress[pk]={status:passed?'cleared':(pv.status==='cleared'?'cleared':'in_progress'),best_score:Math.max(pv.best_score||0,sc),attempts:(pv.attempts||0)+1};if(!u.badges)u.badges=[];const nb=[];function tb(id){if(!u.badges.includes(id)){u.badges.push(id);const b=MANIFEST.badges.find(x=>x.id===id);if(b)nb.push(b)}}tb('first_step');if(passed)tb(`${wid}_${sid}`);if(passed&&sc===100){const wd=MANIFEST.worlds.find(w=>w.id===wid);if(wd.stages.every(s=>(u.progress[`${wid}_${s.id}`]||{}).best_score===100))tb(`${wid}_perfect`)}const allW=MANIFEST.worlds.every(wd=>wd.stages.every(s=>(u.progress[`${wd.id}_${s.id}`]||{}).status==='cleared'));if(allW)tb('all_clear');await saveUser(state.userEmail,u);state.userData=u;state.lastResult={wid,sid,results,score:sc,correctCount:cc,wrongCount:wc,total:tt,passed,passScore:stage.pass_score,earnedXp:xp,newLevel:lv.level,newLevelTitle:lv.title,leveledUp:lv.level>ol,newBadges:nb};state.page='result';render()}
+async function submitQuiz(){const{wid,sid,questions,answers}=state.currentQuiz;const stage=MANIFEST.worlds.find(w=>w.id===wid).stages.find(s=>s.id===sid);const u=state.userData;const un=questions.filter(q=>!answers[q.id]&&answers[q.id]!=='0');if(un.length>0&&!confirm(`${un.length}문제가 남아있어요. 제출할까요?`))return;$.innerHTML='<div class="loading">채점 중...</div>';let cc=0;const results=[];for(const q of questions){const ua=answers[q.id]||'';const ok=checkAnswer(q,ua);if(ok)cc++;let uc,crc;if(q.type==='multiple_choice'){uc=ua!==''?(q.choices[parseInt(ua)]||'(미응답)'):'(미응답)';crc=q.choices[q.answer]}else if(q.type==='ox'){uc=ua==='true'?'O':ua==='false'?'X':'(미응답)';crc=q.answer?'O':'X'}else{uc=ua||'(미응답)';crc=q.answer}results.push({...q,userAnswer:ua,userChoice:uc,correctChoice:crc,isCorrect:ok});await logQuiz(state.userEmail,state.userName,wid,sid,q.id,ok,ua,uc)}const tt=questions.length,sc=Math.round(cc/tt*100),wc=tt-cc,passed=sc>=stage.pass_score,xp=cc*stage.xp_per_question;const ol=u.level;u.total_xp+=xp;const lv=getLevelInfo(u.total_xp);u.level=lv.level;if(!u.progress)u.progress={};const pk=`${wid}_${sid}`,pv=u.progress[pk]||{status:'',best_score:0,attempts:0};u.progress[pk]={status:passed?'cleared':(pv.status==='cleared'?'cleared':'in_progress'),best_score:Math.max(pv.best_score||0,sc),attempts:(pv.attempts||0)+1};if(!u.badges)u.badges=[];const nb=[];function tb(id){if(!u.badges.includes(id)){u.badges.push(id);const b=MANIFEST.badges.find(x=>x.id===id);if(b)nb.push(b)}}tb('first_step');if(passed)tb(`${wid}_${sid}`);if(passed&&sc===100){const wd=MANIFEST.worlds.find(w=>w.id===wid);if(wd.stages.every(s=>(u.progress[`${wid}_${s.id}`]||{}).best_score===100))tb(`${wid}_perfect`)}const allW=MANIFEST.worlds.every(wd=>wd.stages.every(s=>(u.progress[`${wd.id}_${s.id}`]||{}).status==='cleared'));if(allW)tb('all_clear');await saveUser(state.userEmail,u);state.userData=u;state.lastResult={wid,sid,results,score:sc,correctCount:cc,wrongCount:wc,total:tt,passed,passScore:stage.pass_score,earnedXp:xp,newLevel:lv.level,newLevelTitle:lv.title,leveledUp:lv.level>ol,newBadges:nb};state.page='result';render()}
 
 function rResult(){const r=state.lastResult;let h=`<nav class="nav"><div class="nav-brand">🎓 CS Academy${state.isTemp?`<span class="temp-badge">임시 계정 · ${fmtDate(state.tempExpires)}까지</span>`:''}</div><div class="nav-links"><a onclick="goMap()">← 맵으로</a></div></nav><div class="page"><div class="res-hero ${r.passed?'passed':'failed'}"><div style="font-size:56px">${r.passed?'🎉':'💪'}</div><h1>${r.passed?'고생하셨습니다! 통과!':'아쉽지만 다시 도전해봐요!'}</h1><div class="res-summary"><div class="rs-c"><div class="l">총 문제</div><div class="v">${r.total}</div></div><div class="rs-c"><div class="l">정답</div><div class="v">${r.correctCount}</div></div><div class="rs-c"><div class="l">오답</div><div class="v">${r.wrongCount}</div></div><div class="rs-c sc"><div class="l">점수</div><div class="v">${r.score}점</div></div></div><div class="res-sub">통과 기준 ${r.passScore}점</div><div class="gain"><div class="gain-c"><span>⭐</span>+${r.earnedXp} XP</div>${r.leveledUp?`<div class="gain-c lvl"><span>🎊</span>레벨업! → ${r.newLevelTitle} (Lv.${r.newLevel})</div>`:''}</div>${r.newBadges.length?`<div class="nb-area"><div class="nb-title">🏆 새 배지 획득</div><div class="nb-list">${r.newBadges.map(b=>`<div class="nb-card"><div class="i">${b.icon}</div><div class="n">${b.name}</div><div class="d">${b.desc}</div></div>`).join('')}</div></div>`:''}</div>`;if(r.wrongCount>0)h+=`<div class="wb wb-r"><span>📝 ${r.wrongCount}문제를 틀렸어요!</span><a onclick="goWrong()">오답노트 바로가기 →</a></div>`;const ws=r.results.filter(x=>!x.isCorrect),cs=r.results.filter(x=>x.isCorrect);if(ws.length){h+=`<h2 class="sec-t">✗ 오답 문항</h2>`;ws.forEach((v,i)=>h+=rvCard(v,i+1,false))}if(cs.length){h+=`<h2 class="sec-t ok-t">✓ 정답 문항 (클릭하여 펼치기)</h2>`;cs.forEach((v,i)=>h+=rvCard(v,i+1,true))}h+=`<div class="actions"><button class="btn-p" onclick="goMap()">맵으로</button><button class="btn-s" onclick="startQuiz('${r.wid}','${r.sid}')">한 번 더 도전 (다른 문제!)</button></div></div>`;$.innerHTML=h}
 function rvCard(v,i,ok){let h=`<div class="rv ${ok?'correct collapsed':'wrong'}" ${ok?'onclick="this.classList.toggle(\'collapsed\')"':''}>`;h+=`<div class="rv-h"><div class="rv-num">${ok?v.question.substring(0,40)+(v.question.length>40?'...':''):'문제 '+i}</div><div class="rv-tag ${ok?'correct':'wrong'}">${ok?'✓ 정답':'✗ 오답'}</div></div><div class="rv-body"><div class="rv-q">${v.question.replace(/\n/g,'<br>')}</div>`;if(!ok){h+=`<div class="rv-ar"><span class="lbl">내 답변:</span><span class="val wt">${v.userChoice}</span></div><div class="rv-ar"><span class="lbl">정답:</span><span class="val ct">${v.correctChoice}</span></div>`;if(v.type==='multiple_choice'&&v.choices)h+=`<div class="rv-choices">${v.choices.map((c,ci)=>{let cls='';if(ci===v.answer)cls='cc';else if(''+ci===v.userAnswer&&ci!==v.answer)cls='wc';return`<div class="rv-ch ${cls}">${c}</div>`}).join('')}</div>`}if(v.explanation)h+=`<div class="rv-exp"><div class="el">💡 해설</div><div class="et">${v.explanation}</div>${v.guide_ref?`<div class="er">📖 ${v.guide_ref}</div>`:''}</div>`;h+=`</div></div>`;return h}
@@ -343,7 +458,30 @@ async function rDash(){const u=state.userData,l=getLevelInfo(u.total_xp);const l
 
 async function rAdmin(){if(!state.isAdmin){goMap();return}$.innerHTML='<div class="loading">관리자 데이터 로딩 중...</div>';const allUsers=await fireDb.collection('users').get();const allLogs=await fireDb.collection('quiz_logs').get();const users=[];allUsers.forEach(d=>users.push({id:d.id,...d.data()}));const logs=[];allLogs.forEach(d=>logs.push(d.data()));const wc=(await getWrongQuizIds(state.userEmail)).length;let h=nav(wc)+`<div class="page"><h1 style="font-size:18px;font-weight:800;margin-bottom:4px">👑 관리자 대시보드</h1><p style="color:var(--tx2);font-size:12px;margin-bottom:16px">전체 사용자 학습 현황 및 문항별 통계</p><div class="admin-tabs"><div class="admin-tab ${state.adminTab==='users'?'active':''}" onclick="state.adminTab='users';rAdmin()">👥 사용자별 현황</div><div class="admin-tab ${state.adminTab==='questions'?'active':''}" onclick="state.adminTab='questions';rAdmin()">📊 문항별 정답률</div><div class="admin-tab ${state.adminTab==='category'?'active':''}" onclick="state.adminTab='category';rAdmin()">📁 카테고리별 통계</div><div class="admin-tab ${state.adminTab==='temp'?'active':''}" onclick="state.adminTab='temp';rAdmin()">🎫 임시 계정</div></div>`;if(state.adminTab==='users')h+=adminUsers(users,logs);else if(state.adminTab==='questions')h+=adminQuestions(logs);else if(state.adminTab==='temp'){const temps=[];(await fireDb.collection(TEMP_COLLECTION).get()).forEach(d=>temps.push({id:d.id,...d.data()}));h+=adminTemp(temps,users)}else h+=adminCategory(users,logs);h+=`</div>`;$.innerHTML=h}
 
-function adminUsers(users,logs){const uLogs={};logs.forEach(l=>{const e=l.user_email||l.user_name;if(!uLogs[e])uLogs[e]={total:0,correct:0};uLogs[e].total++;if(l.is_correct)uLogs[e].correct++});let h=`<div class="admin-section"><h3 style="font-size:15px;font-weight:800;margin-bottom:12px">👥 전체 사용자 (${users.length}명)</h3><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>이름</th><th>이메일</th><th>레벨</th><th>XP</th><th>푼 문제</th><th>정답률</th><th>배지</th><th>진도</th></tr></thead><tbody>`;users.sort((a,b)=>(b.total_xp||0)-(a.total_xp||0));users.forEach(u=>{const email=u.email||u.id||'';const ul=uLogs[email]||{total:0,correct:0};const acc=ul.total?Math.round(ul.correct/ul.total*100):0;const lv=getLevelInfo(u.total_xp||0);const prog=u.progress||{};const cleared=Object.values(prog).filter(p=>p.status==='cleared').length;const totalStages=MANIFEST.worlds.reduce((a,w)=>a+w.stages.length,0);const accCls=acc>=80?'good':acc>=50?'mid':'bad';h+=`<tr><td><strong><a onclick="showUserDetail('${email}','${u.name||'-'}')" style="cursor:pointer;color:var(--pri)">${u.name||'-'}</a></strong></td><td style="font-size:11px;color:var(--tx3)">${email}${email.endsWith(TEMP_EMAIL_DOMAIN)?'<span class="tmp-tag">임시</span>':''}</td><td>Lv.${lv.level} ${lv.title}</td><td>${u.total_xp||0}</td><td>${ul.total}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar"><div class="stat-fill ${accCls}" style="width:${acc}%"></div></div><span style="font-size:11px">${acc}%</span></div></td><td>${(u.badges||[]).length}개</td><td>${cleared}/${totalStages}</td></tr>`});h+=`</tbody></table></div></div>`;return h}
+// ===== 사용자별 현황 =====
+let _adminRows=[];
+function relDay(iso){if(!iso)return{txt:'-',days:Infinity};const d=new Date(iso),t=new Date();const a=new Date(d.getFullYear(),d.getMonth(),d.getDate()),b=new Date(t.getFullYear(),t.getMonth(),t.getDate());const n=Math.round((b-a)/86400000);return{txt:n<=0?'오늘':n===1?'어제':`${n}일 전`,days:n}}
+function accCls(a){return a>=80?'good':a>=50?'mid':'bad'}
+function adminUsers(users,logs){
+const st={};logs.forEach(l=>{const e=(l.user_email||l.user_name||'').toLowerCase();if(!st[e])st[e]={total:0,correct:0,last:''};st[e].total++;if(l.is_correct)st[e].correct++;if((l.answered_at||'')>st[e].last)st[e].last=l.answered_at});
+const totalStages=MANIFEST.worlds.reduce((a,w)=>a+w.stages.length,0);
+_adminRows=users.map(u=>{const email=(u.email||u.id||'');const k=email.toLowerCase();const x=st[k]||{total:0,correct:0,last:''};const acc=x.total?Math.round(x.correct/x.total*100):0;const cleared=Object.values(u.progress||{}).filter(p=>p.status==='cleared').length;const rd=relDay(x.last);const status=x.total===0?'none':rd.days<=ADMIN_INACTIVE_DAYS?'active':'idle';return{email,name:u.name||'-',xp:u.total_xp||0,lv:getLevelInfo(u.total_xp||0),total:x.total,correct:x.correct,acc,cleared,prog:totalStages?Math.round(cleared/totalStages*100):0,totalStages,last:x.last,rd,status,isTemp:k.endsWith(TEMP_EMAIL_DOMAIN)}});
+const n=_adminRows.length,act=_adminRows.filter(r=>r.status==='active').length,none=_adminRows.filter(r=>r.status==='none').length;const tq=logs.length,tc=logs.filter(l=>l.is_correct).length;const tAcc=tq?Math.round(tc/tq*100):0;
+let h=`<div class="kpi-g"><div class="kpi"><div class="kpi-l">전체 사용자</div><div class="kpi-v">${n}<span>명</span></div></div><div class="kpi"><div class="kpi-l">최근 ${ADMIN_INACTIVE_DAYS}일 활동</div><div class="kpi-v">${act}<span>명</span></div><div class="kpi-s">${n?Math.round(act/n*100):0}% 참여</div></div><div class="kpi"><div class="kpi-l">전체 정답률</div><div class="kpi-v">${tAcc}<span>%</span></div><div class="kpi-s">${tc.toLocaleString()} / ${tq.toLocaleString()}문항</div></div><div class="kpi"><div class="kpi-l">아직 시작 안 함</div><div class="kpi-v">${none}<span>명</span></div></div></div>`;
+const cnt={all:n,active:act,idle:_adminRows.filter(r=>r.status==='idle').length,none,temp:_adminRows.filter(r=>r.isTemp).length};
+const chips=[['all','전체'],['active','활동 중'],['idle',`${ADMIN_INACTIVE_DAYS}일+ 미접속`],['none','미시작'],['temp','임시 계정']];
+h+=`<div class="admin-section"><div class="ul-bar"><input class="ul-search" placeholder="이름·이메일 검색" value="${esc(state.userSearch)}" oninput="state.userSearch=this.value;renderUserTable()"><div class="ul-chips">${chips.map(([k,t])=>`<button class="ul-chip ${state.userFilter===k?'on':''}" onclick="state.userFilter='${k}';document.querySelectorAll('.ul-chip').forEach(c=>c.classList.remove('on'));this.classList.add('on');renderUserTable()">${t} <b>${cnt[k]}</b></button>`).join('')}</div></div><div id="user-table" style="overflow-x:auto"></div></div>`;
+setTimeout(renderUserTable,0);return h}
+function sortUsers(key){const s=state.userSort;if(s.key===key)s.dir*=-1;else{s.key=key;s.dir=key==='name'?1:-1}renderUserTable()}
+function renderUserTable(){const el=document.getElementById('user-table');if(!el)return;const q=(state.userSearch||'').trim().toLowerCase();const f=state.userFilter;
+let rows=_adminRows.filter(r=>(f==='all'||(f==='temp'?r.isTemp:r.status===f))&&(!q||r.name.toLowerCase().includes(q)||r.email.toLowerCase().includes(q)));
+const{key,dir}=state.userSort;const val=r=>key==='name'?r.name:key==='last'?(r.last||''):r[key];rows.sort((a,b)=>{const x=val(a),y=val(b);return(x>y?1:x<y?-1:0)*dir});
+const th=(k,t)=>`<th class="sortable ${key===k?'sorted':''}" onclick="sortUsers('${k}')">${t}${key===k?(dir>0?' ▲':' ▼'):''}</th>`;
+const stTxt={active:'활동 중',idle:'미접속',none:'미시작'};
+let h=`<table class="admin-table ul-table"><thead><tr>${th('name','사용자')}${th('xp','레벨 · XP')}${th('total','풀이')}${th('acc','정답률')}${th('prog','진도')}${th('last','최근 활동')}<th>상태</th></tr></thead><tbody>`;
+if(!rows.length)h+=`<tr><td colspan="7" style="text-align:center;color:var(--tx3);padding:24px">조건에 맞는 사용자가 없어요.</td></tr>`;
+rows.forEach(r=>{h+=`<tr class="ul-row" data-e="${esc(r.email)}" data-n="${esc(r.name)}" onclick="showUserDetail(this.dataset.e,this.dataset.n)"><td><div class="ul-user"><div class="ul-av">${esc(r.name.charAt(0)||'?')}</div><div><div class="ul-name">${esc(r.name)}${r.isTemp?'<span class="tmp-tag">임시</span>':''}</div><div class="ul-mail">${esc(r.email)}</div></div></div></td><td><span class="lv-chip">Lv.${r.lv.level}</span> <span class="ul-sub">${r.lv.title}</span><div class="ul-num">${r.xp.toLocaleString()} XP</div></td><td class="ul-num">${r.total.toLocaleString()}</td><td>${r.total?`<div class="mini-bar"><div class="stat-bar"><div class="stat-fill ${accCls(r.acc)}" style="width:${r.acc}%"></div></div><span>${r.acc}%</span></div>`:'<span class="ul-sub">-</span>'}</td><td><div class="mini-bar"><div class="stat-bar"><div class="stat-fill prog" style="width:${r.prog}%"></div></div><span>${r.cleared}/${r.totalStages}</span></div></td><td><div class="ul-num">${r.rd.txt}</div>${r.last?`<div class="ul-sub">${fmtDate(r.last)}</div>`:''}</td><td><span class="ul-st ${r.status}">${stTxt[r.status]}</span></td></tr>`});
+el.innerHTML=h+`</tbody></table>`}
 
 function adminQuestions(logs){const qStats={};logs.forEach(l=>{const k=`${l.world_id}|${l.stage_id}|${l.quiz_id}`;if(!qStats[k])qStats[k]={total:0,correct:0,wid:l.world_id,sid:l.stage_id,qid:l.quiz_id};qStats[k].total++;if(l.is_correct)qStats[k].correct++});const sorted=Object.values(qStats).sort((a,b)=>(a.total?a.correct/a.total:0)-(b.total?b.correct/b.total:0));let h=`<div class="admin-section"><h3 style="font-size:15px;font-weight:800;margin-bottom:12px">📊 문항별 정답률 (정답률 낮은 순)</h3><div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>월드</th><th>스테이지</th><th>문항ID</th><th>문제 (앞 50자)</th><th>응시</th><th>정답</th><th>정답률</th></tr></thead><tbody>`;sorted.forEach(s=>{const acc=s.total?Math.round(s.correct/s.total*100):0;const accCls=acc>=80?'good':acc>=50?'mid':'bad';const q=QUIZZES[s.wid]?.[s.sid]?.questions.find(x=>x.id===s.qid);const qText=q?q.question.substring(0,50).replace(/\n/g,' '):'(삭제된 문항)';h+=`<tr><td>${s.wid}</td><td>${s.sid}</td><td style="font-size:10px">${s.qid}</td><td style="font-size:11px">${qText}${q&&q.question.length>50?'...':''}</td><td>${s.total}</td><td>${s.correct}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar"><div class="stat-fill ${accCls}" style="width:${acc}%"></div></div><span style="font-size:11px;font-weight:700">${acc}%</span></div></td></tr>`});h+=`</tbody></table></div></div>`;return h}
 
@@ -409,28 +547,65 @@ catch(e){console.error(e);alert('이관 실패: '+(e.message||e)+'\n다시 시�
 
 async function showUserDetail(email,name){state.adminDetailEmail=email;state.adminDetailName=name;state.page='admin_detail';await rUserDetail()}
 
-async function rUserDetail(){const email=state.adminDetailEmail;const name=state.adminDetailName;$.innerHTML='<div class="loading">사용자 상세 이력 로딩 중...</div>';const logs=await fireDb.collection('quiz_logs').where('user_email','==',email).get();const items=[];logs.forEach(d=>items.push(d.data()));items.sort((a,b)=>(b.answered_at||'').localeCompare(a.answered_at||''));const userData=await fireDb.collection('users').doc(email).get();const ud=userData.exists?userData.data():{};const wc=(await getWrongQuizIds(state.userEmail)).length;
-let h=nav(wc)+`<div class="page"><div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><button class="btn-s" onclick="state.adminTab='users';goAdmin()" style="padding:6px 14px;font-size:12px">← 목록으로</button><h1 style="font-size:18px;font-weight:800">📋 ${name} 상세 이력</h1></div><p style="color:var(--tx2);font-size:12px;margin-bottom:16px">${email} | 총 ${items.length}건의 풀이 기록</p>`;
+// ===== 사용자 상세 =====
+let _detail=null;
+function ansText(q,l){
+ if(l.user_answer_text!=null&&l.user_answer_text!=='')return{txt:l.user_answer_text,known:true};
+ if(!q)return{txt:l.user_answer||'(미응답)',known:true};
+ if(q.type==='multiple_choice'){if(l.is_correct)return{txt:q.choices[q.answer],known:true};if(l.user_answer===''||l.user_answer==null)return{txt:'(미응답)',known:true};return{txt:'오답 (선택 보기 기록 없음)',known:false}}
+ if(q.type==='ox')return{txt:l.user_answer==='true'?'O':l.user_answer==='false'?'X':'(미응답)',known:true};
+ return{txt:l.user_answer||'(미응답)',known:true}}
+function correctText(q){if(!q)return'-';if(q.type==='multiple_choice')return q.choices[q.answer];if(q.type==='ox')return q.answer?'O':'X';return q.answer}
+function fmtDT(iso){return iso?new Date(iso).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):''}
 
-// 월드/스테이지별 그룹핑
-const grouped={};items.forEach(l=>{const k=`${l.world_id}/${l.stage_id}`;if(!grouped[k])grouped[k]=[];grouped[k].push(l)});
+async function rUserDetail(){const email=state.adminDetailEmail;const name=state.adminDetailName;$.innerHTML='<div class="loading">사용자 상세 이력 로딩 중...</div>';
+const[logSnap,uSnap]=await Promise.all([fireDb.collection('quiz_logs').where('user_email','==',email).get(),fireDb.collection('users').doc(email).get()]);
+const items=[];logSnap.forEach(d=>items.push(d.data()));items.sort((a,b)=>(a.answered_at||'').localeCompare(b.answered_at||''));const ud=uSnap.exists?uSnap.data():{};const wc=(await getWrongQuizIds(state.userEmail)).length;
+// 문항 단위로 묶기
+const qmap={};items.forEach(l=>{const k=`${l.world_id}|${l.stage_id}|${l.quiz_id}`;if(!qmap[k])qmap[k]={k,wid:l.world_id,sid:l.stage_id,qid:l.quiz_id,q:QUIZZES[l.world_id]?.[l.stage_id]?.questions.find(x=>x.id===l.quiz_id)||null,tries:[]};qmap[k].tries.push(l)});
+const qs=Object.values(qmap).map(o=>{const c=o.tries.filter(t=>t.is_correct).length;const last=o.tries[o.tries.length-1];return{...o,correct:c,wrong:o.tries.length-c,lastOk:!!last.is_correct,lastAt:last.answered_at||'',never:c===0}});
+// 스테이지 통계
+const stg={};items.forEach(l=>{const k=`${l.world_id}/${l.stage_id}`;if(!stg[k])stg[k]={t:0,c:0};stg[k].t++;if(l.is_correct)stg[k].c++});
+_detail={email,name,qs};state.detailFilter=state.detailFilter||'all';
+const totalQ=items.length,correctQ=items.filter(x=>x.is_correct).length,acc=totalQ?Math.round(correctQ/totalQ*100):0,lv=getLevelInfo(ud.total_xp||0);const lastAt=items.length?items[items.length-1].answered_at:'';const firstAt=items.length?items[0].answered_at:'';const isTemp=email.toLowerCase().endsWith(TEMP_EMAIL_DOMAIN);
+let h=nav(wc)+`<div class="page ud"><button class="btn-mini" onclick="state.adminTab='users';goAdmin()" style="margin-bottom:12px">← 사용자 목록</button>`;
+// 프로필 헤더
+h+=`<div class="ud-head"><div class="ud-prof"><div class="ud-av">${esc(name.charAt(0)||'?')}<span>Lv.${lv.level}</span></div><div><div class="ud-name">${esc(name)}${isTemp?'<span class="tmp-tag">임시</span>':''}</div><div class="ud-mail">${esc(email)}</div><div class="ud-title">${lv.title}</div></div></div><div class="ud-stats"><div><b>${(ud.total_xp||0).toLocaleString()}</b><span>XP</span></div><div><b>${totalQ.toLocaleString()}</b><span>풀이</span></div><div><b>${acc}%</b><span>정답률</span></div><div><b>${relDay(lastAt).txt}</b><span>최근 활동</span></div><div><b>${(ud.badges||[]).length}</b><span>배지</span></div></div></div>`;
+// 활동 차트
+const days=[];const today=new Date();for(let i=ADMIN_CHART_DAYS-1;i>=0;i--){const d=addDays(today,-i);days.push({key:fmtDate(d),label:`${d.getMonth()+1}/${d.getDate()}`,t:0,c:0})}const dmap={};days.forEach(d=>dmap[d.key]=d);items.forEach(l=>{if(!l.answered_at)return;const d=dmap[fmtDate(l.answered_at)];if(d){d.t++;if(l.is_correct)d.c++}});const mx=Math.max(1,...days.map(d=>d.t));const actDays=days.filter(d=>d.t>0).length;const sum30=days.reduce((a,d)=>a+d.t,0);
+h+=`<div class="ud-card"><div class="ud-ct">최근 ${ADMIN_CHART_DAYS}일 풀이 활동<span>활동 ${actDays}일 · ${sum30.toLocaleString()}문항${firstAt?` · 첫 풀이 ${fmtDate(firstAt)}`:''}</span></div><div class="act-chart">${days.map(d=>`<div class="act-col" data-tip="${d.label} · ${d.t}문항${d.t?` (정답 ${d.c}, ${Math.round(d.c/d.t*100)}%)`:''}"><div class="act-bar ${d.t?'':'zero'}" style="height:${d.t?Math.max(4,Math.round(d.t/mx*100)):0}%"></div></div>`).join('')}</div><div class="act-axis"><span>${days[0].label}</span><span>최대 ${mx}문항/일</span><span>오늘</span></div></div>`;
+// 월드별 진도
+h+=`<div class="ud-card"><div class="ud-ct">월드별 진도<span>✅ 클리어 · 🏃 진행 중 · ➖ 미응시</span></div><div class="wp-grid">`;
+MANIFEST.worlds.forEach(w=>{const cl=w.stages.filter(s=>(ud.progress||{})[`${w.id}_${s.id}`]?.status==='cleared').length;h+=`<div class="wp"><div class="wp-h"><span>${w.icon} ${w.title}</span><b>${cl}/${w.stages.length}</b></div><div class="wp-stages">`;w.stages.forEach(s=>{const p=(ud.progress||{})[`${w.id}_${s.id}`]||{};const sx=stg[`${w.id}/${s.id}`];const cls=p.status==='cleared'?'cl':(p.attempts>0||sx)?'ip':'no';h+=`<div class="wp-s ${cls}"><div class="wp-sn">${s.icon} ${s.title}</div><div class="wp-sv">${cls==='cl'?'✅':cls==='ip'?'🏃':'➖'} ${p.best_score!=null&&cls!=='no'?p.best_score+'점':''}</div><div class="wp-ss">${p.attempts?`응시 ${p.attempts}회`:''}${sx?` · 정답률 ${Math.round(sx.c/sx.t*100)}%`:''}</div></div>`});h+=`</div></div>`});
+h+=`</div></div>`;
+// 취약 영역
+const weak=Object.entries(stg).filter(([k,v])=>v.t>=ADMIN_WEAK_STAGE_MIN).map(([k,v])=>{const[wid,sid]=k.split('/');const w=MANIFEST.worlds.find(x=>x.id===wid);const s=w?.stages.find(x=>x.id===sid);return{name:`${w?w.icon+' '+w.title:wid} › ${s?s.title:sid}`,acc:Math.round(v.c/v.t*100),t:v.t}}).sort((a,b)=>a.acc-b.acc).slice(0,ADMIN_WEAK_STAGE_TOP);
+const rep=qs.filter(o=>o.wrong>0).sort((a,b)=>(b.never-a.never)||(b.wrong-a.wrong)).slice(0,ADMIN_WRONG_Q_TOP);
+h+=`<div class="weak-g"><div class="ud-card"><div class="ud-ct">취약 스테이지<span>${ADMIN_WEAK_STAGE_MIN}문항 이상 푼 스테이지 중 정답률 낮은 순</span></div>${weak.length?weak.map(x=>`<div class="weak-row"><div class="weak-n">${x.name}</div><div class="mini-bar"><div class="stat-bar"><div class="stat-fill ${accCls(x.acc)}" style="width:${x.acc}%"></div></div><span>${x.acc}% <em>(${x.t}문항)</em></span></div></div>`).join(''):'<div class="ud-empty">아직 판단할 만큼 풀이가 쌓이지 않았어요.</div>'}</div><div class="ud-card"><div class="ud-ct">반복 오답 문항<span>클릭하면 해설로 이동</span></div>${rep.length?rep.map(o=>`<div class="rep-row" onclick="jumpToQ('${o.k}')"><span class="rep-cnt">${o.wrong}회</span><span class="rep-q">${esc(o.q?o.q.question.replace(/\n/g,' ').substring(0,ADMIN_Q_PREVIEW_LEN):'(삭제된 문항)')}</span>${o.never?'<span class="rep-tag">아직 못 맞춤</span>':''}</div>`).join(''):'<div class="ud-empty">틀린 문항이 없어요. 🎉</div>'}</div></div>`;
+// 풀이 이력
+const nWrong=qs.filter(o=>o.wrong>0).length,nNever=qs.filter(o=>o.never).length;
+h+=`<div class="ud-card"><div class="ud-ct">문항별 풀이 이력<span>${qs.length}문항 · 총 ${totalQ}회 풀이</span></div><div class="ul-chips" style="margin-bottom:12px"><button class="ul-chip dchip ${state.detailFilter==='all'?'on':''}" onclick="setDetailFilter('all',this)">전체 <b>${qs.length}</b></button><button class="ul-chip dchip ${state.detailFilter==='wrong'?'on':''}" onclick="setDetailFilter('wrong',this)">한 번이라도 틀림 <b>${nWrong}</b></button><button class="ul-chip dchip ${state.detailFilter==='never'?'on':''}" onclick="setDetailFilter('never',this)">아직 못 맞춤 <b>${nNever}</b></button></div><div id="hist"></div></div>`;
+h+=`</div>`;$.innerHTML=h;renderHistory()}
 
-// 요약 카드
-const totalQ=items.length;const correctQ=items.filter(x=>x.is_correct).length;const acc=totalQ?Math.round(correctQ/totalQ*100):0;const lv=getLevelInfo(ud.total_xp||0);
-h+=`<div class="dash-g"><div class="dc"><div class="dc-l">레벨</div><div class="dc-v">${lv.level}</div><div class="dc-s">${lv.title}</div></div><div class="dc"><div class="dc-l">총 XP</div><div class="dc-v">${ud.total_xp||0}</div></div><div class="dc"><div class="dc-l">총 풀이</div><div class="dc-v">${totalQ}</div></div><div class="dc"><div class="dc-l">정답률</div><div class="dc-v">${acc}%</div><div class="dc-s">${correctQ} / ${totalQ}</div></div></div>`;
-
-// 카테고리별 상세
-for(const[catKey,catLogs] of Object.entries(grouped)){const[wid,sid]=catKey.split('/');const world=MANIFEST.worlds.find(w=>w.id===wid);const stage=world?.stages.find(s=>s.id===sid);const wIcon=world?world.icon:'';const sIcon=stage?stage.icon:'';const catCorrect=catLogs.filter(x=>x.is_correct).length;const catAcc=Math.round(catCorrect/catLogs.length*100);const accCls=catAcc>=80?'good':catAcc>=50?'mid':'bad';
-h+=`<div class="admin-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:14px;font-weight:800">${wIcon} ${world?world.title:wid} › ${sIcon} ${stage?stage.title:sid}</h3><div style="display:flex;align-items:center;gap:6px"><div class="stat-bar" style="min-width:80px"><div class="stat-fill ${accCls}" style="width:${catAcc}%"></div></div><span style="font-size:12px;font-weight:700">${catAcc}% (${catCorrect}/${catLogs.length})</span></div></div>`;
-h+=`<table class="admin-table"><thead><tr><th style="width:40px">결과</th><th>문제</th><th>선택한 답</th><th>정답</th><th>응시일</th></tr></thead><tbody>`;
-catLogs.forEach(l=>{const q=QUIZZES[l.world_id]?.[l.stage_id]?.questions.find(x=>x.id===l.quiz_id);const qText=q?q.question.substring(0,60).replace(/\n/g,' '):'(삭제된 문항)';
-let userAns=l.user_answer||'(미응답)';let correctAns='';
-if(q){if(q.type==='multiple_choice'){try{userAns=q.choices[parseInt(l.user_answer)]||l.user_answer}catch(e){userAns=l.user_answer}correctAns=q.choices[q.answer]}else if(q.type==='ox'){userAns=l.user_answer==='true'?'O':'X';correctAns=q.answer?'O':'X'}else{correctAns=q.answer}}
-const dateStr=l.answered_at?new Date(l.answered_at).toLocaleDateString('ko-KR',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
-h+=`<tr style="${l.is_correct?'':'background:var(--ng-l)'}"><td style="text-align:center;font-size:16px">${l.is_correct?'✅':'❌'}</td><td style="font-size:11px">${qText}${q&&q.question.length>60?'...':''}</td><td style="font-size:11px;${l.is_correct?'color:var(--ok)':'color:var(--ng);font-weight:700'}">${userAns}</td><td style="font-size:11px;color:var(--ok)">${correctAns}</td><td style="font-size:10px;color:var(--tx3)">${dateStr}</td></tr>`});
-h+=`</tbody></table></div>`}
-
-h+=`<div class="actions"><button class="btn-p" onclick="state.adminTab='users';goAdmin()">목록으로 돌아가기</button></div></div>`;$.innerHTML=h}
+function setDetailFilter(f,btn){state.detailFilter=f;document.querySelectorAll('.dchip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');renderHistory()}
+function renderHistory(){const el=document.getElementById('hist');if(!el||!_detail)return;const f=state.detailFilter;const list=_detail.qs.filter(o=>f==='all'||(f==='wrong'?o.wrong>0:o.never));
+const groups={};list.forEach(o=>{const k=`${o.wid}/${o.sid}`;(groups[k]=groups[k]||[]).push(o)});
+const order=[];MANIFEST.worlds.forEach(w=>w.stages.forEach(s=>{const k=`${w.id}/${s.id}`;if(groups[k])order.push([k,w,s])}));Object.keys(groups).forEach(k=>{if(!order.find(x=>x[0]===k))order.push([k,null,null])});
+if(!order.length){el.innerHTML='<div class="ud-empty">해당하는 문항이 없어요.</div>';return}
+let h='';order.forEach(([k,w,s])=>{const arr=groups[k].sort((a,b)=>(a.lastOk-b.lastOk)||(b.wrong-a.wrong)||b.lastAt.localeCompare(a.lastAt));const t=arr.reduce((a,o)=>a+o.tries.length,0),c=arr.reduce((a,o)=>a+o.correct,0),acc=t?Math.round(c/t*100):0;
+h+=`<div class="hg" id="hg-${k.replace('/','-')}"><div class="hg-h" onclick="this.parentElement.classList.toggle('open')"><span class="hg-t">${w?w.icon+' '+w.title:k.split('/')[0]} › ${s?s.icon+' '+s.title:k.split('/')[1]}</span><span class="hg-m">${arr.length}문항 · 오답 있는 문항 ${arr.filter(o=>o.wrong>0).length}</span><div class="mini-bar"><div class="stat-bar"><div class="stat-fill ${accCls(acc)}" style="width:${acc}%"></div></div><span>${acc}%</span></div><span class="hg-arr">▼</span></div><div class="hg-b">${arr.map(qCard).join('')}</div></div>`});
+el.innerHTML=h}
+function qCard(o){const q=o.q;const last=o.tries[o.tries.length-1];const cls=o.never?'never':o.lastOk?'ok':'ng';
+let body='';
+if(!q){body=`<div class="ud-empty">현재 퀴즈 파일에서 삭제된 문항이에요. (ID: ${esc(o.qid)})</div>`}
+else{body=`<div class="wn-q">${esc(q.question).replace(/\n/g,'<br>')}</div>`;
+ if(q.type==='multiple_choice'){const picked={};o.tries.forEach(t=>{const a=ansText(q,t);if(!t.is_correct&&a.known)picked[a.txt]=(picked[a.txt]||0)+1});body+=`<div class="rv-choices" style="margin-bottom:10px">${q.choices.map((c,ci)=>{const ok=ci===q.answer;const pc=picked[c]||0;return`<div class="rv-ch ${ok?'cc':''} ${pc?'qc-wrong':''}">${esc(c)}${ok?' <b class="qc-tag ok">정답</b>':''}${pc?` <b class="qc-tag ng">오답 선택 ${pc}회</b>`:''}</div>`}).join('')}</div>`}
+ else{body+=`<div class="wn-ans">정답: ${esc(correctText(q))}</div>`}
+ body+=`<div class="tries"><div class="tries-t">풀이 기록 (${o.tries.length}회 · 최신순)</div><div class="tries-list">${o.tries.slice().reverse().map(t=>{const a=ansText(q,t);return`<div class="try ${t.is_correct?'ok':'ng'}"><span class="try-r">${t.is_correct?'⭕':'❌'}</span><span class="try-a ${a.known?'':'unk'}">${esc(a.txt)}</span><span class="try-d">${fmtDT(t.answered_at)}</span></div>`}).join('')}</div></div>`;
+ if(q.explanation)body+=`<div class="rv-exp"><div class="el">💡 해설</div><div class="et">${esc(q.explanation)}</div>${q.guide_ref?`<div class="er">📖 ${esc(q.guide_ref)}</div>`:''}</div>`}
+const prev=q?q.question.replace(/\n/g,' '):'(삭제된 문항)';
+return`<div class="wn qcard ${cls}" id="q-${o.k.replace(/\|/g,'-')}"><div class="wn-h" onclick="this.parentElement.classList.toggle('open')"><span class="qc-res">${o.lastOk?'⭕':'❌'}</span><div class="wn-prev">${esc(prev.substring(0,ADMIN_Q_PREVIEW_LEN))}${prev.length>ADMIN_Q_PREVIEW_LEN?'…':''}</div><span class="qc-sum">${o.tries.length}회 · 정답 ${o.correct}</span>${o.never?'<span class="rep-tag">아직 못 맞춤</span>':''}<span class="qc-date">${fmtDT(o.lastAt)}</span><div class="wn-arr">▼</div></div><div class="wn-body">${body}</div></div>`}
+function jumpToQ(k){const id='q-'+k.replace(/\|/g,'-');let el=document.getElementById(id);if(!el){state.detailFilter='all';document.querySelectorAll('.dchip').forEach((c,i)=>c.classList.toggle('on',i===0));renderHistory();el=document.getElementById(id)}if(!el)return;el.closest('.hg')?.classList.add('open');el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1600)}
 
 async function goMap(){state.page='map';await rMap()}
 async function goWrong(){state.page='wrongnotes';await rWrong()}
